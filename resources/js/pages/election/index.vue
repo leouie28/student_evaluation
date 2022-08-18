@@ -11,7 +11,7 @@
                     <v-toolbar
                         flat
                     >
-                        <v-toolbar-title>My CRUD</v-toolbar-title>
+                        <v-toolbar-title>My CRUDs</v-toolbar-title>
                         <v-divider
                         class="mx-4"
                         inset
