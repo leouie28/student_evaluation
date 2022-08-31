@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:admin']], function() {
 
     Route::resources([
         'announcement' => AnnouncementController::class,
+        'student' => StudentController::class,
     ]);
 });

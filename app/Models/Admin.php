@@ -13,7 +13,7 @@ class Admin extends Authenticatable
 
     protected $filable = [
         'name',
-        'school_id',
+        'admin_id',
         'password',
         'active',
     ];

@@ -5,11 +5,19 @@
                 <v-card-title>Import Excel</v-card-title>
                 <v-divider class="pt-0 mt-0"></v-divider>
                 <v-card-text>
-                    <div class="excel text-center">
-                        <v-icon x-large style="font-size:60px;">mdi-microsoft-excel</v-icon>
+                    <div class="excel text-center py-6" @click="$refs.file_input.click()">
+                        <input ref="file_input" class="hide" @change="onFileChange($event.target.files)" accept=".xlsx,.csv" type="file">
+                        <v-icon x-large style="font-size:80px;" :color="file_name?'success': ''">
+                            mdi-microsoft-excel
+                        </v-icon>
                         <div>
-                            <span></span>
+                            <v-toolbar-title class="text--primary">
+                                {{file_name?file_name:'Accept excel file only'}}
+                            </v-toolbar-title>
                         </div>
+                        <v-btn elevation="0" color="light" @click="$refs.file_input.click()">
+                            <span class="text-capitalize">Browse file</span>
+                        </v-btn>
                     </div>
                 </v-card-text>
                 <v-card-actions>
@@ -18,7 +26,8 @@
                         Close
                     </v-btn>
                     <v-btn color="secondary" @click="$emit('save',payload)">
-                        Create
+                        Insert records
+                        <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -27,6 +36,14 @@
 </template>
 <script>
 export default {
+    data: () => ({
+        file_name: '',
+    }),
+    methods: {
+        onFileChange(file) {
+            this.file_name = file[0].name
+        }
+    },
     props: {
         show: {
             type: Boolean,
@@ -36,5 +53,10 @@ export default {
 }
 </script>
 <style scoped>
-
+.hide{
+    display: none;
+}
+.excel{
+    border: 2px dashed grey;
+}
 </style>

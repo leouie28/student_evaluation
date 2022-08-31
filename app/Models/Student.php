@@ -12,7 +12,7 @@ class Student extends Authenticatable
 
     protected $fillable = [
         'name',
-        'school_id',
+        'student_id',
         'password',
         'status',
         'active',

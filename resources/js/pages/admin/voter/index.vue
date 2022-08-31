@@ -5,6 +5,7 @@
             :data="data"
             @addNew="addNew"
             @refresh="fetchPage"
+            @importExcel="importExcel"
             @search="fetchPage"
             @resetFilters="resetFilter"
             @filterRecord="fetchPage"
@@ -84,7 +85,7 @@ export default {
     },
     data: () => ({
         form: false,
-        excelForm: true,
+        excelForm: false,
         data: {
             title: "Voters",
             isFetching: false,
@@ -143,9 +144,8 @@ export default {
             let params = this._createParams(this.options);
             params = params + this._createFilterParams(this.data.filter);
             if (this.data.keyword) params = params + "&keyword=" + this.data.keyword;
-            axios.get(`/admin-api/customer?${params}`).then(({ data }) => {
-                this.items = data.data;
-                this.total = data.total;
+            axios.get(`/admin-api/student?${params}`).then(({ data }) => {
+                this.items = data;
                 this.data.isFetching = false;
             });
         },
@@ -157,13 +157,13 @@ export default {
         save(payload) {
             this.form = false
             console.log(payload)
-            // axios.post(`/admin-api/customer`, payload).then(({ data }) => {
-            //     this.fetchPage()
-            //     this.newAlert(true, data.type, data.message)
-            // }).finally(()=>{
-            //     this.showForm = false;
-            //     this.payload = null;
-            // })
+            axios.post(`/admin-api/student`, payload).then(({ data }) => {
+                this.fetchPage()
+                this.newAlert(true, data.type, data.message)
+            }).finally(()=>{
+                this.showForm = false;
+                this.payload = null;
+            })
         },
         update(payload) {
             axios.put(`/admin-api/customer/${this.selectedItem.id}`, payload).then(({ data }) => {
@@ -173,8 +173,12 @@ export default {
                 this.payload = null;
             })
         },
+        importExcel() {
+            this.excelForm = true
+        },
         close() {
             this.form = false
+            this.excelForm = false
         },
         warning(val){
         this.user = {

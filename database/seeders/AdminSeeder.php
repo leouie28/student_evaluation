@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     {
         Admin::create([
             'name' => 'Admin',
-            'school_id' => '123123123',
+            'admin_id' => '123123123',
             'password' => bcrypt('123'),//password
         ]);
     }

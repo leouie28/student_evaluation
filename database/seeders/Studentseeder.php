@@ -16,7 +16,7 @@ class Studentseeder extends Seeder
     {
         Student::create([
             'name' => 'Mark Leouie Tabique',
-            'school_id' => '123456789',
+            'student_id' => '123456789',
             'password' => bcrypt('123'),
         ]);
     }

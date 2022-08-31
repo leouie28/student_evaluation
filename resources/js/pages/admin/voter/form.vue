@@ -11,6 +11,7 @@
                             dense
                             label="Student Id"
                             v-model="payload.student_id"
+                            :rules="rule"
                             filled
                             required
                             hide-details="auto"
@@ -21,6 +22,18 @@
                             dense
                             label="Name"
                             v-model="payload.name"
+                            :rules="rule"
+                            filled
+                            required
+                            hide-details="auto"
+                            ></v-text-field>
+                        </v-col>
+                        <v-col md="12" cols="12">
+                            <v-text-field
+                            dense
+                            label="Password"
+                            v-model="payload.password"
+                            :rules="rule"
                             filled
                             required
                             hide-details="auto"
@@ -50,8 +63,9 @@
                     <v-btn text @click="$emit('close')">
                         Close
                     </v-btn>
-                    <v-btn color="secondary" @click="$emit('save',payload)">
+                    <v-btn color="secondary" @click="save">
                         Create
+                        <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -65,9 +79,20 @@ export default {
             isEdit: false,
             student_id: '',
             name: '',
+            password: '',
             active: '1',
-        }
+        },
+        rule: [v => !! v || 'This field is required']
     }),
+    methods: {
+        save() {
+            if(this.payload.student_id && this.payload.name){
+                this.$emit('save',this.payload)
+            }else{
+                alert('Important field are required')
+            }
+        }
+    },
     props: {
         show: {
             type: Boolean,
