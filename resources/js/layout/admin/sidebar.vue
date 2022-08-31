@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div style="height:150px">
             <v-img
             src="https://picsum.photos/500/300?image=40">
             </v-img>
@@ -42,29 +42,29 @@ export default {
     data: () => ({
         nav: [
             {
-                text: 'Dashboard',
-                icon: 'monitor-dashboard',
-                url_name: 'dashboard',
+                text: 'Announcement',
+                icon: 'bullhorn-outline',
+                url_name: 'admin-announcement',
             },
             {
                 text: 'Election',
                 icon: 'printer-outline',
                 url_name: 'election',
             },
-            {
-                text: 'Votes',
-                icon: 'note-text-outline',
-                url_name: 'vote',
-            },
-            {
-                text: 'Candidates',
-                icon: 'account-group',
-                url_name: 'candidate',
-            },
+            // {
+            //     text: 'Votes',
+            //     icon: 'note-text-outline',
+            //     url_name: 'vote',
+            // },
+            // {
+            //     text: 'Candidates',
+            //     icon: 'account-group',
+            //     url_name: 'candidate',
+            // },
             {
                 text: 'Voters',
                 icon: 'account-group-outline',
-                url_name: 'voter',
+                url_name: 'admin-voter',
             },
         ]
     }),
@@ -82,9 +82,6 @@ export default {
 </script>
 
 <style scope>
-.v-item-group .v-list-item{
-    /* border-bottom: 1px solid #000 !important; */
-}
 .active-nav .v-icon, .active .v-list-item__title{
   color: #EFEBE9 !important;
 }

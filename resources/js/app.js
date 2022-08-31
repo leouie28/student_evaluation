@@ -8,7 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import "./mixins/index";
 import vuetify from './plugins/vuetify'
+import moment from 'moment';
 import router from './router/index'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'bootstrap/dist/js/bootstrap.min.js'
@@ -24,7 +26,7 @@ import router from './router/index'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('main-app', require('./layout/Main.vue').default);
+Vue.component('main-app', require('./layout/MainApp.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,3 +39,4 @@ const app = new Vue({
     vuetify,
     router,
 });
+Vue.prototype.moment = moment;
