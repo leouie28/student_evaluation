@@ -105,9 +105,6 @@ export default {
                 return [];
             }
         },
-        searchWidth: {
-          type: String
-        }
     },
 }
 </script>

@@ -16,7 +16,7 @@
                         outlined
                         hide-details="auto"
                         dense
-                        v-model="payload.school_id"
+                        v-model="payload.user_id"
                         :rules="rule"
                         label="School Id"
                         required
@@ -61,14 +61,14 @@ export default {
             v => !! v || 'This field is required'
         ],
         payload: {
-            school_id: '',
+            user_id: '',
             password: '',
         },
         message: '',
     }),
     methods: {
         login() {
-            if(!this.payload.school_id || !this.payload.password){
+            if(!this.payload.user_id || !this.payload.password){
                 alert('Please fillup the importan fields')
             }else{
                 axios.post('/web/login', this.payload).then(({data}) => {

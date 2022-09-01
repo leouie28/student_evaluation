@@ -5,17 +5,17 @@
                 <v-card-title>Import Excel</v-card-title>
                 <v-divider class="pt-0 mt-0"></v-divider>
                 <v-card-text>
-                    <div class="excel text-center py-6" @click="$refs.file_input.click()">
-                        <input ref="file_input" class="hide" @change="onFileChange($event.target.files)" accept=".xlsx,.csv" type="file">
+                    <div :class="file_name?'excel excel-color text-center py-6':'excel text-center py-6'" @click="$refs.file_input.click()">
+                        <input ref="file_input" name="file" class="hide" @change="onFileChange($event.target.files)" accept=".xlsx" type="file">
                         <v-icon x-large style="font-size:80px;" :color="file_name?'success': ''">
                             mdi-microsoft-excel
                         </v-icon>
                         <div>
                             <v-toolbar-title class="text--primary">
-                                {{file_name?file_name:'Accept excel file only'}}
+                                {{file_name?file_name:'Accept .xlsx excel file only'}}
                             </v-toolbar-title>
                         </div>
-                        <v-btn elevation="0" color="light" @click="$refs.file_input.click()">
+                        <v-btn elevation="0" color="light" @click.stop="$refs.file_input.click()">
                             <span class="text-capitalize">Browse file</span>
                         </v-btn>
                     </div>
@@ -38,6 +38,7 @@
 export default {
     data: () => ({
         file_name: '',
+        file: null,
     }),
     methods: {
         onFileChange(file) {
@@ -58,5 +59,8 @@ export default {
 }
 .excel{
     border: 2px dashed grey;
+}
+.excel-color{
+    border: 2px dashed #4caf50;
 }
 </style>

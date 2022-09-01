@@ -7,8 +7,6 @@
             @refresh="fetchPage"
             @importExcel="importExcel"
             @search="fetchPage"
-            @resetFilters="resetFilter"
-            @filterRecord="fetchPage"
             :hide="['filter', 'download']">
                 <template v-slot:custom_filter>
                     <admin-filter :filter="data.filter"></admin-filter>
@@ -16,8 +14,7 @@
             </table-header>
             <v-data-table
             :headers="headers"
-            :items="items"
-            max-height="100%"
+            :items="records"
             :search="data.keyword"
             show-select
             :loading="data.isFetching"
@@ -29,7 +26,7 @@
             @click:row="viewProduct"
             class="cursor-pointer table-fix-height"
             fixed-header>
-                <template v-slot:[`item.name`]="{ item }">
+                <!-- <template v-slot:[`item.name`]="{ item }">
                     <v-avatar size="35" style="border: 1px solid #ccc">
                         <img
                         alt="image"
@@ -37,28 +34,36 @@
                         />
                     </v-avatar>
                     {{ item.first_name+ ' '+item.last_name }}
-                </template>
+                </template> -->
                 <template v-slot:[`item.created_at`]="{ item }">
-                    {{ moment(item.created_at).format('MMMM DD YYYY') }}
+                    {{ moment(item.created_at).format('YYYY-MM-DD') }}
+                </template>
+                <template v-slot:[`item.active`]="{ item }">
+                    <v-switch
+                    v-model="item.active"
+                    color="success"
+                    inset
+                    :label="item.active?'Active':'Inactive'"
+                    ></v-switch>
                 </template>
                 <template v-slot:[`item.action`]="{ item }">
                     <v-btn
                         class="px-2"
-                        small
                         elevation="0"
+                        icon
                         color="primary"
                         @click="editItem(item)"
                     >
-                        <v-icon small>mdi-square-edit-outline</v-icon>
+                        <v-icon>mdi-square-edit-outline</v-icon>
                     </v-btn>
                     <v-btn
                         class="px-2"
-                        small
                         elevation="0"
+                        icon
                         color="error"
                         @click="warning(item)"
                     >
-                        <v-icon small>mdi-trash-can</v-icon>
+                        <v-icon>mdi-trash-can</v-icon>
                     </v-btn>
                 </template>
                 <template v-slot:no-data>
@@ -110,7 +115,7 @@ export default {
                 text: "Student Id",
                 align: "start",
                 sortable: true,
-                value: "id",
+                value: "student_id",
             },
             {
                 text: "Name",
@@ -119,16 +124,16 @@ export default {
                 value: "name",
             },
             {
-                text: "Active",
-                align: "start",
-                sortable: true,
-                value: "active",
-            },
-            {
                 text: "Date Added",
                 align: "start",
                 sortable: false,
                 value: "created_at",
+            },
+            {
+                text: "Active",
+                align: "start",
+                sortable: true,
+                value: "active",
             },
             {
                 text: "Actions",
@@ -145,7 +150,8 @@ export default {
             params = params + this._createFilterParams(this.data.filter);
             if (this.data.keyword) params = params + "&keyword=" + this.data.keyword;
             axios.get(`/admin-api/student?${params}`).then(({ data }) => {
-                this.items = data;
+                this.records = data.data;
+                this.total = data.total;
                 this.data.isFetching = false;
             });
         },

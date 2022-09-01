@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\Student;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,35 +12,68 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        try{
-
-            // return auth()->guard('admin')->user();
-            // return $request;
-            
-            $credentials = $request->validate([
-                'school_id' => ['required'],
-                'password' => ['required'],
-            ]);
-
-            if(Auth::guard('web')->attempt($credentials)){
-                $request->session()->regenerate();
-
-                return [
-                    'user' => auth()->guard('web')->user(),
-                    'role' => 'student'
-                ];
-            }elseif(Auth::guard('admin')->attempt($credentials)){
-                $request->session()->regenerate();
-
-                return [
-                    'user' => auth()->guard('admin')->user(),
-                    'role' => 'admin'
-                ];
+        try{;
+            if(Student::where('student_id', $request->user_id)->exists()){
+                $request['student_id'] = $request->user_id;
+                $credentials = $request->validate([
+                    'student_id' => ['required'],
+                    'password' => ['required'],
+                ]);
+                if(Auth::guard('web')->attempt($credentials)){
+                    $request->session()->regenerate();
+    
+                    return [
+                        'user' => auth()->guard('web')->user(),
+                        'role' => 'student'
+                    ];
+                }else{
+                    return [
+                        'message' => 'Incorrect credentials'
+                    ];
+                }
+            }else if(Admin::where('admin_id', $request->user_id)->exists()){
+                $request['admin_id'] = $request->user_id;
+                $credentials = $request->validate([
+                    'admin_id' => ['required'],
+                    'password' => ['required'],
+                ]);
+                if(Auth::guard('admin')->attempt($credentials)){
+                    $request->session()->regenerate();
+    
+                    return [
+                        'user' => auth()->guard('admin')->user(),
+                        'role' => 'admin'
+                    ];
+                }else{
+                    return [
+                        'message' => 'Incorrect credentials'
+                    ];
+                }
             }else{
                 return [
                     'message' => 'Incorrect credentials'
                 ];
             }
+
+            // if(Auth::guard('web')->attempt($credentials)){
+            //     $request->session()->regenerate();
+
+            //     return [
+            //         'user' => auth()->guard('web')->user(),
+            //         'role' => 'student'
+            //     ];
+            // }elseif(Auth::guard('admin')->attempt($credentials)){
+            //     $request->session()->regenerate();
+
+            //     return [
+            //         'user' => auth()->guard('admin')->user(),
+            //         'role' => 'admin'
+            //     ];
+            // }else{
+            //     return [
+            //         'message' => 'Incorrect credentials'
+            //     ];
+            // }
 
             // $admin = auth()->guard('admin')->user();
             
