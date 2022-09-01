@@ -66,10 +66,23 @@ class StudentController extends Controller
         }
     }
 
-    public function imprtExcel(Request $request)
+    public function importExcel(Request $request)
     {
         try{
-            Excel::import(new StudentImport(), $request->file(key:'excel'));
+            // return $request;
+            // Excel::import(new StudentImport(), $request->file);
+            $import = new StudentImport;
+            $import->import($request->file);
+
+            return $import->failures();
+            
+            // if($import->failures()->isNotEmpty()){
+            //     return [
+            //         'data' => $import->failures(),
+            //     ];
+            // }
+
+            return 'success';
         }catch(Exception $e){
             return $e->getMessage();
         }

@@ -8,7 +8,7 @@
         <side-bar></side-bar>
     </v-navigation-drawer>
 
-    <Header></Header>
+    <Header @toggle="toggle"></Header>
 
     <v-main>
         <v-container fluid class="pa-4">
@@ -27,7 +27,16 @@ export default {
     Header
 },
     data: () => ({
-        drawer: null
+        drawer: true
     }),
+    methods: {
+      toggle() {
+        if(this.drawer){
+          this.drawer =false
+        }else{
+          this.drawer = true
+        }
+      }
+    }
 }
 </script>

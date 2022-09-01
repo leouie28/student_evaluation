@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar app >
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="$emit('toggle')"></v-app-bar-nav-icon>
             <div>
                 <v-text-field
                 style="width: 400px;"
@@ -28,3 +28,10 @@
         
     </div>
 </template>
+<script>
+export default {
+    methods: {
+        
+    }
+}
+</script>

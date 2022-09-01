@@ -35,6 +35,9 @@
                     </v-avatar>
                     {{ item.first_name+ ' '+item.last_name }}
                 </template> -->
+                <template v-slot:[`item.voted`]="{ item }">
+                    <v-chip color="error" small>No</v-chip>
+                </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </template>
@@ -122,6 +125,12 @@ export default {
                 align: "start",
                 sortable: true,
                 value: "name",
+            },
+            {
+                text: "Voted",
+                align: "start",
+                sortable: true,
+                value: "voted",
             },
             {
                 text: "Date Added",

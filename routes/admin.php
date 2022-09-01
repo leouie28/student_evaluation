@@ -11,4 +11,8 @@ Route::group(['middleware' => ['auth:admin']], function() {
         'announcement' => AnnouncementController::class,
         'student' => StudentController::class,
     ]);
+
+    Route::controller(StudentController::class)->group(function() {
+        Route::post('student/insert-excel', 'importExcel');
+    });
 });
