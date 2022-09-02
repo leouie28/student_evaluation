@@ -9,9 +9,15 @@ use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class StudentImport implements ToModel, SkipsOnError, WithValidation, SkipsOnFailure
+class StudentImport implements 
+ToModel, 
+SkipsOnError, 
+WithValidation, 
+SkipsOnFailure,
+WithBatchInserts,
 {
     use Importable, SkipsErrors, SkipsFailures;
     /**
@@ -33,5 +39,10 @@ class StudentImport implements ToModel, SkipsOnError, WithValidation, SkipsOnFai
         return [
             '0' => ['unique:students,student_id'],
         ];
+    }
+
+    public function batchSize(): int
+    {
+        return 1000;
     }
 }
