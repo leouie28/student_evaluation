@@ -21,4 +21,9 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function election()
+    {
+        return $this->hasMany(Election::class, 'maker');
+    }
 }

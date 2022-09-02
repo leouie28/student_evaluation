@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Position extends Model
+class Partylist extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
+        'short_name',
         'description',
-        'max_vote',
-        'election_id',
+        'color_theme',
     ];
 
-    public function election()
+    public function candidates()
     {
-        return $this->belongsTo(Election::class);
+        return $this->hasMany(Candidate::class);
     }
 }

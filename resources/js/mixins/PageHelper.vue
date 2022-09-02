@@ -9,6 +9,7 @@ export default {
     data(vm) {
         return {
             active_route: "/",
+            data_items: [],
             selected: [],
             records: [],
         };

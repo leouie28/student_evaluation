@@ -2,7 +2,7 @@
     <div>
         <v-app-bar app >
             <v-app-bar-nav-icon @click="$emit('toggle')"></v-app-bar-nav-icon>
-            <div>
+            <!-- <div>
                 <v-text-field
                 style="width: 400px;"
                 placeholder="Search ..."
@@ -12,7 +12,7 @@
                 hide-details=""
                 dense
                 ></v-text-field>
-            </div>
+            </div> -->
             <v-spacer></v-spacer>
             <v-btn text icon>
                 <v-icon>mdi-bell</v-icon>

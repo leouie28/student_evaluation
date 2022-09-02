@@ -14,7 +14,7 @@
             </table-header>
             <v-data-table
             :headers="headers"
-            :items="records"
+            :items="data_items"
             :search="data.keyword"
             show-select
             :loading="data.isFetching"
@@ -26,15 +26,6 @@
             @click:row="viewProduct"
             class="cursor-pointer table-fix-height"
             fixed-header>
-                <!-- <template v-slot:[`item.name`]="{ item }">
-                    <v-avatar size="35" style="border: 1px solid #ccc">
-                        <img
-                        alt="image"
-                        :src="item.images.length?'/images/customer/' + item.images[0].file_name:'/images/default/person.png'"
-                        />
-                    </v-avatar>
-                    {{ item.first_name+ ' '+item.last_name }}
-                </template> -->
                 <template v-slot:[`item.voted`]="{ item }">
                     <v-chip color="error" small>No</v-chip>
                 </template>
@@ -114,42 +105,12 @@ export default {
         selectedItem: {},
         selected: [],
         headers: [
-            {
-                text: "Student Id",
-                align: "start",
-                sortable: true,
-                value: "student_id",
-            },
-            {
-                text: "Name",
-                align: "start",
-                sortable: true,
-                value: "name",
-            },
-            {
-                text: "Voted",
-                align: "start",
-                sortable: true,
-                value: "voted",
-            },
-            {
-                text: "Date Added",
-                align: "start",
-                sortable: false,
-                value: "created_at",
-            },
-            {
-                text: "Active",
-                align: "start",
-                sortable: true,
-                value: "active",
-            },
-            {
-                text: "Actions",
-                align: "center",
-                sortable: false,
-                value: "action",
-            },
+            { text: "Student Id", align: "start", sortable: true, value: "student_id", },
+            { text: "Name", align: "start", sortable: true, value: "name", },
+            { text: "Voted", align: "start", sortable: false, value: "voted", },
+            { text: "Date Added", align: "start", sortable: true, value: "created_at", },
+            { text: "Active", align: "start", sortable: false, value: "active", },
+            { text: "Actions", align: "center", sortable: false, value: "action", },
         ],
     }),
     methods: {
@@ -159,7 +120,7 @@ export default {
             params = params + this._createFilterParams(this.data.filter);
             if (this.data.keyword) params = params + "&keyword=" + this.data.keyword;
             axios.get(`/admin-api/student?${params}`).then(({ data }) => {
-                this.records = data.data;
+                this.data_items = data.data;
                 this.total = data.total;
                 this.data.isFetching = false;
             });

@@ -74,7 +74,7 @@ export default {
                 axios.post('/web/login', this.payload).then(({data}) => {
                     if(data.user){
                         if(data.role=='admin'){
-
+                            this.$router.push({path: '/admin/status'})
                         }else if(data.role=='student'){
 
                         }

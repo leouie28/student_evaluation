@@ -24,6 +24,21 @@
                 hide-details="">
                 </v-text-field>
             </div>
+            <v-tooltip v-if="!hide.includes('gridView')" bottom color="primary">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        color="primary"
+                        dark
+                        @click.stop="$emit('gridView')"
+                        class="mr-2"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        <v-icon>mdi-view-grid</v-icon>
+                    </v-btn>
+                </template>
+                <span>Grid View</span>
+            </v-tooltip>
             <v-tooltip v-if="!hide.includes('addNew')" bottom color="primary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn

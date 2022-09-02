@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Vote extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'data',
+        'election_id',
+        'student_id',
+    ];
+
+    public function election()
+    {
+        return $this->belongsTo(Election::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

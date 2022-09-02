@@ -42,6 +42,11 @@ export default {
     data: () => ({
         nav: [
             {
+                text: 'Status',
+                icon: 'monitor-dashboard',
+                url_name: 'admin-status',
+            },
+            {
                 text: 'Announcement',
                 icon: 'bullhorn-outline',
                 url_name: 'admin-announcement',
@@ -49,7 +54,7 @@ export default {
             {
                 text: 'Election',
                 icon: 'printer-outline',
-                url_name: 'election',
+                url_name: 'admin-election',
             },
             // {
             //     text: 'Votes',
