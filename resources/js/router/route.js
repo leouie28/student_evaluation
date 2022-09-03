@@ -18,6 +18,12 @@ export default [
         meta: { requireAuth: true },
     },
     {
+        path:'/admin/election/form',
+        component: () => import('@/pages/admin/election/form/index.vue'),
+        name:'admin-election-form',
+        meta: { requireAuth: true },
+    },
+    {
         path:'/admin/election/:id',
         component: () => import('@/pages/admin/election/_id/index.vue'),
         name:'admin-election-show',

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar app >
+        <v-app-bar app elevate-on-scroll>
             <v-app-bar-nav-icon @click="$emit('toggle')"></v-app-bar-nav-icon>
             <!-- <div>
                 <v-text-field

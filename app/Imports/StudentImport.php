@@ -17,7 +17,7 @@ ToModel,
 SkipsOnError, 
 WithValidation, 
 SkipsOnFailure,
-WithBatchInserts,
+WithBatchInserts
 {
     use Importable, SkipsErrors, SkipsFailures;
     /**

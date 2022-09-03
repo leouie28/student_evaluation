@@ -1,13 +1,20 @@
 <template>
-    <div class="elevation-4 d-flex">
+    <div class="elevation-4 pt-1 d-flex">
         <v-navigation-drawer
-        color="grey"
+        color="brown lighten-1"
         dark
-        class="accent-4 pt-3"
+        class="accent-4"
         width="200" 
-        height="80vh" 
+        height="90vh" 
         permanent>
             <v-list dense nav>
+                <v-list-item>
+                    <v-btn block>
+                        <v-icon class="mr-2">mdi-backspace</v-icon>
+                        Return
+                    </v-btn>
+                </v-list-item>
+                <v-divider class="py-1 my-1"></v-divider>
                 <template v-for="menu in menus">
                     <v-list-item
                     :key="menu.text"
@@ -24,7 +31,7 @@
                 </template>
             </v-list>
         </v-navigation-drawer>
-        <div class="route pa-4">
+        <div class="route pa-2">
             <v-stepper v-model="e1" elevation="0">
                 <v-stepper-header>
                 <v-stepper-step

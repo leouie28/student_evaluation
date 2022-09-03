@@ -51,3 +51,6 @@ export default {
     }
 }
 </script>
+<style lang="css">
+    @import url('../../css/app.css');
+</style>

@@ -3,7 +3,6 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      class="elevation-2"
     >
         <side-bar></side-bar>
     </v-navigation-drawer>
@@ -11,7 +10,7 @@
     <Header @toggle="toggle"></Header>
 
     <v-main>
-        <v-container fluid class="pa-4">
+        <v-container fluid class="pa-0 grey lighten-2" style="min-height:90vh;">
             <router-view></router-view>
         </v-container>
     </v-main>

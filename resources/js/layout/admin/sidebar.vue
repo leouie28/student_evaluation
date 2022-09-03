@@ -71,6 +71,11 @@ export default {
                 icon: 'account-group-outline',
                 url_name: 'admin-voter',
             },
+            {
+                text: 'Partylist',
+                icon: 'flag-outline',
+                url_name: 'admin-voter',
+            },
         ]
     }),
     methods: {
