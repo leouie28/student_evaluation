@@ -35,4 +35,10 @@ export default [
         name:'admin-voter',
         meta: { requireAuth: true },
     },
+    {
+        path:'/admin/partylist',
+        component: () => import('../pages/admin/partylist'),
+        name:'admin-partylist',
+        meta: { requireAuth: true },
+    },
 ]

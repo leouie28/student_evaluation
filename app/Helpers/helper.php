@@ -4,7 +4,7 @@
         $image = $file;
         $ext = explode(';', $image);
         $ext = explode('/', $ext[0]);
-        $imageName = date("YmdHis") . '.' . $ext[1];
+        $imageName = date("YmdHis") . generateRandomString() . '.' . $ext[1];
         list($type, $image) = explode(';', $image);
         list(, $image)      = explode(',', $image);
         $data = base64_decode($image);

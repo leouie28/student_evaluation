@@ -74,7 +74,7 @@ export default {
             {
                 text: 'Partylist',
                 icon: 'flag-outline',
-                url_name: 'admin-voter',
+                url_name: 'admin-partylist',
             },
         ]
     }),

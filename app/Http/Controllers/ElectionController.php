@@ -71,7 +71,7 @@ class ElectionController extends Controller
                 if(isset($election['image'])){
                     Image::create([
                         'imagable_id' => $elec->id,
-                        'imagable_type' => Image::class,
+                        'imagable_type' => Election::class,
                         'file_name' => uploadImage($election['image'], 'images/election/'),
                         'path' => 'images/election/',
                     ]);
@@ -89,6 +89,15 @@ class ElectionController extends Controller
                             'position_id' => $pos->id,
                             'partylist_id' => $candidate['partylist'],
                         ]);
+
+                        if(isset($candidate['image'])){
+                            Image::create([
+                                'imagable_id' => $cand->id,
+                                'imagable_type' => Candidate::class,
+                                'file_name' => uploadImage($candidate['image'], 'images/candidate/'),
+                                'path' => 'images/candidate/',
+                            ]);
+                        }
                     }
                 }
 

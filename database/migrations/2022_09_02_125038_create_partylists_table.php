@@ -16,9 +16,9 @@ class CreatePartylistsTable extends Migration
         Schema::create('partylists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('short_name');
-            $table->string('description');
-            $table->string('color_theme');
+            $table->string('short_name')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('color_theme')->nullable();
             $table->timestamps();
         });
     }

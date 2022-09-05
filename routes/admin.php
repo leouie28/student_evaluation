@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ElectionController;
+use App\Http\Controllers\PartylistController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
     Route::resources([
         'announcement' => AnnouncementController::class,
         'student' => StudentController::class,
+        'partylist' => PartylistController::class,
     ]);
 
     Route::controller(StudentController::class)->group(function() {

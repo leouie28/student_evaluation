@@ -40,12 +40,15 @@
                                         ></v-text-field>
                                     </v-col>
                                     <v-col md="5" cols="12">
-                                        <v-text-field
+                                        <v-select
                                         filled
+                                        :items="partylist"
+                                        item-text="name"
+                                        item-value="id"
                                         v-model="positions[index].candidate[i].partylist"
                                         label="Partylist (optional)"
                                         hide-details="auto"
-                                        ></v-text-field>
+                                        ></v-select>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -67,7 +70,7 @@
 <script>
 export default {
     data: () => ({
-        
+        partylist: []
     }),
     props: {
         positions: {
@@ -76,11 +79,16 @@ export default {
         }
     },
     created() {
-        console.log(this.$refs)
+        this.getPartylist()
     },
     methods: {
         addSlot(i) {
             this.positions[i].candidate.push({name: '', partylist: '', image: ''})
+        },
+        getPartylist() {
+            axios.get(`/admin-api/partylist`).then(({data})=>{
+                this.partylist = data.data
+            });
         },
         triggerInput(index1, index2) {
             console.log(index1, index2)
