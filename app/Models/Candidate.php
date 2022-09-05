@@ -13,10 +13,14 @@ class Candidate extends Model
         'name',
         'short_description',
         'description',
-        'active',
         'position_id',
         'partylist_id',
     ];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imagable');
+    }
 
     public function position()
     {

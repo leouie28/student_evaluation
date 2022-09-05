@@ -16,8 +16,8 @@ class CreateCandidatesTable extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->boolean('active')->default(true);
+            $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();
             $table->foreignId('position_id')->constrained()->onDelete('cascade');
             $table->bigInteger('partylist_id')->nullable();
             $table->timestamps();

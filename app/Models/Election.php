@@ -21,6 +21,11 @@ class Election extends Model
         'maker',
     ];
 
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imagable');
+    }
+
     public function maker()
     {
         return $this->belongsTo(Admin::class, 'maker');

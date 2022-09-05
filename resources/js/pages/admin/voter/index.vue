@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pa-2">
         <v-card elevation="2" class="pa-2">
             <table-header
             :data="data"
@@ -7,7 +7,7 @@
             @refresh="fetchPage"
             @importExcel="importExcel"
             @search="fetchPage"
-            :hide="['filter', 'download']">
+            :hide="['gridView', 'filter', 'download']">
                 <template v-slot:custom_filter>
                     <admin-filter :filter="data.filter"></admin-filter>
                 </template>

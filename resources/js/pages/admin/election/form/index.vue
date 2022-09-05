@@ -40,13 +40,13 @@
                         <step-1 :election="payload.election"></step-1>
                         <v-btn
                         color="primary"
-                        @click="step = 2"
+                        @click="saveLocal(2)"
                         >
                         Continue
                         </v-btn>
 
-                        <v-btn text>
-                        Cancel
+                        <v-btn text disabled>
+                        Back
                         </v-btn>
                     </v-stepper-content>
 
@@ -54,13 +54,13 @@
                         <step-2 :positions="payload.positions"></step-2>
                         <v-btn
                         color="primary"
-                        @click="step = 3"
+                        @click="saveLocal(3)"
                         >
                         Continue
                         </v-btn>
 
-                        <v-btn text>
-                        Cancel
+                        <v-btn text @click="step = 1">
+                        Back
                         </v-btn>
                     </v-stepper-content>
 
@@ -68,13 +68,13 @@
                         <step-3 :positions="payload.positions"></step-3>
                         <v-btn
                         color="primary"
-                        @click="step = 1"
+                        @click="create"
                         >
                         Create election
                         </v-btn>
 
-                        <v-btn text>
-                        Cancel
+                        <v-btn text @click="step = 2">
+                        Back
                         </v-btn>
                     </v-stepper-content>
                     </v-stepper-items>
@@ -104,7 +104,7 @@ export default {
                 time_open: '',
                 date_close: '',
                 time_close: '',
-                image: '',
+                image: null,
             },
             positions: [
                 {
@@ -114,20 +114,33 @@ export default {
                         {
                             name: '',
                             partylist: '',
-                            image: ''
+                            image: null
                         }
                     ]
                 },
             ],
         }
     }),
-    watch: {
-        payload: {
-            handler(val) {
-                console.log(val)
-                localStorage.setItem('payload', JSON.stringify(val))
-            },immediate:true, deep:true
+    mounted() {
+        if(localStorage.getItem('payload')){
+            this.payload = JSON.parse(localStorage.payload)
+            console.log(JSON.parse(localStorage.payload))
+            // console.log(localStorage.payload)
         }
-    }
+    },
+    methods: {
+        saveLocal(step) {
+            this.step = step
+            localStorage.setItem('payload', JSON.stringify(this.payload))
+        },
+        create() {
+            localStorage.setItem('payload', JSON.stringify(this.payload))
+            axios.post(`/admin-api/election/store-set`, this.payload).then(({ data }) => {
+                
+            }).finally(()=>{
+                
+            })
+        }
+    },
 }
 </script>

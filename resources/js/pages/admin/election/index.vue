@@ -113,7 +113,6 @@ export default {
             { text: "Votes", align: "start", sortable: true, value: "votes", },
             { text: "Date Added", align: "start", sortable: true, value: "created_at", },
             { text: "Active", align: "start", sortable: false, value: "active", },
-            { text: "Created By", align: "start", sortable: false, value: "maker", },
             { text: "Actions", align: "center", sortable: false, value: "action", },
         ],
     }),

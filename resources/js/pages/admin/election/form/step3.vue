@@ -4,15 +4,25 @@
             <v-card outlined class="mb-4" :key="index">
                 <v-card-title>["{{position.name}}"]</v-card-title>
                 <v-card-text>
-                    <template v-for="(candidate, i) in position.candidate">
+                    <template v-for="(rep, i) in position.candidate">
                         <v-row :key="i">
                             <v-col md="1" cols="12">
                                 <v-row wrap>
                                     <v-col md="12" cols="12">
                                         <div class="feat-img mx-auto">
-                                            <div class="d-flex justify-center align-center flex-column" style="height:100%;">
-                                                <v-icon>mdi-file-image</v-icon>
-                                                image
+                                            <input type="file" class="hide" :ref="`file_input_${index}${i}`" accept=".jpeg,.png,.jpg" @change="onFileChange($event.target.files, index, i)">
+                                            <div @click="triggerInput(index, i)" class="" style="height:100%;">
+                                                <div v-if="!positions[index].candidate[i].image" class="d-flex justify-center align-center flex-column" style="height:100%;">
+                                                    <v-icon>mdi-file-image</v-icon>
+                                                    icon/img
+                                                </div>
+                                                <v-img
+                                                alt="icon"
+                                                position="center center"
+                                                max-height="100%"
+                                                max-width="100%"
+                                                :src="positions[index].candidate[i].image"
+                                                ></v-img>
                                             </div>
                                         </div>
                                     </v-col>
@@ -24,6 +34,7 @@
                                         <v-text-field
                                         filled
                                         label="Candidate Name"
+                                        v-model="positions[index].candidate[i].name"
                                         placeholder="Ex. President"
                                         hide-details="auto"
                                         ></v-text-field>
@@ -31,6 +42,7 @@
                                     <v-col md="5" cols="12">
                                         <v-text-field
                                         filled
+                                        v-model="positions[index].candidate[i].partylist"
                                         label="Partylist (optional)"
                                         hide-details="auto"
                                         ></v-text-field>
@@ -63,10 +75,34 @@ export default {
             default: () => []
         }
     },
+    created() {
+        console.log(this.$refs)
+    },
     methods: {
         addSlot(i) {
             this.positions[i].candidate.push({name: '', partylist: '', image: ''})
-        }
+        },
+        triggerInput(index1, index2) {
+            console.log(index1, index2)
+            const input = `file_input_${index1}${index2}`
+            this.$refs[input][0].click()
+            // this.$refs.key[index1][index2].click()
+            // this.$refs.key[`'file_input'+index1+index2`][i].click()
+        },
+        async onFileChange(file, index1, index2) {
+            console.log(file)
+            let imageFile = file[0];
+            let temp = {};
+            if (file.length > 0) {
+                if (!imageFile.type.match("image.*")) {
+                    alert("Please choose an image file")
+                } else {
+                    let imageURL = URL.createObjectURL(imageFile);
+                    this.positions[index1].candidate[index2].image = await this.createImageBase64(imageFile);
+                    // this.election.image = await this.createImageBase64(imageFile);
+                }
+            }
+        },
     }
 }
 </script>

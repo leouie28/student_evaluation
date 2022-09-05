@@ -17,7 +17,7 @@ class CreateElectionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('school_year');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->boolean('active')->default(false);
             $table->date('date_open')->nullable();
             $table->time('time_open')->nullable();

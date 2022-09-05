@@ -1,3 +1,6 @@
 .v-divider{
     border-color: rgb(10, 10, 10) !important;
 }
+.hide{
+    display: none;
+}
