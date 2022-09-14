@@ -26,8 +26,16 @@ export default [
     {
         path:'/admin/election/:id',
         component: () => import('@/pages/admin/election/_id/index.vue'),
-        name:'admin-election-show',
-        meta: { requireAuth: true },
+        // name:'admin-election-show',
+        // meta: { requireAuth: true },
+        children: [
+            {
+                path: 'details',
+                component: () => import('@/pages/admin/election/form/index.vue'),
+                name: 'admin-election-details',
+                meta: { parent:'/admin/election', requireAuth:true }
+            }
+        ]
     },
     {
         path:'/admin/voter',

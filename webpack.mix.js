@@ -25,7 +25,7 @@ mix.webpackConfig({
         headers: {
             "Access-Control-Allow-Origin": ""
         }
-    }
+    },
 });
 
 mix.js('resources/js/app.js', 'public/js')

@@ -22,11 +22,18 @@
             :options.sync="options"
             :items-per-page="options.itemsPerPage"
             @update:options="fetchPage"
-            @click:row="viewProduct"
+            @click:row="viewElection"
             class="cursor-pointer table-fix-height"
             fixed-header>
-                <template v-slot:[`item.voted`]="{ item }">
-                    <v-chip color="error" small>No</v-chip>
+                <template v-slot:[`item.opening`]="{ item }">
+                    <v-chip label color="success">
+                        {{moment(item.date_open+' '+item.time_open).format('MMM DD YY, h:mm a')}}
+                    </v-chip>
+                </template>
+                <template v-slot:[`item.closing`]="{ item }">
+                    <v-chip label color="error">
+                        {{moment(item.date_close+' '+item.time_close).format('MMM DD YY, h:mm a')}}
+                    </v-chip>
                 </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
@@ -64,8 +71,6 @@
                 </template>
             </v-data-table>
         </v-card>
-        <data-form :show="form" @close="close" @save="save"></data-form>
-        <excel-form :show="excelForm" @close="close" @save="save"></excel-form>
     </div>
 </template>
 
@@ -107,7 +112,6 @@ export default {
             { text: "ID", align: "start", sortable: true, value: "id", },
             { text: "School Year", align: "start", sortable: true, value: "school_year", },
             { text: "Name", align: "start", sortable: true, value: "name", },
-            { text: "Description", align: "start", sortable: true, value: "description", },
             { text: "Date Opening", align: "start", sortable: true, value: "opening", },
             { text: "Date CLosing", align: "start", sortable: true, value: "closing", },
             { text: "Votes", align: "start", sortable: true, value: "votes", },
@@ -118,6 +122,9 @@ export default {
     }),
     methods: {
         fetchPage() {
+            if(localStorage._show){
+                localStorage.removeItem('_show')
+            }
             this.data.isFetching = true;
             let params = this._createParams(this.options);
             params = params + this._createFilterParams(this.data.filter);
@@ -128,8 +135,15 @@ export default {
                 this.data.isFetching = false;
             });
         },
+        viewElection(item) {
+            localStorage.setItem('_show', 1)
+            axios.get(`/admin-api/election/get-set/${item.id}`).then(({ data }) => {
+                localStorage.setItem('payload', JSON.stringify(data))
+            })
+            this.$router.push({path: this.$route.path+'/'+item.id+'/details'})
+        },
         editItem(val){
-            console.log(this.alert.trigger,'trigger')
+            console.log(this.alert_data.trigger,'trigger')
             this.selectedItem = val
             this.showForm = true
         },
@@ -138,7 +152,7 @@ export default {
             console.log(payload)
             axios.post(`/admin-api/student`, payload).then(({ data }) => {
                 this.fetchPage()
-                this.newAlert(true, data.type, data.message)
+                this._newAlert(true, data.type, data.message)
             }).finally(()=>{
                 this.showForm = false;
                 this.payload = null;
@@ -148,7 +162,7 @@ export default {
             axios.put(`/admin-api/customer/${this.selectedItem.id}`, payload).then(({ data }) => {
                 this.showForm = false;
                 this.fetchPage()
-                this.newAlert(true, data.type, data.message)
+                this._newAlert(true, data.type, data.message)
                 this.payload = null;
             })
         },
@@ -171,7 +185,7 @@ export default {
         axios.delete(`/admin-api/${this.user.model}/${this.user.id}`).then(({data})=>{
             this.deleteForm = false
             this.fetchPage()
-            this.newAlert(true, data.type, data.message)
+            this._newAlert(true, data.type, data.message)
         });
         }
     },

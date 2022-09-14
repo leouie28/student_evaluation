@@ -16,6 +16,15 @@ class Partylist extends Model
         'color_theme',
     ];
 
+    protected $with = [
+        'images'
+    ];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imagable');
+    }
+
     public function candidates()
     {
         return $this->hasMany(Candidate::class);

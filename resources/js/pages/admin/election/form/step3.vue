@@ -33,6 +33,7 @@
                                     <v-col md="7" cols="12">
                                         <v-text-field
                                         filled
+                                        dense
                                         label="Candidate Name"
                                         v-model="positions[index].candidate[i].name"
                                         placeholder="Ex. President"
@@ -42,13 +43,22 @@
                                     <v-col md="5" cols="12">
                                         <v-select
                                         filled
+                                        dense
+                                        hide-details="auto"
+                                        prepend-inner-icon="mdi-plus"
+                                        @click:prepend-inner="$router.push({name: 'admin-partylist'})"
                                         :items="partylist"
                                         item-text="name"
                                         item-value="id"
                                         v-model="positions[index].candidate[i].partylist"
-                                        label="Partylist (optional)"
-                                        hide-details="auto"
-                                        ></v-select>
+                                        label="Partylist (optional)">
+                                            <template v-slot:item="{ item }">
+                                                <v-avatar size="35" style="border: 1px solid #ccc;">
+                                                    <img :src="item.images.length>0?imageSrc(item.images[0]):'/images/system/noimage.png'">
+                                                </v-avatar>
+                                                <span class="ml-2">{{ item.name }}</span>
+                                            </template>
+                                        </v-select>
                                     </v-col>
                                 </v-row>
                             </v-col>

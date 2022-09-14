@@ -45,7 +45,7 @@ class PartylistController extends Controller
                 'imagable_id' => $partylist->id,
                 'imagable_type' => Partylist::class,
                 'file_name' => uploadImage($request->image, 'images/partylist/'),
-                'path' => 'images/partylist/'
+                'path' => '/images/partylist/'
             ]);
             return [
                 'data' => $partylist,

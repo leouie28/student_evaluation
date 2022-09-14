@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\Filter;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\Image;
@@ -18,7 +19,23 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        //
+        $model = Election::class;
+        return (new Filter($model))->searchable();
+    }
+
+    public function getElectionSet($id)
+    {
+        try{
+            $elec = Election::find($id);
+            $positions = $elec->positions;
+
+            return [
+                'election' => $elec,
+                'positions' => $positions
+            ];
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -73,7 +90,7 @@ class ElectionController extends Controller
                         'imagable_id' => $elec->id,
                         'imagable_type' => Election::class,
                         'file_name' => uploadImage($election['image'], 'images/election/'),
-                        'path' => 'images/election/',
+                        'path' => '/images/election/',
                     ]);
                 }
 
@@ -95,7 +112,7 @@ class ElectionController extends Controller
                                 'imagable_id' => $cand->id,
                                 'imagable_type' => Candidate::class,
                                 'file_name' => uploadImage($candidate['image'], 'images/candidate/'),
-                                'path' => 'images/candidate/',
+                                'path' => '/images/candidate/',
                             ]);
                         }
                     }

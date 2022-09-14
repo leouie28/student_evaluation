@@ -26,11 +26,27 @@
             @click:row="viewProduct"
             class="cursor-pointer table-fix-height"
             fixed-header>
-                <template v-slot:[`item.voted`]="{ item }">
-                    <v-chip color="error" small>No</v-chip>
+                <template v-slot:[`item.name`]="{ item }">
+                    <v-avatar size="30" class="mr-1">
+                        <v-img
+                        alt="icon"
+                        :src="item.images.length>0?imageSrc(item.images[0]):'/images/system/noimage.png'"
+                        ></v-img>
+                    </v-avatar>
+                    <span>{{item.name}}</span>
+                </template>
+                <template v-slot:[`item.short_description`]="{ item }">
+                    {{item.short_description?item.short_description:'...'}}
+                </template>
+                <template v-slot:[`item.description`]="{ item }">
+                    {{item.description?item.description:'...'}}
                 </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
+                </template>
+                <template v-slot:[`item.color_theme`]="{ item }">
+                    <v-avatar size="18" :color="item.color_theme"></v-avatar>
+                    {{item.color_theme}}
                 </template>
                 <template v-slot:[`item.active`]="{ item }">
                     <v-switch
@@ -66,6 +82,7 @@
             </v-data-table>
         </v-card>
         <data-form :show="form" @close="close" @save="save"></data-form>
+        <Alert :data="alert_data"></Alert>
     </div>
 </template>
 
@@ -105,7 +122,7 @@ export default {
             { text: "ID", align: "start", sortable: true, value: "id", },
             { text: "Name", align: "start", sortable: true, value: "name", },
             { text: "Short Description", align: "start", sortable: false, value: "short_description", },
-            { text: "Description", align: "start", sortable: true, value: "Description", },
+            { text: "Description", align: "start", sortable: true, value: "description", },
             { text: "Date Added", align: "start", sortable: true, value: "created_at", },
             { text: "Color Theme", align: "start", sortable: false, value: "color_theme", },
             { text: "Actions", align: "center", sortable: false, value: "action", },
@@ -124,7 +141,7 @@ export default {
             });
         },
         editItem(val){
-            console.log(this.alert.trigger,'trigger')
+            console.log(this.alert_data.trigger,'trigger')
             this.selectedItem = val
             this.showForm = true
         },
@@ -132,7 +149,7 @@ export default {
             this.form = false
             axios.post(`/admin-api/partylist`, payload).then(({ data }) => {
                 this.fetchPage()
-                this.newAlert(true, data.type, data.message)
+                this._newAlert(true, data.type, data.message)
             }).finally(()=>{
                 this.showForm = false;
                 this.payload = null;
@@ -142,7 +159,7 @@ export default {
             axios.put(`/admin-api/customer/${this.selectedItem.id}`, payload).then(({ data }) => {
                 this.showForm = false;
                 this.fetchPage()
-                this.newAlert(true, data.type, data.message)
+                this._newAlert(true, data.type, data.message)
                 this.payload = null;
             })
         },
@@ -154,19 +171,19 @@ export default {
             this.excelForm = false
         },
         warning(val){
-        this.user = {
-            id: val.id,
-            text: val.first_name+' '+val.last_name,
-            model: 'customer'
-        }
-        this.deleteForm = true
+            this.user = {
+                id: val.id,
+                text: val.first_name+' '+val.last_name,
+                model: 'customer'
+            }
+            this.deleteForm = true
         },
         confirm() {
-        axios.delete(`/admin-api/${this.user.model}/${this.user.id}`).then(({data})=>{
-            this.deleteForm = false
-            this.fetchPage()
-            this.newAlert(true, data.type, data.message)
-        });
+            axios.delete(`/admin-api/${this.user.model}/${this.user.id}`).then(({data})=>{
+                this.deleteForm = false
+                this.fetchPage()
+                this._newAlert(true, data.type, data.message)
+            });
         }
     },
 };

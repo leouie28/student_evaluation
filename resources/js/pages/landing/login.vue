@@ -18,7 +18,7 @@
                         dense
                         v-model="payload.user_id"
                         :rules="rule"
-                        label="School Id"
+                        label="Student Id"
                         required
                         prepend-inner-icon="mdi-account"
                         placeholder="00-0000"

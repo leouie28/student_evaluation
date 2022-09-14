@@ -2,11 +2,23 @@
     <div>
         <v-card outlined class="mb-4">
             <v-card-text>
+                <div v-if="updating" class="mb-4">
+                    <v-btn small color="success" outlined @click="readonly=false" v-if="readonly">
+                        <v-icon small class="mr-1">mdi-square-edit-outline</v-icon>
+                        Edit
+                    </v-btn>
+                    <v-btn small color="success" @click="readonly=true" v-else>
+                        <v-icon small class="mr-1">mdi-check</v-icon>
+                        Save
+                    </v-btn>
+                </div>
                 <template v-for="(position, index) in positions">
                     <v-row :key="index">
                         <v-col md="9" cols="12">
                             <v-text-field
-                            filled
+                            :filled="readonly?false:true"
+                            :readonly="readonly"
+                            :dense="readonly?false:true"
                             label="Position name"
                             placeholder="Ex. President"
                             v-model="positions[index].name"
@@ -15,8 +27,10 @@
                         </v-col>
                         <v-col md="3" cols="12">
                             <v-text-field
-                            filled
+                            :filled="readonly?false:true"
+                            :readonly="readonly"
                             min="1"
+                            :dense="readonly?false:true"
                             type="number"
                             v-model="positions[index].max_vote"
                             label="Maximum votes"
@@ -27,7 +41,7 @@
                 </template>
                 <v-row class="mb-1">
                     <div class="text-center">
-                        <v-btn large outlined @click="addSlot">
+                        <v-btn outlined @click="addSlot">
                             Add Position
                             <v-icon class="ml-2">mdi-plus</v-icon>
                         </v-btn>
@@ -40,7 +54,8 @@
 <script>
 export default {
     data: () => ({
-        
+        readonly: false,
+        updating: false
     }),
     props: {
         positions: {
@@ -48,9 +63,18 @@ export default {
             default: () => []
         }
     },
+    created() {
+        if(localStorage._show){
+            if(localStorage._show=="1"){
+                this.readonly = true
+                this.updating = true
+            }
+        }
+    },
     methods: {
         addSlot() {
-            this.positions.push({name:'', max_vote: 1, candidate: [{name: '', partylist: '', image: ''}]})
+            let count = this.positions.length
+            this.positions.push({name:'', max_vote: 1, candidate: [{name: '', partylist: '', image: ''}], sort: count + 1})
         }
     }
 }

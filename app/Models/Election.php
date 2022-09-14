@@ -21,6 +21,10 @@ class Election extends Model
         'maker',
     ];
 
+    protected $with = [
+        'images'
+    ];
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imagable');

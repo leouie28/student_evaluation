@@ -15,8 +15,13 @@ export default {
         };
     },
     methods: {
-        viewProduct() {},
+        viewItem(item) {
+            // this.$router.push({path: this.$route.path+'/'+item.id})
+        },
         resetFilter() {},
+        imageSrc(image) {
+            return image.path+image.file_name
+        },
         createImageBase64(file) {
             var reader = new FileReader();
 

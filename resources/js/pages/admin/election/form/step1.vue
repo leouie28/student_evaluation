@@ -3,11 +3,22 @@
         <v-card outlined class="mb-4">
             <v-card-text>
                 <v-row>
+                    <v-col md="12" cols="12" v-if="updating">
+                        <v-btn small color="success" outlined @click="readonly=false" v-if="readonly">
+                            <v-icon small class="mr-1">mdi-square-edit-outline</v-icon>
+                            Edit
+                        </v-btn>
+                        <v-btn small color="success" @click="readonly=true" v-else>
+                            <v-icon small class="mr-1">mdi-check</v-icon>
+                            Save
+                        </v-btn>
+                    </v-col>
                     <v-col md="6" cols="12">
                         <v-row wrap>
                             <v-col md="12" cols="12">
                                 <v-text-field
-                                filled
+                                :filled="readonly?false:true"
+                                :readonly="readonly"
                                 label="Name of the election"
                                 placeholder="Ex. SSG Election"
                                 v-model="election.name"
@@ -16,7 +27,8 @@
                             </v-col>
                             <v-col md="12" cols="12">
                                 <v-textarea
-                                filled
+                                :filled="readonly?false:true"
+                                :readonly="readonly"
                                 label="Description (optional)"
                                 v-model="election.description"
                                 hide-details="auto"
@@ -33,12 +45,12 @@
                                 >
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                    filled
+                                    :filled="readonly?false:true"
                                     prepend-inner-icon="mdi-calendar"
                                     label="Opening Date"
                                     readonly
-                                    v-bind="attrs"
-                                    v-on="on"
+                                    v-bind="!readonly ? attrs : ''"
+                                    v-on="!readonly ? on : ''"
                                     v-model="election.date_open"
                                     hide-details="auto"
                                     ></v-text-field>
@@ -64,12 +76,12 @@
                                 >
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                    filled
+                                    :filled="readonly?false:true"
                                     prepend-inner-icon="mdi-clock-outline"
                                     label="Opening Time"
                                     readonly
-                                    v-bind="attrs"
-                                    v-on="on"
+                                    v-bind="!readonly ? attrs : ''"
+                                    v-on="!readonly ? on : ''"
                                     v-model="election.time_open"
                                     hide-details="auto"
                                     ></v-text-field>
@@ -94,12 +106,12 @@
                                 >
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                    filled
+                                    :filled="readonly?false:true"
                                     prepend-inner-icon="mdi-calendar"
                                     label="CLosing Date"
                                     readonly
-                                    v-bind="attrs"
-                                    v-on="on"
+                                    v-bind="!readonly ? attrs : ''"
+                                    v-on="!readonly ? on : ''"
                                     v-model="election.date_close"
                                     hide-details="auto"
                                     ></v-text-field>
@@ -125,12 +137,12 @@
                                 >
                                     <template v-slot:activator="{ on, attrs }">
                                     <v-text-field
-                                    filled
+                                    :filled="readonly?false:true"
                                     prepend-inner-icon="mdi-clock-outline"
                                     label="Closing Time"
                                     readonly
-                                    v-bind="attrs"
-                                    v-on="on"
+                                    v-bind="!readonly ? attrs : ''"
+                                    v-on="!readonly ? on : ''"
                                     v-model="election.time_close"
                                     hide-details="auto"
                                     ></v-text-field>
@@ -149,14 +161,14 @@
                     <v-col md="6" cols="12">
                         <v-row wrap>
                             <v-col md="12" cols="12">
-                                <div class="feat-img mx-auto pa-2" @click="$refs.file_input.click()">
+                                <div class="feat-img mx-auto pa-2" @click="!readonly ? $refs.file_input.click() : false">
                                     <input type="file" class="hide" ref="file_input" accept=".jpeg,.png,.jpg" @change="onFileChange($event.target.files)">
                                     <div v-if="!election.image" class="d-flex justify-center align-center flex-column" style="height:100%;">
                                         <v-icon size="60">mdi-file-image</v-icon>
                                         <v-toolbar-title>
                                             Feature image or cover photo (landscape)
                                         </v-toolbar-title>
-                                        <v-btn elevation="0" @click.stop="$refs.file_input.click()">
+                                        <v-btn elevation="0" @click.stop="!readonly ? $refs.file_input.click() : false">
                                             Browse file
                                         </v-btn>
                                     </div>
@@ -168,7 +180,7 @@
                                     max-width="100%"
                                     :src="election.image"
                                     ></v-img>
-                                    <v-btn v-if="election.image" class="ma-4" absolute top right color="primary">
+                                    <v-btn v-if="election.image && !readonly" class="ma-4" absolute top right color="primary">
                                         Change
                                         <v-icon class="ml-2">mdi-pencil</v-icon>
                                     </v-btn>
@@ -176,9 +188,10 @@
                             </v-col>
                             <v-col md="12" cols="12">
                                 <v-text-field
-                                filled
+                                :filled="readonly?false:true"
                                 placeholder="Ex. 2022-2023"
                                 label="School year"
+                                :readonly="readonly"
                                 v-model="election.school_year"
                                 hide-details="auto"
                                 ></v-text-field>
@@ -193,6 +206,8 @@
 <script>
 export default {
     data: () => ({
+        readonly: false,
+        updating: false,
         date_open_menu: false,
         time_open_menu: false,
         date_close_menu: false,
@@ -203,6 +218,15 @@ export default {
         election: {
             type: Object,
             default: () => {}
+        }
+    },
+    created() {
+        if(localStorage._show){
+            console.log(localStorage._show)
+            if(localStorage._show=="1"){
+                this.readonly = true
+                this.updating = true
+            }
         }
     },
     methods: {

@@ -67,6 +67,7 @@
         </v-card>
         <data-form :show="form" @close="close" @save="save"></data-form>
         <excel-form :show="excelForm" @close="close" @save="save"></excel-form>
+        <Alert :data="alert_data"></Alert>
     </div>
 </template>
 
@@ -135,7 +136,7 @@ export default {
             console.log(payload)
             axios.post(`/admin-api/student`, payload).then(({ data }) => {
                 this.fetchPage()
-                this.newAlert(true, data.type, data.message)
+                this._newAlert(true, data.type, data.message)
             }).finally(()=>{
                 this.showForm = false;
                 this.payload = null;
@@ -145,7 +146,7 @@ export default {
             axios.put(`/admin-api/customer/${this.selectedItem.id}`, payload).then(({ data }) => {
                 this.showForm = false;
                 this.fetchPage()
-                this.newAlert(true, data.type, data.message)
+                this._newAlert(true, data.type, data.message)
                 this.payload = null;
             })
         },
@@ -168,7 +169,7 @@ export default {
         axios.delete(`/admin-api/${this.user.model}/${this.user.id}`).then(({data})=>{
             this.deleteForm = false
             this.fetchPage()
-            this.newAlert(true, data.type, data.message)
+            this._newAlert(true, data.type, data.message)
         });
         }
     },

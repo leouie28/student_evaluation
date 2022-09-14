@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
         'announcement' => AnnouncementController::class,
         'student' => StudentController::class,
         'partylist' => PartylistController::class,
+        'election' => ElectionController::class,
     ]);
 
     Route::controller(StudentController::class)->group(function() {
@@ -21,5 +22,6 @@ Route::group(['middleware' => ['auth:admin']], function() {
 
     Route::controller(ElectionController::class)->group(function() {
         Route::post('election/store-set', 'storeElectionSet');
+        Route::get('election/get-set/{id}', 'getElectionSet');
     });
 });
