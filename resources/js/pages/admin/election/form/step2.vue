@@ -7,10 +7,16 @@
                         <v-icon small class="mr-1">mdi-square-edit-outline</v-icon>
                         Edit
                     </v-btn>
-                    <v-btn small color="success" @click="readonly=true" v-else>
-                        <v-icon small class="mr-1">mdi-check</v-icon>
-                        Save
-                    </v-btn>
+                    <div v-else>
+                        <v-btn small color="success" @click="readonly=true">
+                            <v-icon small class="mr-1">mdi-check</v-icon>
+                            Save
+                        </v-btn>
+                        <v-btn small color="error" @click="readonly=true" class="ml-1">
+                            <v-icon small class="mr-1">mdi-close</v-icon>
+                            Cancel
+                        </v-btn>
+                    </div>
                 </div>
                 <template v-for="(position, index) in positions">
                     <v-row :key="index">
@@ -39,7 +45,7 @@
                         </v-col>
                     </v-row>
                 </template>
-                <v-row class="mb-1">
+                <v-row class="mb-1" v-if="!readonly">
                     <div class="text-center">
                         <v-btn outlined @click="addSlot">
                             Add Position

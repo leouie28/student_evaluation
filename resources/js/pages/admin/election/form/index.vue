@@ -13,7 +13,8 @@
                 <v-stepper v-model="step">
                     <v-stepper-header>
                     <v-stepper-step
-                        :complete="step > 1"
+                        :complete="step > 1 || isShow"
+                        :editable="isShow"
                         step="1"
                     >
                         Election Info
@@ -22,7 +23,8 @@
                     <v-divider></v-divider>
 
                     <v-stepper-step
-                        :complete="step > 2"
+                        :complete="step > 2 || isShow"
+                        :editable="isShow"
                         step="2"
                     >
                         Election Positions
@@ -31,7 +33,8 @@
                     <v-divider></v-divider>
 
                     <v-stepper-step
-                        :complete="step > 3"
+                        :complete="step > 3 || isShow"
+                        :editable="isShow"
                         step="3">
                         Election Candidates
                     </v-stepper-step>
@@ -40,42 +43,48 @@
                     <v-stepper-items>
                     <v-stepper-content step="1">
                         <step-1 :election="payload.election"></step-1>
-                        <v-btn
-                        color="primary"
-                        @click="saveLocal(2)"
-                        >
-                        {{isShow?'Next':'Continue'}}
-                        </v-btn>
-                        <v-btn text disabled>
-                        Back
-                        </v-btn>
+                        <div v-if="!isShow">
+                            <v-btn
+                            color="primary"
+                            @click="saveLocal(2)"
+                            >
+                            {{isShow?'Next':'Continue'}}
+                            </v-btn>
+                            <v-btn text disabled>
+                            Back
+                            </v-btn>
+                        </div>
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
                         <step-2 :positions="payload.positions"></step-2>
-                        <v-btn
-                        color="primary"
-                        @click="saveLocal(3)"
-                        >
-                        {{isShow?'Next':'Continue'}}
-                        </v-btn>
-                        <v-btn text @click="step = 1">
-                        Back
-                        </v-btn>
+                        <div v-if="!isShow">
+                            <v-btn
+                            color="primary"
+                            @click="saveLocal(3)"
+                            >
+                            {{isShow?'Next':'Continue'}}
+                            </v-btn>
+                            <v-btn text @click="step = 1">
+                            Back
+                            </v-btn>
+                        </div>
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
                         <step-3 :positions="payload.positions"></step-3>
-                        <v-btn
-                        color="primary"
-                        :disabled="isShow"
-                        @click="warning"
-                        >
-                        {{isShow?'Next':'Create Election'}}
-                        </v-btn>
-                        <v-btn text @click="step = 2">
-                        Back
-                        </v-btn>
+                        <div v-if="!isShow">
+                            <v-btn
+                            color="primary"
+                            :disabled="isShow"
+                            @click="warning"
+                            >
+                            {{isShow?'Next':'Create Election'}}
+                            </v-btn>
+                            <v-btn text @click="step = 2">
+                            Back
+                            </v-btn>
+                        </div>
                     </v-stepper-content>
                     </v-stepper-items>
                 </v-stepper>

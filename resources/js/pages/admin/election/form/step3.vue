@@ -1,12 +1,28 @@
 <template>
     <div>
+        <div v-if="updating" class="mb-4">
+                    <v-btn small color="success" outlined @click="readonly=false" v-if="readonly">
+                        <v-icon small class="mr-1">mdi-square-edit-outline</v-icon>
+                        Edit
+                    </v-btn>
+                    <div v-else>
+                        <v-btn small color="success" @click="readonly=true">
+                            <v-icon small class="mr-1">mdi-check</v-icon>
+                            Save
+                        </v-btn>
+                        <v-btn small color="error" @click="readonly=true" class="ml-1">
+                            <v-icon small class="mr-1">mdi-close</v-icon>
+                            Cancel
+                        </v-btn>
+                    </div>
+                </div>
         <template v-for="(position, index) in positions">
             <v-card outlined class="mb-4" :key="index">
                 <v-card-title>["{{position.name}}"]</v-card-title>
                 <v-card-text>
                     <template v-for="(rep, i) in position.candidate">
                         <v-row :key="i">
-                            <v-col md="1" cols="12">
+                            <v-col md="1" cols="12" class="px-2">
                                 <v-row wrap>
                                     <v-col md="12" cols="12">
                                         <div class="feat-img mx-auto">
@@ -32,8 +48,9 @@
                                 <v-row>
                                     <v-col md="7" cols="12">
                                         <v-text-field
-                                        filled
-                                        dense
+                                        :filled="readonly?false:true"
+                                        :readonly="readonly"
+                                        :dense="readonly?false:true"
                                         label="Candidate Name"
                                         v-model="positions[index].candidate[i].name"
                                         placeholder="Ex. President"
@@ -42,10 +59,11 @@
                                     </v-col>
                                     <v-col md="5" cols="12">
                                         <v-select
-                                        filled
-                                        dense
+                                        :filled="readonly?false:true"
+                                        :readonly="readonly"
+                                        :dense="readonly?false:true"
                                         hide-details="auto"
-                                        prepend-inner-icon="mdi-plus"
+                                        :prepend-inner-icon="!readonly?'mdi-plus':''"
                                         @click:prepend-inner="$router.push({name: 'admin-partylist'})"
                                         :items="partylist"
                                         item-text="name"
@@ -64,7 +82,7 @@
                             </v-col>
                         </v-row>
                     </template>
-                    <v-row class="mb-1">
+                    <v-row class="mb-1" v-if="!readonly">
                         <div class="text-center">
                             <v-btn outlined @click="addSlot(index)">
                                 Add {{position.name}} candidate
@@ -80,7 +98,9 @@
 <script>
 export default {
     data: () => ({
-        partylist: []
+        partylist: [],
+        readonly: false,
+        updating: false
     }),
     props: {
         positions: {
@@ -90,6 +110,12 @@ export default {
     },
     created() {
         this.getPartylist()
+        if(localStorage._show){
+            if(localStorage._show=="1"){
+                this.readonly = true
+                this.updating = true
+            }
+        }
     },
     methods: {
         addSlot(i) {
@@ -127,7 +153,7 @@ export default {
 <style scoped>
 .feat-img{
     width: 100%;
-    height: 56px;
-    border: 2px dashed grey;
+    height: 52px;
+    border: 1px dashed grey;
 }
 </style>
