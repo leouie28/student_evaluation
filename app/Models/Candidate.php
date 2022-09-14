@@ -17,6 +17,20 @@ class Candidate extends Model
         'partylist_id',
     ];
 
+    protected $appends = [
+        'image'
+    ];
+
+    public function getImageAttribute()
+    {
+        $image = $this->images()->first();
+        if($image){
+            return $image->path . $image->file_name;
+        }else{
+            return '/images/system/noimage.png';
+        }
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imagable');

@@ -4,7 +4,7 @@
         color="brown lighten-2"
         dark
         class="accent-4"
-        width="200" 
+        width="180" 
         height="90vh" 
         permanent>
             <v-list dense nav>
@@ -54,7 +54,7 @@ export default {
 </script>
 <style scoped>
 .route{
-    width: calc(100% - 200px);
+    width: calc(100% - 180px);
     max-height: 90vh !important;
     overflow: auto;
 }

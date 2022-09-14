@@ -8,10 +8,16 @@
                             <v-icon small class="mr-1">mdi-square-edit-outline</v-icon>
                             Edit
                         </v-btn>
-                        <v-btn small color="success" @click="readonly=true" v-else>
-                            <v-icon small class="mr-1">mdi-check</v-icon>
-                            Save
-                        </v-btn>
+                        <div v-else>
+                            <v-btn small color="success" @click="readonly=true">
+                                <v-icon small class="mr-1">mdi-check</v-icon>
+                                Save
+                            </v-btn>
+                            <v-btn small color="error" @click="readonly=true" class="ml-1">
+                                <v-icon small class="mr-1">mdi-close</v-icon>
+                                Cancel
+                            </v-btn>
+                        </div>
                     </v-col>
                     <v-col md="6" cols="12">
                         <v-row wrap>
@@ -178,12 +184,13 @@
                                     position="center center"
                                     max-height="100%"
                                     max-width="100%"
-                                    :src="election.image"
-                                    ></v-img>
-                                    <v-btn v-if="election.image && !readonly" class="ma-4" absolute top right color="primary">
-                                        Change
+                                    :src="election.image">
+                                        <v-btn small v-if="election.image && !readonly" class="ma-n3" absolute top right color="primary">
+                                            Change
                                         <v-icon class="ml-2">mdi-pencil</v-icon>
                                     </v-btn>
+                                    </v-img>
+                                    
                                 </div>
                             </v-col>
                             <v-col md="12" cols="12">
@@ -248,7 +255,7 @@ export default {
 <style scoped>
 .feat-img{
     width: 100%;
-    height: 250px;
+    height: 28vh;
     border: 2px dashed grey;
 }
 </style>

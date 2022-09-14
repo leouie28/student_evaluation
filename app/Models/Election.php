@@ -21,9 +21,19 @@ class Election extends Model
         'maker',
     ];
 
-    protected $with = [
-        'images'
+    protected $appends = [
+        'image'
     ];
+
+    public function getImageAttribute()
+    {
+        $image = $this->images()->first();
+        if($image){
+            return $image->path . $image->file_name;
+        }else{
+            return '/images/system/noimage.png';
+        }
+    }
 
     public function images()
     {

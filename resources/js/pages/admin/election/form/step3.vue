@@ -66,7 +66,7 @@
                     </template>
                     <v-row class="mb-1">
                         <div class="text-center">
-                            <v-btn large outlined @click="addSlot(index)">
+                            <v-btn outlined @click="addSlot(index)">
                                 Add {{position.name}} candidate
                                 <v-icon class="ml-2">mdi-plus</v-icon>
                             </v-btn>

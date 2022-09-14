@@ -41,12 +41,14 @@ class PartylistController extends Controller
     {
         try{
             $partylist = Partylist::create($request->toArray());
-            Image::create([
-                'imagable_id' => $partylist->id,
-                'imagable_type' => Partylist::class,
-                'file_name' => uploadImage($request->image, 'images/partylist/'),
-                'path' => '/images/partylist/'
-            ]);
+            if(isset($request->image)){
+                Image::create([
+                    'imagable_id' => $partylist->id,
+                    'imagable_type' => Partylist::class,
+                    'file_name' => uploadImage($request->image, 'images/partylist/'),
+                    'path' => '/images/partylist/'
+                ]);
+            }
             return [
                 'data' => $partylist,
                 'status' => 200,

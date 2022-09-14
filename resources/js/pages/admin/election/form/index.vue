@@ -132,7 +132,6 @@ export default {
         }
         if(localStorage._show){
             this.isShow = true
-            this.payload.election.image = this.payload.election.images[0].path+this.payload.election.images[0].file_name
         }
     },
     methods: {
