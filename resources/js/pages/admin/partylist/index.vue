@@ -16,7 +16,6 @@
             :headers="headers"
             :items="data_items"
             :search="data.keyword"
-            show-select
             :loading="data.isFetching"
             :server-items-length="total"
             :footer-props="footerPages"
@@ -24,7 +23,7 @@
             :items-per-page="options.itemsPerPage"
             @update:options="fetchPage"
             @click:row="viewItem"
-            class="cursor-pointer table-fix-height"
+            class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
                 <template v-slot:[`item.name`]="{ item }">
                     <v-avatar size="30" class="mr-1">
@@ -100,7 +99,7 @@ export default {
         form: false,
         excelForm: false,
         data: {
-            title: "Partylist",
+            title: "Party Group",
             isFetching: false,
             keyword: "",
             filter: {},

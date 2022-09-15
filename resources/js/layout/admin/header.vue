@@ -14,13 +14,14 @@
                 ></v-text-field>
             </div> -->
             <v-spacer></v-spacer>
-            <v-btn text icon>
+            <!-- <v-btn text icon>
                 <v-icon>mdi-bell</v-icon>
-            </v-btn>
-            <v-btn text icon class="mr-4">
+            </v-btn> -->
+            <v-btn text class="mr-4">
                 <v-avatar size="32">
-                    <v-icon>mdi-account</v-icon>
+                    <v-icon>mdi-account-circle</v-icon>
                 </v-avatar>
+                Admin
             </v-btn>
         </v-app-bar>
 

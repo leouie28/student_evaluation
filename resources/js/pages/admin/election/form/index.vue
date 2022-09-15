@@ -42,7 +42,7 @@
 
                     <v-stepper-items>
                     <v-stepper-content step="1">
-                        <step-1 :election="payload.election"></step-1>
+                        <step-1 :election="payload.election" @cancelEdit="cancelEdit"></step-1>
                         <div v-if="!isShow">
                             <v-btn
                             color="primary"
@@ -57,7 +57,7 @@
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
-                        <step-2 :positions="payload.positions"></step-2>
+                        <step-2 :positions="payload.positions" @cancelEdit="cancelEdit"></step-2>
                         <div v-if="!isShow">
                             <v-btn
                             color="primary"
@@ -72,7 +72,7 @@
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
-                        <step-3 :positions="payload.positions"></step-3>
+                        <step-3 :positions="payload.positions" @cancelEdit="cancelEdit"></step-3>
                         <div v-if="!isShow">
                             <v-btn
                             color="primary"
@@ -144,6 +144,11 @@ export default {
         }
     },
     methods: {
+        cancelEdit() {
+            axios.get(`/admin-api/election/get-set/${this.payload.election.id}`).then(({ data }) => {
+                this.payload = data
+            })
+        },
         warning() {
             let text = 'Are you sure you want to add this data?'
             this._warning(text)

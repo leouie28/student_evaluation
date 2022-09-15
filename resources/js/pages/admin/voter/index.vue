@@ -24,7 +24,7 @@
             :items-per-page="options.itemsPerPage"
             @update:options="fetchPage"
             @click:row="viewProduct"
-            class="cursor-pointer table-fix-height"
+            class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
                 <template v-slot:[`item.voted`]="{ item }">
                     <v-chip color="error" small>No</v-chip>
@@ -36,7 +36,6 @@
                     <v-switch
                     v-model="item.active"
                     color="success"
-                    inset
                     :label="item.active?'Active':'Inactive'"
                     ></v-switch>
                 </template>

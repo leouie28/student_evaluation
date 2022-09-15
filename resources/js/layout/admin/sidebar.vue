@@ -72,7 +72,7 @@ export default {
                 url_name: 'admin-voter',
             },
             {
-                text: 'Partylist',
+                text: 'Party Group',
                 icon: 'flag-outline',
                 url_name: 'admin-partylist',
             },
@@ -85,7 +85,7 @@ export default {
         getUrl() {
             let url = this.$route.fullPath
             let path = url.split('/')
-            return path[1]
+            return path[1]+'-'+path[2]
         }
     }
 }

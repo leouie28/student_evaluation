@@ -13,7 +13,7 @@
                                 <v-icon small class="mr-1">mdi-check</v-icon>
                                 Save
                             </v-btn>
-                            <v-btn small color="error" @click="readonly=true" class="ml-1">
+                            <v-btn small color="error" @click="readonly=true, $emit('cancelEdit')" class="ml-1">
                                 <v-icon small class="mr-1">mdi-close</v-icon>
                                 Cancel
                             </v-btn>

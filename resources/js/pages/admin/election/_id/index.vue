@@ -19,6 +19,7 @@
                     <v-list-item
                     :key="menu.text"
                     link
+                    :class="childNavAct == menu.link ? 'act' : ''"
                     >
                     <v-list-item-icon>
                         <v-icon>mdi-{{menu.icon}}</v-icon>
@@ -44,12 +45,18 @@ export default {
         return {
             e1: 1,
             menus: [
-                {text: 'Details', icon: 'information-outline', link: ''},
+                {text: 'Details', icon: 'information-outline', link: 'admin-election-details'},
                 {text: 'Status', icon: 'chart-bar-stacked', link: ''},
                 {text: 'Votes', icon: 'tray-full', link: ''},
             ]
         }
     },
+    computed: {
+        childNavAct() {
+            let url = this.$route.name
+            return url
+        }
+    }
 }
 </script>
 <style scoped>
@@ -57,5 +64,8 @@ export default {
     width: calc(100% - 180px);
     max-height: 90vh !important;
     overflow: auto;
+}
+.act{
+    background: #6D4C41 !important;
 }
 </style>

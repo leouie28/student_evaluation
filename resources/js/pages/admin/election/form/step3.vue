@@ -10,7 +10,7 @@
                             <v-icon small class="mr-1">mdi-check</v-icon>
                             Save
                         </v-btn>
-                        <v-btn small color="error" @click="readonly=true" class="ml-1">
+                        <v-btn small color="error" @click="readonly=true, $emit('cancelEdit')" class="ml-1">
                             <v-icon small class="mr-1">mdi-close</v-icon>
                             Cancel
                         </v-btn>
@@ -27,7 +27,7 @@
                                     <v-col md="12" cols="12">
                                         <div class="feat-img mx-auto">
                                             <input type="file" class="hide" :ref="`file_input_${index}${i}`" accept=".jpeg,.png,.jpg" @change="onFileChange($event.target.files, index, i)">
-                                            <div @click="triggerInput(index, i)" class="" style="height:100%;">
+                                            <div @click="!readonly ? triggerInput(index, i) : false" class="" style="height:100%;">
                                                 <div v-if="!positions[index].candidate[i].image" class="d-flex justify-center align-center flex-column" style="height:100%;">
                                                     <v-icon>mdi-file-image</v-icon>
                                                     icon/img
@@ -69,7 +69,7 @@
                                         item-text="name"
                                         item-value="id"
                                         v-model="positions[index].candidate[i].partylist"
-                                        label="Partylist (optional)">
+                                        label="Party Group (optional)">
                                             <template v-slot:item="{ item }">
                                                 <v-avatar size="35" style="border: 1px solid #ccc;">
                                                     <img :src="item.images.length>0?imageSrc(item.images[0]):'/images/system/noimage.png'">

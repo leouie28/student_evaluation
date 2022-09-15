@@ -23,7 +23,7 @@
             :items-per-page="options.itemsPerPage"
             @update:options="fetchPage"
             @click:row="viewElection"
-            class="cursor-pointer table-fix-height"
+            class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
                 <template v-slot:[`item.opening`]="{ item }">
                     <v-chip label color="success">
@@ -47,24 +47,54 @@
                     ></v-switch>
                 </template>
                 <template v-slot:[`item.action`]="{ item }">
-                    <v-btn
-                        class="px-2"
-                        elevation="0"
-                        icon
-                        color="primary"
-                        @click="editItem(item)"
-                    >
-                        <v-icon>mdi-square-edit-outline</v-icon>
-                    </v-btn>
-                    <v-btn
-                        class="px-2"
-                        elevation="0"
-                        icon
-                        color="error"
-                        @click="warning(item)"
-                    >
-                        <v-icon>mdi-trash-can</v-icon>
-                    </v-btn>
+                    <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            class="px-2"
+                            elevation="0"
+                            icon
+                            color="secondary"
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="editItem(item)"
+                        >
+                            <v-icon>mdi-eye</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>View</span>
+                    </v-tooltip>
+                    <v-tooltip bottom color="primary">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            class="px-2"
+                            elevation="0"
+                            icon
+                            color="primary"
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="editItem(item)"
+                        >
+                            <v-icon>mdi-square-edit-outline</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Edit</span>
+                    </v-tooltip>
+                    <v-tooltip bottom color="error">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            class="px-2"
+                            elevation="0"
+                            icon
+                            color="error"
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="warning(item)"
+                        >
+                            <v-icon>mdi-trash-can</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Remove</span>
+                    </v-tooltip>
                 </template>
                 <template v-slot:no-data>
                     <div>No Data</div>
