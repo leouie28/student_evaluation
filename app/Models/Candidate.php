@@ -18,7 +18,8 @@ class Candidate extends Model
     ];
 
     protected $appends = [
-        'image'
+        'image',
+        'partylist'
     ];
 
     public function getImageAttribute()
@@ -31,6 +32,11 @@ class Candidate extends Model
         }
     }
 
+    public function getPartylistAttribute()
+    {
+        return $this->partylist_id;
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imagable');
@@ -41,7 +47,7 @@ class Candidate extends Model
         return $this->belongsTo(Position::class);
     }
 
-    public function partylist()
+    public function party()
     {
         return $this->belongsTo(Partylist::class);
     }

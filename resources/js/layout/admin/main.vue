@@ -11,7 +11,9 @@
 
     <v-main>
         <v-container fluid class="pa-0 grey lighten-2" style="min-height:90vh;">
-            <router-view></router-view>
+            <transition name="slide-y-reverse-transition" mode="out-in">
+              <router-view></router-view>
+            </transition>
         </v-container>
     </v-main>
   </v-app>

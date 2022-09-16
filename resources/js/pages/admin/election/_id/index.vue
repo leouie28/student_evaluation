@@ -19,6 +19,7 @@
                     <v-list-item
                     :key="menu.text"
                     link
+                    @click="$router.push({name: menu.link}).catch(() => {})"
                     :class="childNavAct == menu.link ? 'act' : ''"
                     >
                     <v-list-item-icon>
@@ -46,8 +47,8 @@ export default {
             e1: 1,
             menus: [
                 {text: 'Details', icon: 'information-outline', link: 'admin-election-details'},
-                {text: 'Status', icon: 'chart-bar-stacked', link: ''},
-                {text: 'Votes', icon: 'tray-full', link: ''},
+                {text: 'Status', icon: 'chart-bar-stacked', link: 'admin-election-status'},
+                {text: 'Votes', icon: 'tray-full', link: 'admin-election-votes'},
             ]
         }
     },

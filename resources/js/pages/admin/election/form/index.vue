@@ -4,7 +4,7 @@
             <v-card-title>
                 Election Form
                 <v-spacer></v-spacer>
-                <v-btn color="secondary">
+                <v-btn color="secondary" v-if="!isShow">
                     <v-icon class="mr-2">mdi-backspace</v-icon>
                     Return
                 </v-btn>

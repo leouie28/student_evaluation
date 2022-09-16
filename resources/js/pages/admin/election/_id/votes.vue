@@ -80,26 +80,23 @@
                 </template>
             </v-data-table>
         </v-card>
-        <data-form :show="form" @close="close" @save="save"></data-form>
         <Alert :data="alert_data"></Alert>
     </div>
 </template>
 
 <script>
 import DeleteDialog from "@/components/deleteDialog.vue";
-import DataForm from "./form.vue";
 import TableHeader from "@/components/table-header.vue";
 export default {
     components: {
         DeleteDialog,
-        DataForm,
         TableHeader,
     },
     data: () => ({
         form: false,
         excelForm: false,
         data: {
-            title: "Party Group",
+            title: "Votes",
             isFetching: false,
             keyword: "",
             filter: {},
