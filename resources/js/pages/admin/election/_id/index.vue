@@ -46,8 +46,8 @@ export default {
         return {
             e1: 1,
             menus: [
-                {text: 'Details', icon: 'information-outline', link: 'admin-election-details'},
                 {text: 'Status', icon: 'chart-bar-stacked', link: 'admin-election-status'},
+                {text: 'Details', icon: 'information-outline', link: 'admin-election-details'},
                 {text: 'Votes', icon: 'tray-full', link: 'admin-election-votes'},
             ]
         }

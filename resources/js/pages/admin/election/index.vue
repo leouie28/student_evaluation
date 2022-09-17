@@ -26,12 +26,12 @@
             class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
                 <template v-slot:[`item.opening`]="{ item }">
-                    <v-chip label color="success">
+                    <v-chip outlined color="success">
                         {{moment(item.date_open+' '+item.time_open).format('MMM DD YY, h:mm a')}}
                     </v-chip>
                 </template>
                 <template v-slot:[`item.closing`]="{ item }">
-                    <v-chip label color="error">
+                    <v-chip outlined color="error">
                         {{moment(item.date_close+' '+item.time_close).format('MMM DD YY, h:mm a')}}
                     </v-chip>
                 </template>
@@ -155,6 +155,9 @@ export default {
             if(localStorage._show){
                 localStorage.removeItem('_show')
             }
+            if(localStorage.payload){
+                localStorage.removeItem('payload')
+            }
             this.data.isFetching = true;
             let params = this._createParams(this.options);
             params = params + this._createFilterParams(this.data.filter);
@@ -170,7 +173,7 @@ export default {
             axios.get(`/admin-api/election/get-set/${item.id}`).then(({ data }) => {
                 localStorage.setItem('payload', JSON.stringify(data))
             })
-            this.$router.push({path: this.$route.path+'/'+item.id+'/details'})
+            this.$router.push({path: this.$route.path+'/'+item.id+'/status'})
         },
         editItem(val){
             console.log(this.alert_data.trigger,'trigger')

@@ -71,7 +71,13 @@ export default {
           y: {
             grid: {
               display: false
-            }
+            },
+            beginAtZero: true,
+            grace: '5%',
+          },
+          x: {
+            beginAtZero: true,
+            grace: '5%',
           }
         }
       }
@@ -81,12 +87,16 @@ export default {
     this.chartOptions.plugins = {
       legend: {
         display: false
+      },
+      title: {
+        display: true,
+        text: this.chartData.title.text
       }
     }
     if(this.max_value){
       this.chartOptions.scales.y.max = this.max_value
     }
 
-  }
+  },
 }
 </script>
