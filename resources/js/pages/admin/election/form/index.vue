@@ -8,6 +8,18 @@
                     <v-icon class="mr-2">mdi-backspace</v-icon>
                     Return
                 </v-btn>
+                <span v-else class="d-flex align-center">
+                    <span class="text-subtitle-1 mr-1">Election Url: </span>
+                    <v-tooltip bottom color="primary">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-chip label outlined v-bind="attrs" v-on="on" color="success">
+                                {{url}}
+                                <v-icon small class="ml-2">mdi-content-copy</v-icon>
+                            </v-chip>
+                        </template>
+                        <span>Click to copy election url link</span>
+                    </v-tooltip>
+                </span>
             </v-card-title>
             <v-card-text>
                 <v-stepper v-model="step">
@@ -106,6 +118,7 @@ export default {
     data: () => ({
         isShow: false,
         step: 1,
+        url: '',
         payload: {
             election: {
                 name: '',
@@ -115,6 +128,7 @@ export default {
                 time_open: '',
                 date_close: '',
                 time_close: '',
+                code: '',
                 image: null,
             },
             positions: [
@@ -136,6 +150,7 @@ export default {
     mounted() {
         if(localStorage.getItem('payload')){
             this.payload = JSON.parse(localStorage.payload)
+            this.url = window.location.origin+'/election/'+this.payload.election.urlkey
             console.log(JSON.parse(localStorage.payload), 'test')
             // console.log(localStorage.payload)
         }

@@ -61,4 +61,12 @@ export default [
         name:'admin-partylist',
         meta: { requireAuth: true },
     },
+
+    //student route
+    {
+        path:'/home',
+        component: () => import('@/pages/student/home'),
+        name:'student-home',
+        meta: { requireAuth: true },
+    }
 ]

@@ -76,7 +76,7 @@ export default {
                         if(data.role=='admin'){
                             this.$router.push({path: '/admin/status'})
                         }else if(data.role=='student'){
-
+                            this.$router.push({path: '/home'})
                         }
                     }else{
                         this.message = data.message

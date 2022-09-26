@@ -43,5 +43,12 @@
                 </v-menu>
             </div>
         </v-app-bar>
+        <v-main>
+            <v-container fluid class="pa-2 grey lighten-5" style="min-height:90vh;">
+                <transition name="slide-y-reverse-transition" mode="out-in">
+                    <router-view></router-view>
+                </transition>
+            </v-container>
+        </v-main>
     </div>
 </template>

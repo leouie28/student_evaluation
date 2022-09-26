@@ -82,6 +82,8 @@ class ElectionController extends Controller
                     'time_open' => $election['time_open'],
                     'date_close' => $election['date_close'],
                     'time_close' => $election['time_close'],
+                    'code' => $election['code'],
+                    'urlkey' => generateRandomString(),
                     'maker' => auth()->guard('admin')->user()->id,
                 ]);
 

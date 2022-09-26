@@ -23,6 +23,8 @@ class CreateElectionsTable extends Migration
             $table->time('time_open')->nullable();
             $table->date('date_close')->nullable();
             $table->time('time_close')->nullable();
+            $table->string('code')->nullable();
+            $table->string('urlkey');
             $table->integer('maker')->nullable();
             $table->timestamps();
         });

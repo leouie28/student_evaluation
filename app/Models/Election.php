@@ -18,6 +18,8 @@ class Election extends Model
         'time_open',
         'date_close',
         'time_close',
+        'code',
+        'urlkey',
         'maker',
     ];
 

@@ -23,7 +23,7 @@
             :options.sync="options"
             :items-per-page="options.itemsPerPage"
             @update:options="fetchPage"
-            @click:row="viewProduct"
+            @click:row="viewItem"
             class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
                 <template v-slot:[`item.voted`]="{ item }">

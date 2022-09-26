@@ -193,7 +193,7 @@
                                     
                                 </div>
                             </v-col>
-                            <v-col md="12" cols="12">
+                            <v-col md="6" cols="12">
                                 <v-text-field
                                 :filled="readonly?false:true"
                                 placeholder="Ex. 2022-2023"
@@ -202,6 +202,26 @@
                                 v-model="election.school_year"
                                 hide-details="auto"
                                 ></v-text-field>
+                            </v-col>
+                            <v-col md="6" cols="12">
+                                <v-text-field
+                                :filled="readonly?false:true"
+                                placeholder="Ex. SSG-ELECTION-2022"
+                                label="Election Code (no spacing)"
+                                :readonly="readonly"
+                                v-model="election.code"
+                                hide-details="auto"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col md="12" cols="12" v-if="!updating">
+                                <v-alert
+                                outlined
+                                type="warning"
+                                color="brown"
+                                prominent
+                                border="left">
+                                    Unique url will be generated automatically when you finish making election.
+                                </v-alert>
                             </v-col>
                         </v-row>
                     </v-col>
