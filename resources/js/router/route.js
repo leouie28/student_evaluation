@@ -68,5 +68,11 @@ export default [
         component: () => import('@/pages/student/home'),
         name:'student-home',
         meta: { requireAuth: true },
+    },
+    {
+        path:'/election/:key/vote',
+        component: () => import('@/pages/student/election/election-form.vue'),
+        name:'student-election-form',
+        meta: { requireAuth: true },
     }
 ]

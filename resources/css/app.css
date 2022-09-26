@@ -8,3 +8,9 @@
 .clickable-item tbody tr{
     cursor: pointer !important;
 }
+.elec-card{
+    border: 1px solid rgb(185, 185, 185) !important;
+}
+.cus-border-top {
+    border-top: 10px solid #2196f3 !important;
+}

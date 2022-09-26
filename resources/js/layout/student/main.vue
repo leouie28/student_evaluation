@@ -14,9 +14,8 @@
                     v-on="on"
                     class="mx-auto">
                         <v-avatar
-                        color="grey"
                         size="32">
-                        <v-icon>mdi-account</v-icon>
+                        <v-icon>mdi-account-school</v-icon>
                         </v-avatar>
                         <span class="ml-2">My Name</span>
                         <v-icon>mdi-chevron-down</v-icon>
