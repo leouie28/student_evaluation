@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Election;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -58,12 +59,30 @@ class ElectionController extends Controller
     public function checkCode(Request $request, $key)
     {
         try{
+            // Carbon::now()->toDateTimeString();
             $code = key($request->all());
             $elect = Election::where('urlkey', $key)->first();
             $elect->makeVisible('code');
 
             if($this->isOpen($elect->opening)) {
-                
+                if(!$this->isClose($elect->closing)){
+                    if($code==$elect->code){
+                        return [
+                            'type' => 'success',
+                            'text' => 'code matched'
+                        ];
+                    }else {
+                        return [
+                            'type' => 'error',
+                            'text' => 'Invalid passcode'
+                        ];
+                    }
+                }else {
+                    return [
+                        'type' => 'error',
+                        'text' => 'Election is closed.'
+                    ];
+                }
             }else {
                 return [
                     'type' => 'error',
@@ -78,7 +97,26 @@ class ElectionController extends Controller
 
     public function isOpen($datetime)
     {
-        return true;
+        $now = Carbon::now()->toDateTimeString();
+        $open = Carbon::make($datetime)->toDateTimeString();
+
+        if($now>=$open) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public function isClose($datetime)
+    {
+        $now = Carbon::now()->toDateTimeString();
+        $close = Carbon::make($datetime)->toDateTimeString();
+
+        if($now>=$close) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**

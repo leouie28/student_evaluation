@@ -20,7 +20,7 @@
                             hide-details="auto"
                             ></v-text-field>
                             <div v-if="invalid" class="text-center mt-2 error--text">
-                                Invalid passcode!
+                                {{log}}!
                             </div>
                         </div>
                         <div class="text-right mt-3">
@@ -52,6 +52,7 @@ export default {
             code: '',
             submitting: false,
             invalid: false,
+            log: '',
         }
     },
     props: {
@@ -70,7 +71,17 @@ export default {
                 this.submitting = true
                 let key = this.$route.params.key
                 axios.post(`/student-api/election-api/${key}/check-code`, this.code).then(({data}) => {
-                    
+                    setTimeout(() => {
+                        if(data.type=='error') {
+                            this.submitting = false
+                            this.invalid = true
+                            this.log = data.text
+                        }else if(data.type=='success') {
+                            localStorage.setItem('_passcode', this.code)
+                            this.$emit('close')
+                            this.$router.push({path: '/election/'+key+'/vote'})
+                        }
+                    },2000)
                 })
             }
         }

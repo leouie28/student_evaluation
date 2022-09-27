@@ -16,13 +16,13 @@
                     <div>
                         <span class="text--primary">
                             <v-icon color="primary">mdi-calendar</v-icon>
-                            Opening: {{ moment(elect.opening).format('MM/DD/YYYY, h:mm a') }}
+                            Open: {{ moment(elect.opening).format('MM/DD/YYYY, h:mm a') }}
                         </span>
                     </div>
                     <span>
                         <span class="text--primary">
                             <v-icon color="red">mdi-calendar</v-icon>
-                            Closing: {{ moment(elect.closing).format('MM/DD/YYYY, h:mm a') }}
+                            Close: {{ moment(elect.closing).format('MM/DD/YYYY, h:mm a') }}
                         </span>
                     </span>
                 </div>
