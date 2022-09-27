@@ -70,9 +70,15 @@ export default [
         meta: { requireAuth: true },
     },
     {
+        path:'/election/:key',
+        component: () => import('@/pages/student/election/index.vue'),
+        name:'student-election',
+        meta: { requireAuth: true },
+    },
+    {
         path:'/election/:key/vote',
-        component: () => import('@/pages/student/election/election-form.vue'),
+        component: () => import('@/pages/student/election/form.vue'),
         name:'student-election-form',
         meta: { requireAuth: true },
-    }
+    },
 ]

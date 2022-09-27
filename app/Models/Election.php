@@ -23,9 +23,25 @@ class Election extends Model
         'maker',
     ];
 
-    protected $appends = [
-        'image'
+    protected $hidden = [
+        'code'
     ];
+
+    protected $appends = [
+        'image',
+        'security',
+        'opening',
+        'closing',
+    ];
+
+    public function getSecurityAttribute()
+    {
+        if($this->code != null) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     public function getImageAttribute()
     {
@@ -60,5 +76,15 @@ class Election extends Model
     public function votes()
     {
         return $this->hasMany(Vote::class);
+    }
+
+    public function getOpeningAttribute()
+    {
+        return $this->date_open . ' ' . $this->time_open;
+    }
+
+    public function getClosingAttribute()
+    {
+        return $this->date_close . ' ' . $this->time_close;
     }
 }
