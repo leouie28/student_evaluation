@@ -3,7 +3,7 @@
         <v-app-bar
         app
         flat
-        elevation="2">
+        elevation="4">
             <!-- <div class="text-center mx-auto"> -->
             <div class="d-flex justify-space-between align-center w-100">
                 <span>

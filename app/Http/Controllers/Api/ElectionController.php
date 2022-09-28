@@ -20,6 +20,18 @@ class ElectionController extends Controller
         //
     }
 
+    public function getSet($key)
+    {
+        try{
+            return Election::where('urlkey', $key)
+            ->with('positions', function($item) {
+                return $item->with('candidate');
+            })->first();
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

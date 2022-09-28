@@ -22,12 +22,12 @@ import router from './router/index'
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
+ import VueCountdown from '@chenfengyuan/vue-countdown';
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('main-app', require('./layout/MainApp.vue').default);
-
+Vue.component(VueCountdown.name, VueCountdown);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

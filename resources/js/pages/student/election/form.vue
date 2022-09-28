@@ -1,50 +1,120 @@
 <template>
     <div>
-        <v-card class="mb-2 cus-border-top">
-            <v-card-title>SSG Election 2022</v-card-title>
+        <v-card :class="elect.image == '/images/system/noimage.png' ? 'mb-2 cus-border-top' : 'mb-2'">
+            <v-img
+            height="150"
+            :src="elect.image"
+            ></v-img>
+            <v-card-title>{{elect.name}}</v-card-title>
             <v-divider class="my-0"></v-divider>
             <v-card-text>
-                You are running Vue in development mode.
-                Make sure to turn on production mode when deploying for production.
-                See more tips at https://vuejs.org/guide/deployment.html
+                {{elect.description}}
+                <div class="d-flex justify-end">
+                    <!-- 10:20:34 -->
+                    <countdown :time="time" :interval="1000" v-if="time>0">
+                        <template slot-scope="props">
+                            <span class="text--primary">Close in：{{ props.days }}d : {{ props.hours }}h : {{ props.minutes }}m : {{ props.seconds }}s</span>
+                        </template>
+                    </countdown>
+                    <span v-else class="error--text">Election Closed</span>
+                </div>
             </v-card-text>
         </v-card>
-        <v-card class="mb-2">
-            <v-card-text>
-                <v-toolbar-title>President</v-toolbar-title>
-                <v-radio-group>
-                <v-radio
-                v-for="n in 2"
-                :key="n"
-                :label="`Radio ${n}`"
-                :value="n"
-                ></v-radio>
-                </v-radio-group>
-            </v-card-text>
-        </v-card>
-        <v-card class="mb-2">
-            <v-card-text>
-                <v-toolbar-title>Vice President</v-toolbar-title>
-                <v-radio-group>
-                <v-radio
-                v-for="n in 2"
-                :key="n"
-                :label="`Radio ${n}`"
-                :value="n"
-                ></v-radio>
-                </v-radio-group>
+        <template v-for="(pos, i) in elect.positions">
+            <v-card class="mb-2" :key="pos.id">
+                <v-card-text>
+                    <v-toolbar-title>{{pos.name}} <span class="text-subtitle-2 grey--text" v-if="pos.max_vote>1">( Vote {{pos.max_vote}} )</span></v-toolbar-title>
+                    <v-radio-group v-model="elect.positions[i].vote" v-if="pos.max_vote<=1">
+                        <v-radio
+                        v-for="c in pos.candidate"
+                        :key="c.id"
+                        :label="c.name"
+                        :value="c.id"
+                        ></v-radio>
+                    </v-radio-group>
+                    <div v-else class="my-3">
+                        <v-checkbox
+                        v-for="c in pos.candidate"
+                        v-model="elect.positions[i].vote"
+                        :key="c.id"
+                        :label="c.name"
+                        :value="c.id"
+                        class="mt-2"
+                        hide-details
+                        ></v-checkbox>
+                    </div>
+                </v-card-text>
+            </v-card>
+        </template>
+        <v-card class="mb-3">
+            <v-card-text class="text-center error--text">
+                Invalid
             </v-card-text>
         </v-card>
         <div class="text-right">
-            <v-btn color="secondary" outlined>Reset Form</v-btn>
-            <v-btn color="primary">Submit my vote</v-btn>
+            <v-btn color="secondary" :disabled="submitting" outlined>Reset Form</v-btn>
+            <v-btn color="primary" :disabled="submitting" @click="confirmation = true">Submit my vote</v-btn>
         </div>
+        <v-dialog persistent v-model="confirmation" max-width="600">
+            <v-card>
+                <v-card-title>
+                    Warning
+                </v-card-title>
+                <v-card-text class="text-center">
+                    Are you sure you want to submit your vote?
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="confirmation = false">
+                        Cancel
+                    </v-btn>
+                    <v-btn color="primary" @click="submit">
+                        Confirm & submit
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 <script>
+import moment, { now } from 'moment'
 export default {
+    data() {
+        const now = new Date();
+        const newYear = new Date(now.getFullYear() + 1, 0, 1);
+        return {
+            confirmation: false,
+            valid: true,
+            submitting: false,
+            elect: {},
+            time: null,
+        }
+    },
     mounted() {
-        console.log('test123')
-    }
+        this.getElection()
+    },
+    methods: {
+        getElection() {
+            let key = this.$route.params.key
+            axios.get(`/student-api/election-api/${key}/election-set`).then(({data}) => {
+                data.positions.forEach(elem => {
+                    if(elem.max_vote > 1) {
+                        elem.vote = []
+                    }else {
+                        elem.vote = ''
+                    }
+                    let close = new Date(data.closing)
+                    let now = new Date()
+                    this.time = close - now
+                });
+                this.elect = data
+            })
+        },
+        submit() {
+            this.confirmation = false
+            this.submitting = true
+            console.log(this.elect, 'test12')
+        }
+    },
 }
 </script>
