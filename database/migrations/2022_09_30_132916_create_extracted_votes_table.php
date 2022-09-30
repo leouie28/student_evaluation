@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVotables extends Migration
+class CreateExtractedVotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateVotables extends Migration
      */
     public function up()
     {
-        Schema::create('votables', function (Blueprint $table) {
+        Schema::create('extracted_votes', function (Blueprint $table) {
             $table->id();
-            $table->integer('votable_id');
-            $table->string('votable_type');
-            $table->integer('election_id');
-            $table->integer('student_id');
+            $table->foreignId('vote_id')->constrained();
+            $table->foreignId('position_id')->constrained();
+            $table->foreignId('candidate_id')->constrained();
+            $table->foreignId('student_id')->constrained();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateVotables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('votables');
+        Schema::dropIfExists('extracted_votes');
     }
 }

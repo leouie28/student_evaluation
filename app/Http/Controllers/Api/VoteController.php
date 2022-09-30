@@ -57,11 +57,21 @@ class VoteController extends Controller
                             $raw[$position['name']] = Candidate::where('id', $position['vote'])->value('name');
                         }
                     }
+                    $student_id = Auth::guard('web')->user()->id;
                     $votes = Vote::create([
                         'data' => json_encode($raw),
                         'election_id' => $request->id,
-                        'student_id' => Auth::guard('web')->user()->id,
+                        'student_id' =>$student_id,
                     ]);
+                    foreach($request->positions as $position) {
+                        if(is_array($position['vote'])) {
+                            foreach($position['vote'] as $vote) {
+                                $this->extractVote($votes->id, $position['id'], $vote, $student_id);
+                            }
+                        }else {
+                            $this->extractVote($votes->id, $position['id'], $position['vote'], $student_id);
+                        }
+                    }
                     return $votes;
                 }else {
                     return [
