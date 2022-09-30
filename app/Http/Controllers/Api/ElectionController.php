@@ -23,10 +23,12 @@ class ElectionController extends Controller
     public function getSet($key)
     {
         try{
-            return Election::where('urlkey', $key)
+            $elect = Election::where('urlkey', $key)
             ->with('positions', function($item) {
                 return $item->with('candidate');
             })->first();
+            $elect->makeVisible('code');
+            return $elect;
         }catch(Exception $e) {
             return $e->getMessage();
         }

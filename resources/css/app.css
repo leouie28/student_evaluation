@@ -14,3 +14,7 @@
 .cus-border-top {
     border-top: 10px solid #2196f3 !important;
 }
+.empty-container {
+    height: 80vh;
+    padding-top: 25vh;
+}

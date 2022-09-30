@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="valid">
         <v-card :class="elect.image == '/images/system/noimage.png' ? 'mb-2 cus-border-top' : 'mb-2'">
             <v-img
             height="150"
@@ -52,7 +52,7 @@
             </v-card-text>
         </v-card>
         <div class="text-right">
-            <v-btn color="secondary" :disabled="submitting" outlined>Reset Form</v-btn>
+            <v-btn color="secondary" :disabled="submitting" @click="resetPayload" outlined>Reset Form</v-btn>
             <v-btn color="primary" :disabled="submitting" @click="confirmation = true">Submit my vote</v-btn>
         </div>
         <v-dialog persistent v-model="confirmation" max-width="600">
@@ -75,6 +75,20 @@
             </v-card>
         </v-dialog>
     </div>
+    <div v-else class="empty-container text-center">
+        <v-img
+        class="mx-auto"
+        max-width="60%"
+        alt="Empty"
+        src="/images/system/empty.svg"
+        ></v-img><br>
+        <div class="text-h2 font-weight-medium w-100">
+            Oops
+        </div>
+        <div class="mt-2">
+            Your passcode is not valid for this election.
+        </div>
+    </div>
 </template>
 <script>
 import moment, { now } from 'moment'
@@ -95,25 +109,41 @@ export default {
     },
     methods: {
         getElection() {
-            let key = this.$route.params.key
-            axios.get(`/student-api/election-api/${key}/election-set`).then(({data}) => {
-                data.positions.forEach(elem => {
-                    if(elem.max_vote > 1) {
-                        elem.vote = []
-                    }else {
-                        elem.vote = ''
-                    }
-                    let close = new Date(data.closing)
-                    let now = new Date()
-                    this.time = close - now
-                });
-                this.elect = data
-            })
+            if(localStorage._passcode) {
+                let key = this.$route.params.key
+                axios.get(`/student-api/election-api/${key}/election-set`).then(({data}) => {
+                    data.positions.forEach(elem => {
+                        if(elem.max_vote > 1) {
+                            elem.vote = []
+                        }else {
+                            elem.vote = ''
+                        }
+                        let close = new Date(data.closing)
+                        let now = new Date()
+                        this.time = close - now
+                    });
+                    this.elect = data
+                    if(data.code != localStorage._passcode) this.valid = false
+                })
+            }else {
+                this.valid = false
+            }
+        },
+        resetPayload() {
+            this.elect.positions.forEach(elem => {
+                if(elem.max_vote > 1) {
+                    elem.vote = []
+                }else {
+                    elem.vote = ''
+                }
+            });
         },
         submit() {
             this.confirmation = false
             this.submitting = true
-            console.log(this.elect, 'test12')
+            axios.post(`/student-api/vote-api`,this.elect).then(({data}) => {
+                
+            })
         }
     },
 }

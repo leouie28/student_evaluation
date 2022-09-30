@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ElectionController;
+use App\Http\Controllers\Api\VoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:web']], function() {
@@ -13,6 +14,7 @@ Route::group(['middleware' => ['auth:web']], function() {
 
     Route::resources([
         'election-api' => ElectionController::class,
+        'vote-api' => VoteController::class,
     ]);
 
 });
