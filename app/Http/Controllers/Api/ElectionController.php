@@ -17,7 +17,11 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            return Election::get();
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function getSet($key)
@@ -27,7 +31,11 @@ class ElectionController extends Controller
             ->with('positions', function($item) {
                 return $item->with('candidate');
             })->first();
-            $elect->makeVisible('code');
+            if($elect) {
+                $elect->makeVisible('code');
+            }else {
+                return 'error';
+            }
             return $elect;
         }catch(Exception $e) {
             return $e->getMessage();

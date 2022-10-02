@@ -4,26 +4,25 @@
         app
         flat
         elevation="4">
-            <!-- <div class="text-center mx-auto"> -->
             <div class="d-flex justify-space-between align-center w-100">
-                <span>
+                <span @click="$router.push({path: '/home'}).catch(() => {})" style="cursor:pointer;">
                     <v-avatar>
                         <v-icon>mdi-account-circle</v-icon>
                     </v-avatar>
                     CKC Voting System
                 </span>
-                <v-menu offset-y bottom left>
+                <v-menu offset-y bottom left min-width="180">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
                         elevation="0"
                         large rounded
                         v-bind="attrs"
+                        class="px-1 mr-1 user"
                         v-on="on">
                             <v-avatar
                             size="32">
                             <v-icon>mdi-account-school</v-icon>
                             </v-avatar>
-                            <!-- <span class="ml-2">My Name</span> -->
                             <v-icon class="ml-n2">mdi-chevron-down</v-icon>
                         </v-btn>
                     </template>
@@ -57,3 +56,23 @@
         </v-main>
     </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+
+        }
+    }
+}
+</script>
+<style scoped>
+@media screen and (max-width: 600px) {
+    .user {
+        min-width: unset !important;
+    }
+    .v-toolbar >>> .v-toolbar__content {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}
+</style>

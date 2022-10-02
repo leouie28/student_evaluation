@@ -86,7 +86,7 @@
             Oops
         </div>
         <div class="mt-2">
-            Your passcode is not valid for this election.
+            {{errMsg}}
         </div>
     </div>
 </template>
@@ -99,6 +99,7 @@ export default {
         return {
             confirmation: false,
             valid: true,
+            errMsg: '',
             submitting: false,
             elect: {},
             time: null,
@@ -112,21 +113,27 @@ export default {
             if(localStorage._passcode) {
                 let key = this.$route.params.key
                 axios.get(`/student-api/election-api/${key}/election-set`).then(({data}) => {
-                    data.positions.forEach(elem => {
-                        if(elem.max_vote > 1) {
-                            elem.vote = []
-                        }else {
-                            elem.vote = ''
-                        }
-                        let close = new Date(data.closing)
-                        let now = new Date()
-                        this.time = close - now
-                    });
-                    this.elect = data
-                    if(data.code != localStorage._passcode) this.valid = false
+                    if(data!='error') {
+                        data.positions.forEach(elem => {
+                            if(elem.max_vote > 1) {
+                                elem.vote = []
+                            }else {
+                                elem.vote = ''
+                            }
+                            let close = new Date(data.closing)
+                            let now = new Date()
+                            this.time = close - now
+                        });
+                        this.elect = data
+                        if(data.code != localStorage._passcode) this.valid = false
+                    }else {
+                        this.valid = false
+                        this.errMsg = 'Election key not found...'
+                    }
                 })
             }else {
                 this.valid = false
+                this.errMsg ='Your passcode is not valid for this election.'
             }
         },
         resetPayload() {

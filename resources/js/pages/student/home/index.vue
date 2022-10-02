@@ -12,8 +12,17 @@
                     </v-btn>
                 </v-toolbar-title>
                 <div class="pl-4">
-                    <div><a href="#">#ELECTION ANNOUNCEMENT</a></div>
-                    <div><a href="#">#Announcement one</a></div>
+                    <div v-if="!loading">
+                        <div><a href="#">#ELECTION ANNOUNCEMENT</a></div>
+                        <div><a href="#">#Announcement one</a></div>
+                    </div>
+                    <div v-else>
+                        <v-skeleton-loader
+                        class="mx-auto"
+                        max-width="374"
+                        type="list-item-three-line"
+                        ></v-skeleton-loader>
+                    </div>
                 </div>
             </v-card-text>
         </v-card>
@@ -28,44 +37,35 @@
                         <v-icon>mdi-refresh</v-icon>
                     </v-btn>
                 </v-toolbar-title>
-                <v-card
-                elevation="0"
-                class="mx-auto my-3 elec-card"
-                max-width="374">
-                    <v-img
-                    height="150"
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-                    ></v-img>
-                    <v-card-title>SSG Election 2022</v-card-title>
-                    <v-card-text>
-                        <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
-                        <div class="text-left">
-                            <div>
-                                <span class="primary--text">
-                                    <v-icon small color="primary">mdi-calendar</v-icon>
-                                    Opening: 02-10-2022 10:00am
-                                </span>
-                            </div>
-                            <span>
-                                <span class="red--text">
-                                    <v-icon small color="red">mdi-calendar</v-icon>
-                                    Closing: 02-10-2022 10:00am
-                                </span>
-                            </span>
-                        </div>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-btn
-                        disabled
-                        block
-                        color="success"
-                        outlined>
-                            Vote Now
-                            <v-icon class="ml-1">mdi-checkbox-outline</v-icon>
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
+                <election v-if="!loading"></election>
+                <div v-else>
+                    <v-skeleton-loader
+                    v-for="n in 5"
+                    :key="n"
+                    class="mx-auto"
+                    max-width="374"
+                    type="image, article"
+                    ></v-skeleton-loader>
+                </div>
             </v-card-text>
         </v-card>
     </div>
 </template>
+<script>
+import Election from '../election/index.vue'
+export default {
+    components: {
+        Election,
+    },
+    data() {
+        return {
+            loading: true,
+        }
+    },
+    created() {
+        setTimeout(() => {
+            this.loading = false
+        },2000)
+    }
+}
+</script>
