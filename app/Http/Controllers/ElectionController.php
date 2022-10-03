@@ -148,6 +148,11 @@ class ElectionController extends Controller
         //
     }
 
+    public function result($id)
+    {
+        
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

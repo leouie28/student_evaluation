@@ -23,5 +23,6 @@ Route::group(['middleware' => ['auth:admin']], function() {
     Route::controller(ElectionController::class)->group(function() {
         Route::post('election/store-set', 'storeElectionSet');
         Route::get('election/get-set/{id}', 'getElectionSet');
+        Route::get('election/{id}/result', 'result');
     });
 });
