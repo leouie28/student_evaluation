@@ -39,22 +39,6 @@
                 </template>
                 <span>Grid View</span>
             </v-tooltip>
-            <v-tooltip v-if="!hide.includes('addNew')" bottom color="primary">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        color="secondary"
-                        dark
-                        @click.stop="$emit('addNew')"
-                        class="mr-2"
-                        v-bind="attrs"
-                        v-on="on"
-                    >
-                        Add 
-                        <v-icon>mdi-plus</v-icon>
-                    </v-btn>
-                </template>
-                <span>Add New</span>
-            </v-tooltip>
             <v-tooltip v-if="!hide.includes('excel')" bottom color="primary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -85,6 +69,22 @@
                     </v-btn>
                 </template>
                 <span>Download {{data.title}} record</span>
+            </v-tooltip>
+            <v-tooltip v-if="!hide.includes('addNew')" bottom color="primary">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        color="secondary"
+                        dark
+                        @click.stop="$emit('addNew')"
+                        class="mr-2"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                        Add 
+                        <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                </template>
+                <span>Add New</span>
             </v-tooltip>
         </v-toolbar>
     </div>

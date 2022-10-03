@@ -5,7 +5,7 @@
         dark
         class="accent-4"
         width="180" 
-        height="90vh" 
+        height="93vh" 
         permanent>
             <v-list dense nav>
                 <v-list-item>
@@ -63,7 +63,7 @@ export default {
 <style scoped>
 .route{
     width: calc(100% - 180px);
-    max-height: 90vh !important;
+    max-height: 93vh !important;
     overflow: auto;
 }
 .act{

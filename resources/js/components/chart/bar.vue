@@ -62,7 +62,6 @@ export default {
   },
   data () {
     return {
-
       chartOptions: {
         indexAxis: 'y',
         responsive: true,
@@ -80,10 +79,12 @@ export default {
             grace: '5%',
           }
         }
-      }
+      },
     }
   },
   created () {
+    let img1 = new Image()
+    img1.src = 'https://picsum.photos/500/300?image=40'
     this.chartOptions.plugins = {
       legend: {
         display: false

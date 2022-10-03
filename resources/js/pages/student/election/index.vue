@@ -14,10 +14,11 @@
             <election-container
             :key="elect.id"
             :elect="elect"
-            @codeDialog="codeDialog=true"
+            @codeDialog="codeShow(elect.urlkey)"
             ></election-container>
         </template>
         <code-dialog
+        :urlKey="urlKey"
         :show="codeDialog"
         @close="codeDialog=false">
         </code-dialog>
@@ -36,6 +37,7 @@ export default {
             noKey: false,
             codeDialog: false,
             code: '',
+            urlKey: '',
             closed: false,
             elect: {},
             elects: []
@@ -58,6 +60,10 @@ export default {
                     this.elects = data
                 })
             }
+        },
+        codeShow(key) {
+            this.codeDialog = true
+            this.urlKey = key
         },
         submitCode() {
 

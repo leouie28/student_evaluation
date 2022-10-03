@@ -53,23 +53,30 @@ export default {
             submitting: false,
             invalid: false,
             log: '',
+            urlKey1: ''
         }
     },
     props: {
         show: {
             type: Boolean,
             default: () => false
+        },
+        urlKey: {
+            type: String,
+            default: () => ''
         }
     },
     mounted() {
-        console.log(this.$route.params.key,'123')
+        
     },
     methods: {
         submitCode() {
             console.log(this.code)
             if(this.code.length >= 1) {
                 this.submitting = true
-                let key = this.$route.params.key
+                let key = ''
+                if(this.$route.params.key) key = this.$route.params.key
+                else key = this.urlKey1
                 axios.post(`/student-api/election-api/${key}/check-code`, this.code).then(({data}) => {
                     setTimeout(() => {
                         if(data.type=='error') {
@@ -84,6 +91,13 @@ export default {
                     },2000)
                 })
             }
+        }
+    },
+    watch: {
+        urlKey: {
+            handler(val) {
+                this.urlKey1 = val
+            },immediate:true,deep:true
         }
     }
 }
