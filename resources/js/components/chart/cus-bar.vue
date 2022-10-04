@@ -1,31 +1,26 @@
 <template>
     <div>
-        <div class="cb w-100" v-for="n in 5" :key="n">
+        <div class="cb w-100 mb-4" v-for="pos in elect.positions" :key="pos.id">
             <div class="cb-title text-center">
-                Position Name
+                <v-toolbar-title>{{pos.name}}</v-toolbar-title>
             </div>
-            <div class="d-flex align-center bar">
+            <div class="d-flex align-center bar" v-for="cand in pos.candidate" :key="cand.id">
                 <div class="bar-left justify-end d-flex align-center">
-                    <span>Candidate Name</span>
+                    <span>{{cand.name}}</span>
                     <v-avatar>
                         <v-icon>mdi-account-circle</v-icon>
                     </v-avatar>
                 </div>
                 <div class="bar-right w-100 d-flex align-center">
-                    <div class="bar-block bg" :style="'background:'+pickColor() + '; width:90%;'"></div>
-                    <div class="ml-2">{{Math.random() * 10}} votes</div>
-                </div>
-            </div>
-            <div class="d-flex align-center bar">
-                <div class="bar-left justify-end d-flex align-center">
-                    <span>Candidate Name</span>
-                    <v-avatar>
-                        <v-icon>mdi-account-circle</v-icon>
-                    </v-avatar>
-                </div>
-                <div class="bar-right w-100 d-flex align-center">
-                    <div class="bar-block bg" style="width:90%;"></div>
-                    <div class="ml-2">28 votes</div>
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on, attrs }">
+                            <div class="bar-block" :style="'width:'+computeWidth(cand.vote_count)+'%'" v-bind="attrs" v-on="on">
+                                <div class="block-content bg" :style="'background:'+pickColor() + ';'"></div>
+                            </div>
+                        </template>
+                    <span>{{cand.name + ' - ' + cand.vote_count}} votes</span>
+                    </v-tooltip>
+                    <div class="ml-2">{{cand.vote_count}} votes</div>
                 </div>
             </div>
         </div>
@@ -42,8 +37,11 @@ export default {
     methods: {
         pickColor() {
             return '#'+(Math.random()*0xFFFFFF<<0).toString(16)
+        },
+        computeWidth(val) {
+            return (val/this.elect.voters_count) * 90
         }
-    }
+    },
 }
 </script>
 <style scoped>
@@ -59,6 +57,9 @@ export default {
 .bar-right .bar-block {
     height: 40px;
     margin: 5px 0;
+}
+.bar-right .bar-block .block-content {
+    height: 100%;
     animation-name: grow;
     animation-duration: 2s;
 }
@@ -67,7 +68,7 @@ export default {
         width: 0;
     }
     to {
-        width: 90%;
+        width: 100%;
     }
 }
 .bg {

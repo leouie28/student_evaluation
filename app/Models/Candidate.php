@@ -19,8 +19,14 @@ class Candidate extends Model
 
     protected $appends = [
         'image',
-        'partylist'
+        'partylist',
+        'vote_count'
     ];
+
+    public function getVoteCountAttribute()
+    {
+        return $this->votes()->count();
+    }
 
     public function getImageAttribute()
     {
@@ -35,6 +41,11 @@ class Candidate extends Model
     public function getPartylistAttribute()
     {
         return $this->partylist_id;
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(ExtractedVote::class);
     }
 
     public function images()

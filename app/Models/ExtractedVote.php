@@ -16,6 +16,20 @@ class ExtractedVote extends Model
         'student_id',
     ];
 
+    // protected $appends = [
+    //     'tally',
+    // ];
+
+    // public function getTallyAttribute()
+    // {
+        
+    // }
+
+    // public function tally()
+    // {
+    //     return $this->position;
+    // }
+
     public function vote()
     {
         return $this->belongsTo(Vote::class);

@@ -32,7 +32,12 @@ class Election extends Model
         'security',
         'opening',
         'closing',
+        'voters_count',
     ];
+
+    public function getVotersCountAttribute() {
+        return Student::count();
+    }
 
     public function getSecurityAttribute()
     {

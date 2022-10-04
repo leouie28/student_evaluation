@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Filters\Filter;
 use App\Models\Candidate;
 use App\Models\Election;
+use App\Models\ExtractedVote;
 use App\Models\Image;
 use App\Models\Position;
 use Exception;
@@ -150,7 +151,11 @@ class ElectionController extends Controller
 
     public function result($id)
     {
-        
+        try{
+            return Election::with('positions')->find($id);
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
