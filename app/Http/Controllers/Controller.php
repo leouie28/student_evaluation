@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\Election;
 use App\Models\ExtractedVote;
+use App\Models\Partylist;
+use App\Models\Student;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -41,5 +45,19 @@ class Controller extends BaseController
         if($extact) return true;
 
         return false;
+    }
+
+    public function stat()
+    {
+        try{
+            return [
+                'announcements' => Announcement::count(),
+                'elections' => Election::count(),
+                'voters' => Student::count(),
+                'partygroups' => Partylist::count(),
+            ];
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

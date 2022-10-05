@@ -24,7 +24,7 @@
                 hide-details="">
                 </v-text-field>
             </div>
-            <v-tooltip v-if="!hide.includes('gridView')" bottom color="primary">
+            <!-- <v-tooltip v-if="!hide.includes('gridView')" bottom color="primary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="primary"
@@ -38,7 +38,7 @@
                     </v-btn>
                 </template>
                 <span>Grid View</span>
-            </v-tooltip>
+            </v-tooltip> -->
             <v-tooltip v-if="!hide.includes('excel')" bottom color="primary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn

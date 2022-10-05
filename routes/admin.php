@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\PartylistController;
 use App\Http\Controllers\StudentController;
@@ -20,6 +21,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
         Route::post('student/insert-excel', 'importExcel');
     });
 
+    Route::get('status', [Controller::class, 'stat']);
     Route::controller(ElectionController::class)->group(function() {
         Route::post('election/store-set', 'storeElectionSet');
         Route::get('election/get-set/{id}', 'getElectionSet');

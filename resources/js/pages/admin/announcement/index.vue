@@ -99,7 +99,7 @@ export default {
         form: false,
         excelForm: false,
         data: {
-            title: "Party Group",
+            title: "Announcement",
             isFetching: false,
             keyword: "",
             filter: {},
@@ -120,10 +120,8 @@ export default {
         headers: [
             { text: "ID", align: "start", sortable: true, value: "id", },
             { text: "Name", align: "start", sortable: true, value: "name", },
-            { text: "Short Description", align: "start", sortable: false, value: "short_description", },
-            { text: "Description", align: "start", sortable: true, value: "description", },
+            { text: "Content", align: "start", sortable: false, value: "conent", },
             { text: "Date Added", align: "start", sortable: true, value: "created_at", },
-            { text: "Color Theme", align: "start", sortable: false, value: "color_theme", },
             { text: "Actions", align: "center", sortable: false, value: "action", },
         ],
     }),

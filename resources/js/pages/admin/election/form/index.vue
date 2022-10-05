@@ -12,7 +12,7 @@
                     <span class="text-subtitle-1 mr-1">Election Url: </span>
                     <v-tooltip bottom color="primary">
                         <template v-slot:activator="{ on, attrs }">
-                            <v-chip label outlined v-bind="attrs" v-on="on" color="success">
+                            <v-chip label outlined v-bind="attrs" v-on="on" @click="copyLink" color="success">
                                 {{url}}
                                 <v-icon small class="ml-2">mdi-content-copy</v-icon>
                             </v-chip>
@@ -183,7 +183,12 @@ export default {
                     this.$router.push({path: '/admin/election'})
                 },2000)
             })
-        }
+        },
+        copyLink() {
+            let url = this.url
+            navigator.clipboard.writeText(url);
+            alert("Link copied to clipboard")
+        },
     },
 }
 </script>
