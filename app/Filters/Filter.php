@@ -24,12 +24,12 @@ class Filter
     {
         $searchable = ['name'];
         if (Request()->keyword && Request()->keyword != "null") {
-        $keyword = Request()->keyword;
-        foreach ($searchable as $column) {
-            if ($column == 'name') {
-            $this->model->orWhere($column, 'like', "%" . $keyword . "%");
+            $keyword = Request()->keyword;
+            foreach ($searchable as $column) {
+                if ($column == 'name') {
+                $this->model->orWhere($column, 'like', "%" . $keyword . "%");
+                }
             }
-        }
         }
     }
 

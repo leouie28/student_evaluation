@@ -15,6 +15,15 @@ class Vote extends Model
         'student_id',
     ];
 
+    protected $appends = [
+        'voter',
+    ];
+
+    public function getVoterAttribute()
+    {
+        return $this->student->name;
+    }
+
     public function election()
     {
         return $this->belongsTo(Election::class);

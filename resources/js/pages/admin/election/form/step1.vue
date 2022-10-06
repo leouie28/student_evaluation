@@ -220,7 +220,7 @@
                                 color="brown"
                                 prominent
                                 border="left">
-                                    Unique url will be generated automatically when you finish making election.
+                                    Note* Election cannot be edited once it open to the voters.
                                 </v-alert>
                             </v-col>
                         </v-row>

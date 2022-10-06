@@ -13,7 +13,7 @@
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-            <div>
+            <div v-if="elects.length>0">
                 <v-card elevation="0">
                     <!-- <v-btn outlined class="mb-2">
                         Select Election Name
@@ -24,39 +24,65 @@
                             <v-select
                             outlined
                             dense
+                            v-model="selectedId"
+                            :items="elects"
+                            item-value="id"
+                            item-text="name"
                             hide-details=""
-                            label="Select Election"
+                            placeholder="Select Election"
+                            @change="getElection"
                             ></v-select>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col md="8" cols="12">
                             <v-card outlined>
-                                <v-card-title>Status</v-card-title>
-                                <v-card-text>
+                                <v-card-title class="mb-0 pb-0">Status</v-card-title>
+                                <v-divider></v-divider>
+                                <v-card-text class="pt-0">
                                     <custom-bar :elect="elect"></custom-bar>
                                 </v-card-text>
                             </v-card>
                         </v-col>
                         <v-col md="4" cols="12">
                             <v-card outlined>
-                                <v-card-title>Votes</v-card-title>
-                                <v-card-text>
-                                    <v-timeline align-top>
+                                <v-card-title class="mb-0 pb-0">Voted</v-card-title>
+                                <v-divider></v-divider>
+                                <v-card-text class="pt-0">
+                                    <v-timeline align-top v-if="votes.length>0">
                                         <v-timeline-item
-                                        v-for="n in 9"
-                                        :key="n"
+                                        class="pb-0"
+                                        v-for="vote in votes"
+                                        :key="vote.id"
                                         :color="pickColor()"
                                         small>
-                                            <span class="pt-1">02/10/22 User submit vote</span>
+                                            <span class="pt-1">{{`${moment(vote.created_at).format('MM/DD/YY')} ${vote.voter}`}}</span>
                                         </v-timeline-item>
                                     </v-timeline>
+                                    <div class="pa-10" v-else>
+                                        <v-img
+                                        src="/images/system/admin-empty.svg"
+                                        ></v-img>
+                                        <br>
+                                        <div class="mt-2 text-center">No currently vote record...</div>
+                                    </div>
                                 </v-card-text>
                             </v-card>
                         </v-col>
                     </v-row>
                 </v-card>
             </div>
+            <v-card v-else outlined>
+                <div class="pa-10 text-center">
+                    <v-img
+                    class="mx-auto"
+                    width="300"
+                    src="/images/system/admin-empty.svg"
+                    ></v-img>
+                    <br>
+                    <div class="mt-2 text-center">No currently vote record...</div>
+                </div>
+            </v-card>
         </v-card>
     </div>
 </template>
@@ -68,23 +94,37 @@ export default {
     },
     data() {
         return {
+            selectedId: '',
+            elects: [],
+            votes: [],
             elect: {},
             stats: [
-                {name: 'Announcements', color: 'red', icon: 'mdi-bullhorn-outline', data: ''},
-                {name: 'Elections', color: 'brown', icon: 'mdi-printer-outline', data: ''},
-                {name: 'Voters', color: 'secondary', icon: 'mdi-account-group-outline', data: ''},
-                {name: 'Party Groups', color: 'success', icon: 'mdi-flag-outline', data: ''},
+                {name: 'Announcements', color: 'red', icon: 'mdi-bullhorn-outline', data: '0'},
+                {name: 'Elections', color: 'brown', icon: 'mdi-printer-outline', data: '0'},
+                {name: 'Voters', color: 'secondary', icon: 'mdi-account-group-outline', data: '0'},
+                {name: 'Party Groups', color: 'success', icon: 'mdi-flag-outline', data: '0'},
             ],
         }
     },
     created() {
-        this.getElection(1)
+        this.getElectionList()
         this.getStat()
     },
     methods: {
-        getElection(id) {
+        getElectionList() {
+            axios.get(`/admin-api/election?per_page=-1`).then(({data}) => {
+                this.elects = data.data
+                if(data.data.length>0) {
+                    this.selectedId = this.elects[0].id
+                    this.getElection()
+                }
+            })
+        },
+        getElection() {
+            let id = this.selectedId
             axios.get(`/admin-api/election/${id}/result`).then(({data}) => {
-                this.elect = data
+                this.elect = data.election
+                this.votes = data.votes
             })
         },
         getStat() {

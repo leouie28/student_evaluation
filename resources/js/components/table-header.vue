@@ -80,7 +80,7 @@
                         v-bind="attrs"
                         v-on="on"
                     >
-                        Add 
+                        Create 
                         <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </template>

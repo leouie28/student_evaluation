@@ -8,6 +8,7 @@ use App\Models\Election;
 use App\Models\ExtractedVote;
 use App\Models\Image;
 use App\Models\Position;
+use App\Models\Vote;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -152,7 +153,10 @@ class ElectionController extends Controller
     public function result($id)
     {
         try{
-            return Election::with('positions')->find($id);
+            return [
+                'election' => Election::with('positions')->find($id),
+                'votes' => Vote::where('election_id', $id)->orderBy('id', 'desc')->get()
+            ];
         }catch(Exception $e) {
             return $e->getMessage();
         }
@@ -178,7 +182,15 @@ class ElectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            
+        }catch(Exception $e) {
+            return [
+                'data' => $request,
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
     /**

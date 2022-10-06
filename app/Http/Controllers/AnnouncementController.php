@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\Filter;
+use App\Models\Announcement;
+use Exception;
 use Illuminate\Http\Request;
 
 class AnnouncementController extends Controller
@@ -13,7 +16,8 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        //
+        $model = Announcement::class;
+        return (new Filter($model))->searchable();
     }
 
     /**
@@ -34,7 +38,21 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $request['maker'] = auth()->guard('admin')->user()->id;
+            $announce = Announcement::create($request->toArray());
+            return [
+                'data' => $announce,
+                'type' => 'success',
+                'message' => 'Announcement successfully added...',
+            ];
+        }catch(Exception $e) {
+            return [
+                'data' => $request,
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
     /**
@@ -68,7 +86,21 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $announce = Announcement::find($id);
+            $announce->update($request->toArray());
+            return [
+                'data' => $announce,
+                'type' => 'success',
+                'message' => 'Announcement successfully updated....',
+            ];
+        }catch(Exception $e) {
+            return [
+                'data' => $request,
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
     /**
@@ -79,6 +111,19 @@ class AnnouncementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $announce = Announcement::destroy($id);
+            return [
+                'data' => $announce,
+                'type' => 'success',
+                'message' => 'Announcement successfully deleted....',
+            ];
+        }catch(Exception $e) {
+            return [
+                'data' => $id,
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 }

@@ -20,8 +20,8 @@ export default {
                 this.alert_data.trigger = trigger
             }, 1000)
         },
-        _warning(text, item){
-            this.warning_data.trigger = true
+        _warning(trigger, text, item){
+            this.warning_data.trigger = trigger
             this.warning_data.text = text
             if(item){
                 this.warning_data.item = item
