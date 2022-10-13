@@ -3,11 +3,15 @@
         <v-app-bar
         app
         flat
+        class="header-student"
         elevation="4">
             <div class="d-flex justify-space-between align-center w-100">
                 <span @click="$router.push({path: '/home'}).catch(() => {})" style="cursor:pointer;">
-                    <v-avatar>
-                        <v-icon>mdi-account-circle</v-icon>
+                    <v-avatar size="34">
+                        <!-- <v-icon>mdi-account-circle</v-icon> -->
+                        <v-img
+                        src="/images/system/logo.png"
+                        ></v-img>
                     </v-avatar>
                     CKC Voting System
                 </span>
@@ -48,7 +52,7 @@
             </div>
         </v-app-bar>
         <v-main>
-            <v-container fluid class="pa-2 grey lighten-5" style="min-height:90vh;">
+            <v-container fluid class="pa-2 mx-auto grey student-main lighten-5" style="min-height:90vh;">
                 <transition name="slide-y-reverse-transition" mode="out-in">
                     <router-view></router-view>
                 </transition>
@@ -66,7 +70,16 @@ export default {
 }
 </script>
 <style scoped>
+
+.student-main {
+    max-width: 600px !important;
+}
+
 @media screen and (max-width: 600px) {
+    .header-student {
+        padding-right: 5px;
+        padding-left: 10px;
+    }
     .user {
         min-width: unset !important;
     }

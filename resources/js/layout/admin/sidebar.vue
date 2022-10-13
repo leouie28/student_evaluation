@@ -1,8 +1,11 @@
 <template>
     <div>
-        <div style="height:150px">
+        <div style="height:150px" class="text-center">
             <v-img
-            src="https://picsum.photos/500/300?image=40">
+            class="text-center mx-auto my-4" 
+            height="170"
+            width="170"
+            src="/images/system/logo.png">
             </v-img>
         </div>
       <v-list class="mt-5">

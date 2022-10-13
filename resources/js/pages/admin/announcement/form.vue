@@ -9,7 +9,7 @@
                         <v-col md="12" cols="12">
                             <v-text-field
                             dense
-                            label="Titile"
+                            label="Heading/Titile"
                             v-model="payload.title"
                             :rules="rule"
                             filled
@@ -20,7 +20,7 @@
                         <v-col md="12" cols="12">
                             <v-textarea
                             dense
-                            label="Content"
+                            label="Content/Message"
                             v-model="payload.content"
                             :rules="rule"
                             filled
@@ -36,8 +36,8 @@
                         Close
                     </v-btn>
                     <v-btn color="secondary" @click="save">
-                        {{isEdit?'Update':'Create'}}
-                        <v-icon class="ml-2">mdi-{{isEdit?'content-save':'plus'}}</v-icon>
+                        {{isEdit?'Update':'Send'}}
+                        <v-icon class="ml-2">mdi-{{isEdit?'content-save':'send'}}</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>

@@ -3,7 +3,7 @@
         <v-card
         elevation="0"
         class="mx-auto my-3 elec-card"
-        max-width="374">
+        max-width="600">
             <v-img
             height="150"
             :src="elect.image"

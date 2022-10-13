@@ -3,12 +3,13 @@
         <v-card rounded="lg" elevation="4" max-width="400" class="mx-auto py-4">
             <v-card-text>
                 <div class="text-center mb-8">
-                    <v-avatar size="150" class="mx-auto">
+                    <v-avatar size="170" class="mx-auto">
                         <v-img
                         alt="School Logo"
-                        src="https://picsum.photos/500/300?image=40"
+                        src="/images/system/logo.png"
                         ></v-img>
                     </v-avatar>
+                    <h4 class="mt-3 secondary--text">CKC Voting System</h4>
                 </div>
                 <v-row>
                     <v-col cols="12" md="12">
