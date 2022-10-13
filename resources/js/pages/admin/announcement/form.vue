@@ -47,7 +47,7 @@
 <script>
 export default {
     data: () => ({
-        isEdit: false,
+        // isEdit: false,
         payload: {
             title: '',
             content: '',
@@ -58,29 +58,12 @@ export default {
         },
         rule: [v => !! v || 'This field is required'],
     }),
-    methods: {
-        save() {
-            if(this.payload.title && this.payload.content){
-                if(this.payload.isEdit) {
-                    this.$emit('update',this.payload)
-                }else {
-                    this.$emit('save',this.payload)
-                }
-            }else{
-                alert('Important field are required')
-            }
-        },
-        closeForm() {
-            // console.log(this.payload)
-            this.payload = JSON.parse(JSON.stringify(this.orig))
-            this.$emit('close')
-            setTimeout(() => {
-                this.isEdit = false
-            },100)
-        }
-    },
     props: {
         show: {
+            type: Boolean,
+            default: () => false
+        },
+        edit: {
             type: Boolean,
             default: () => false
         },
@@ -89,15 +72,41 @@ export default {
             default: () => {}
         }
     },
-    watch: {
-        isEdit(val) {
-            console.log(val)
+    mounted() {
+        console.log(this._getters('is_editing'),'form')
+    },
+    methods: {
+        save() {
+            if(this.payload.title && this.payload.content){
+                if(this.isEdit) {
+                    this.$emit('update',this.payload)
+                    this.closeForm()
+                }else {
+                    this.$emit('save',this.payload)
+                    this.closeForm()
+                }
+            }else{
+                alert('Important field are required')
+            }
         },
+        closeForm() {
+            // console.log(this.payload)
+            this.$emit('close')
+            setTimeout(() => {
+                this._commit('is_editing', false)
+                this.payload = JSON.parse(JSON.stringify(this.orig))
+            },200)
+        }
+    },
+    computed: {
+        isEdit() {
+            return this._getters('is_editing')
+        }
+    },
+    watch: {
         data: {
             handler(val) {
                 if(val) {
-                    console.log(val)
-                    this.isEdit = true
                     this.payload = val
                 }
             },immediate:true,deep:true

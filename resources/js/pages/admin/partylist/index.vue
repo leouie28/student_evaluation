@@ -80,8 +80,14 @@
                 </template>
             </v-data-table>
         </v-card>
-        <data-form :show="form" @close="close" @save="save"></data-form>
+        <data-form 
+        :show="form" 
+        :data="selectedItem" 
+        @close="close" 
+        @save="save">
+        </data-form>
         <Alert :data="alert_data"></Alert>
+        <Warning :data="warning_data" @close="close" @confirm="confirm"></Warning>
     </div>
 </template>
 
@@ -120,7 +126,6 @@ export default {
         headers: [
             { text: "ID", align: "start", sortable: true, value: "id", },
             { text: "Name", align: "start", sortable: true, value: "name", },
-            { text: "Short Description", align: "start", sortable: false, value: "short_description", },
             { text: "Description", align: "start", sortable: true, value: "description", },
             { text: "Date Added", align: "start", sortable: true, value: "created_at", },
             { text: "Color Theme", align: "start", sortable: false, value: "color_theme", },
@@ -140,9 +145,11 @@ export default {
             });
         },
         editItem(val){
-            console.log(this.alert_data.trigger,'trigger')
+            console.log(val)
+            // console.log(this.alert_data.trigger,'trigger')
+            this._commit('is_editing', true)
             this.selectedItem = val
-            this.showForm = true
+            this.form = true
         },
         save(payload) {
             this.form = false
@@ -166,6 +173,7 @@ export default {
             this.excelForm = true
         },
         close() {
+            this.selectedItem = {}
             this.form = false
             this.excelForm = false
         },

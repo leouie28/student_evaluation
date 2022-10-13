@@ -5,9 +5,8 @@
             :data="data"
             @addNew="addNew"
             @refresh="fetchPage"
-            @importExcel="importExcel"
             @search="fetchPage"
-            :hide="['filter', 'download', 'excel']">
+            :hide="['filter', 'download', 'excel', 'addNew']">
                 <template v-slot:custom_filter>
                     <admin-filter :filter="data.filter"></admin-filter>
                 </template>
@@ -25,54 +24,19 @@
             @click:row="viewItem"
             class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
-                <template v-slot:[`item.name`]="{ item }">
-                    <v-avatar size="30" class="mr-1">
-                        <v-img
-                        alt="icon"
-                        :src="item.images.length>0?imageSrc(item.images[0]):'/images/system/noimage.png'"
-                        ></v-img>
-                    </v-avatar>
-                    <span>{{item.name}}</span>
-                </template>
-                <template v-slot:[`item.short_description`]="{ item }">
-                    {{item.short_description?item.short_description:'...'}}
-                </template>
-                <template v-slot:[`item.description`]="{ item }">
-                    {{item.description?item.description:'...'}}
-                </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
-                </template>
-                <template v-slot:[`item.color_theme`]="{ item }">
-                    <v-avatar size="18" :color="item.color_theme"></v-avatar>
-                    {{item.color_theme}}
-                </template>
-                <template v-slot:[`item.active`]="{ item }">
-                    <v-switch
-                    v-model="item.active"
-                    color="success"
-                    inset
-                    :label="item.active?'Active':'Inactive'"
-                    ></v-switch>
                 </template>
                 <template v-slot:[`item.action`]="{ item }">
                     <v-btn
                         class="px-2"
                         elevation="0"
-                        icon
+                        small
                         color="primary"
                         @click="editItem(item)"
                     >
-                        <v-icon>mdi-square-edit-outline</v-icon>
-                    </v-btn>
-                    <v-btn
-                        class="px-2"
-                        elevation="0"
-                        icon
-                        color="error"
-                        @click="warning(item)"
-                    >
-                        <v-icon>mdi-trash-can</v-icon>
+                        <v-icon class="mr-1" small>mdi-eye</v-icon>
+                        view vote
                     </v-btn>
                 </template>
                 <template v-slot:no-data>
@@ -80,7 +44,6 @@
                 </template>
             </v-data-table>
         </v-card>
-        <Alert :data="alert_data"></Alert>
     </div>
 </template>
 
@@ -93,8 +56,6 @@ export default {
         TableHeader,
     },
     data: () => ({
-        form: false,
-        excelForm: false,
         data: {
             title: "Votes",
             isFetching: false,
@@ -108,19 +69,15 @@ export default {
             itemsPerPage: 15,
         },
         total: 0,
-        deleteForm: false,
-        showForm: false,
-        dialogDelete: false,
         items: [],
         selectedItem: {},
         selected: [],
         headers: [
             { text: "ID", align: "start", sortable: true, value: "id", },
-            { text: "Name", align: "start", sortable: true, value: "name", },
-            { text: "Short Description", align: "start", sortable: false, value: "short_description", },
-            { text: "Description", align: "start", sortable: true, value: "description", },
-            { text: "Date Added", align: "start", sortable: true, value: "created_at", },
-            { text: "Color Theme", align: "start", sortable: false, value: "color_theme", },
+            { text: "Voter Id", align: "start", sortable: true, value: "voter_id", },
+            { text: "Voter Name", align: "start", sortable: true, value: "voter_name", },
+            { text: "Vote Data", align: "start", sortable: true, value: "data", },
+            { text: "Date Submitted", align: "start", sortable: true, value: "created_at", },
             { text: "Actions", align: "center", sortable: false, value: "action", },
         ],
     }),
@@ -130,57 +87,18 @@ export default {
             let params = this._createParams(this.options);
             params = params + this._createFilterParams(this.data.filter);
             if (this.data.keyword) params = params + "&keyword=" + this.data.keyword;
-            axios.get(`/admin-api/partylist?${params}`).then(({ data }) => {
-                this.data_items = data.data;
-                this.total = data.total;
+            let id = this.$route.params.id
+            axios.get(`/admin-api/election/get-votes/${id}?${params}`).then(({ data }) => {
+                this.data.title = data.details.name + ' Votes'
+                this.data_items = data.votes.data;
+                this.total = data.votes.total;
                 this.data.isFetching = false;
             });
-        },
-        editItem(val){
-            console.log(this.alert_data.trigger,'trigger')
-            this.selectedItem = val
-            this.showForm = true
-        },
-        save(payload) {
-            this.form = false
-            axios.post(`/admin-api/partylist`, payload).then(({ data }) => {
-                this.fetchPage()
-                this._newAlert(true, data.type, data.message)
-            }).finally(()=>{
-                this.showForm = false;
-                this.payload = null;
-            })
-        },
-        update(payload) {
-            axios.put(`/admin-api/customer/${this.selectedItem.id}`, payload).then(({ data }) => {
-                this.showForm = false;
-                this.fetchPage()
-                this._newAlert(true, data.type, data.message)
-                this.payload = null;
-            })
-        },
-        importExcel() {
-            this.excelForm = true
         },
         close() {
             this.form = false
             this.excelForm = false
         },
-        warning(val){
-            this.user = {
-                id: val.id,
-                text: val.first_name+' '+val.last_name,
-                model: 'customer'
-            }
-            this.deleteForm = true
-        },
-        confirm() {
-            axios.delete(`/admin-api/${this.user.model}/${this.user.id}`).then(({data})=>{
-                this.deleteForm = false
-                this.fetchPage()
-                this._newAlert(true, data.type, data.message)
-            });
-        }
     },
 };
 </script>

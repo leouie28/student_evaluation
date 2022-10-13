@@ -53,7 +53,14 @@
                 </template>
             </v-data-table>
         </v-card>
-        <data-form :show="form" :data="selectedItem" @close="close" @save="save" @update="update"></data-form>
+        <template v-if="form">
+            <data-form
+            :show="true"
+            :data="selectedItem" 
+            @close="close" @save="save" 
+            @update="update">
+            </data-form>
+        </template>
         <Alert :data="alert_data"></Alert>
         <Warning :data="warning_data" @close="close" @confirm="confirm"></Warning>
     </div>
@@ -113,6 +120,7 @@ export default {
         },
         editItem(val){
             // console.log(this.alert_data.trigger, val,'trigger')
+            this._commit('is_editing', true)
             this.selectedItem = val
             this.form = true
         },

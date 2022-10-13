@@ -4,7 +4,7 @@
       v-model="drawer"
       app
     >
-        <side-bar></side-bar>
+        <side-bar @logout="$emit('logout')"></side-bar>
     </v-navigation-drawer>
 
     <Header @toggle="toggle"></Header>

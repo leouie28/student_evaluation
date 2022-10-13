@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <div class="cb w-100 mb-4" v-for="pos in elect.positions" :key="pos.id">
             <div class="cb-title text-center">
                 <v-toolbar-title>{{pos.name}}</v-toolbar-title>
@@ -25,9 +25,25 @@
             </div>
         </div>
     </div>
+    <div v-else class="d-flex align-center justify-center" style="min-height:80vh;">
+        <div class="text-center">
+            <v-progress-circular
+            :size="70"
+            :width="7"
+            color="primary"
+            indeterminate
+            ></v-progress-circular>
+            <div class="mt-5">
+                Loading Information ...
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 export default {
+    data: () => ({
+        loading: true,
+    }),
     props: {
         elect: {
             type: Object,
@@ -42,6 +58,17 @@ export default {
             return (val/this.elect.voters_count) * 90
         }
     },
+    watch: {
+        elect: {
+            handler(val) {
+                if(val) {
+                    setTimeout(() => {
+                        this.loading = false
+                    },1000)
+                }
+            }
+        }
+    }
 }
 </script>
 <style scoped>

@@ -56,7 +56,6 @@
                             color="secondary"
                             v-bind="attrs"
                             v-on="on"
-                            @click="editItem(item)"
                         >
                             <v-icon>mdi-eye</v-icon>
                         </v-btn>
@@ -72,7 +71,7 @@
                             color="primary"
                             v-bind="attrs"
                             v-on="on"
-                            @click="editItem(item)"
+                            @click.stop="editItem(item)"
                         >
                             <v-icon>mdi-square-edit-outline</v-icon>
                         </v-btn>
@@ -176,9 +175,14 @@ export default {
             this.$router.push({path: this.$route.path+'/'+item.id+'/status'})
         },
         editItem(val){
-            console.log(this.alert_data.trigger,'trigger')
-            this.selectedItem = val
-            this.showForm = true
+            // console.log(this.alert_data.trigger,'trigger')
+            // this.selectedItem = val
+            // this.showForm = true
+            localStorage.setItem('_show', 1)
+            axios.get(`/admin-api/election/get-set/${val.id}`).then(({ data }) => {
+                localStorage.setItem('payload', JSON.stringify(data))
+            })
+            this.$router.push({path: `/admin/election/${val.id}/details`})
         },
         save(payload) {
             this.form = false

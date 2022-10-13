@@ -2,7 +2,7 @@
     <v-app v-if="!fetching" id="inspire">
         <Login v-if="!auth"></Login>
         <Student @logout="logout" v-else-if="auth==2"></Student>
-        <Admin v-else-if="auth==1"></Admin>
+        <Admin @logout="logout" v-else-if="auth==1"></Admin>
     </v-app>
 </template>
 <script>

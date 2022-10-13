@@ -49,6 +49,7 @@ class StudentController extends Controller
                 ];
             }else{
                 $student = Student::create($request->toArray());
+                $student->status = $request->active;
                 $student->password = bcrypt($request->password);
                 $student->save();
                 return [
@@ -119,7 +120,22 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $voter = Student::find($id);
+            $request['status'] = $request->active;
+            $voter->update($request->toArray());
+            return [
+                'data' => $voter,
+                'type' => 'success',
+                'message' => 'Voter successfully updated....',
+            ];
+        }catch(Exception $e) {
+            return [
+                'data' => $request,
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
     /**
@@ -130,6 +146,19 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $voter = Student::destroy($id);
+            return [
+                'data' => $voter,
+                'type' => 'success',
+                'message' => 'Voter successfully removed....',
+            ];
+        }catch(Exception $e) {
+            return [
+                'data' => $voter,
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 }

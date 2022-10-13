@@ -34,6 +34,7 @@ export default {
             });
         },
         addNew() {
+            this._commit('is_editing', false)
             this.form = true;
         },
         _asset(file) {

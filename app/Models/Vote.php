@@ -17,11 +17,23 @@ class Vote extends Model
 
     protected $appends = [
         'voter',
+        'voter_id',
+        'voter_name',
     ];
 
     public function getVoterAttribute()
     {
         return $this->student->name;
+    }
+
+    public function getVoterNameAttribute()
+    {
+        return $this->student->name;
+    }
+
+    public function getVoterIdAttribute()
+    {
+        return $this->student->student_id;
     }
 
     public function election()

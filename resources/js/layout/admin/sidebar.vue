@@ -29,6 +29,7 @@
             block
             elevation="2"
             color="brown lighten-4"
+            @click="$emit('logout')"
             >
                 <v-icon>mdi-logout-variant</v-icon>
                 Logout

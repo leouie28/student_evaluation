@@ -2,7 +2,7 @@
     <div class="pa-2">
         <v-card elevation="2" class="pa-2">
             <v-card-text>
-                <custom-bar :elect="elect"></custom-bar>
+                <custom-bar :elect="elect.election"></custom-bar>
             </v-card-text>
         </v-card>
     </div>

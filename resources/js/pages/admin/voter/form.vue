@@ -33,7 +33,6 @@
                             dense
                             label="Password"
                             v-model="payload.password"
-                            :rules="rule"
                             filled
                             required
                             hide-details="auto"
@@ -60,12 +59,12 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text @click="$emit('close')">
+                    <v-btn text @click="close">
                         Close
                     </v-btn>
                     <v-btn color="secondary" @click="save">
-                        Create
-                        <v-icon>mdi-plus</v-icon>
+                        {{isEdit?'Update':'Create'}}
+                        <v-icon>mdi-{{isEdit?'content-save':'plus'}}</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -73,6 +72,7 @@
     </div>
 </template>
 <script>
+import { watch } from 'vue'
 export default {
     data: () => ({
         payload: {
@@ -82,12 +82,40 @@ export default {
             password: '',
             active: '1',
         },
+        orig: {
+            isEdit: false,
+            student_id: '',
+            name: '',
+            password: '',
+            active: '1',
+        },
         rule: [v => !! v || 'This field is required']
     }),
+    mounted() {
+        console.log('test')
+    },
+    computed: {
+        isEdit() {
+            return this._getters('is_editing') 
+        }
+    },
     methods: {
+        close() {
+            this.$emit('close')
+            setTimeout(() => {
+                this._commit('is_editing',false)
+                this.payload = JSON.parse(JSON.stringify(this.orig))
+            },200)
+        },
         save() {
             if(this.payload.student_id && this.payload.name){
-                this.$emit('save',this.payload)
+                if(this.isEdit) {
+                    this.$emit('update', this.payload)
+                    this.close()
+                }else {
+                    this.$emit('save',this.payload)
+                    this.close()
+                }
             }else{
                 alert('Important field are required')
             }
@@ -97,6 +125,21 @@ export default {
         show: {
             type: Boolean,
             default: () => false
+        },
+        data: {
+            type: Object,
+            default: () => {}
+        }
+    },
+    watch: {
+        data: {
+            handler(val) {
+                if(val) {
+                    this.payload = val
+                    this.payload.active = String(val.status)
+                    console.log(this.payload)
+                }
+            }
         }
     }
 }

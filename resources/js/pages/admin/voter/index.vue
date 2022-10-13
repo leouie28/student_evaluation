@@ -26,18 +26,11 @@
             @click:row="viewItem"
             class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
-                <template v-slot:[`item.voted`]="{ item }">
-                    <v-chip color="error" small>No</v-chip>
-                </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </template>
-                <template v-slot:[`item.active`]="{ item }">
-                    <v-switch
-                    v-model="item.active"
-                    color="success"
-                    :label="item.active?'Active':'Inactive'"
-                    ></v-switch>
+                <template v-slot:[`item.status`]="{ item }">
+                    <v-icon :color="item.status==1?'success':'error'">mdi-{{item.status==1?'check':'close'}}</v-icon>
                 </template>
                 <template v-slot:[`item.action`]="{ item }">
                     <v-btn
@@ -45,7 +38,7 @@
                         elevation="0"
                         icon
                         color="primary"
-                        @click="editItem(item)"
+                        @click.stop="editItem(item)"
                     >
                         <v-icon>mdi-square-edit-outline</v-icon>
                     </v-btn>
@@ -64,9 +57,16 @@
                 </template>
             </v-data-table>
         </v-card>
-        <data-form :show="form" @close="close" @save="save"></data-form>
+        <data-form
+        :show="form"
+        :data="selectedItem"
+        @close="close"
+        @save="save"
+        @update="update">
+        </data-form>
         <excel-form :show="excelForm" @close="close" @save="save"></excel-form>
         <Alert :data="alert_data"></Alert>
+        <Warning :data="warning_data" @close="close" @confirm="confirm"></Warning>
     </div>
 </template>
 
@@ -107,9 +107,9 @@ export default {
         headers: [
             { text: "Student Id", align: "start", sortable: true, value: "student_id", },
             { text: "Name", align: "start", sortable: true, value: "name", },
-            { text: "Voted", align: "start", sortable: false, value: "voted", },
+            // { text: "Voted", align: "start", sortable: false, value: "voted", },
             { text: "Date Added", align: "start", sortable: true, value: "created_at", },
-            { text: "Active", align: "start", sortable: false, value: "active", },
+            { text: "Active", align: "start", sortable: false, value: "status", },
             { text: "Actions", align: "center", sortable: false, value: "action", },
         ],
     }),
@@ -126,9 +126,10 @@ export default {
             });
         },
         editItem(val){
-            console.log(this.alert.trigger,'trigger')
+            // console.log(this.alert.trigger,'trigger')
+            this._commit('is_editing', true)
             this.selectedItem = val
-            this.showForm = true
+            this.form = true
         },
         save(payload) {
             this.form = false
@@ -142,12 +143,15 @@ export default {
             })
         },
         update(payload) {
-            axios.put(`/admin-api/customer/${this.selectedItem.id}`, payload).then(({ data }) => {
-                this.showForm = false;
+            axios.put(`/admin-api/student/${this.selectedItem.id}`, payload).then(({ data }) => {
                 this.fetchPage()
                 this._newAlert(true, data.type, data.message)
                 this.payload = null;
             })
+            this.form = false
+        },
+        activate() {
+
         },
         importExcel() {
             this.excelForm = true
@@ -155,21 +159,20 @@ export default {
         close() {
             this.form = false
             this.excelForm = false
+            this.fetchPage()
         },
         warning(val){
-        this.user = {
-            id: val.id,
-            text: val.first_name+' '+val.last_name,
-            model: 'customer'
-        }
-        this.deleteForm = true
+            this.selectedItem = val
+            let text = 'Are you sure you want to delete'
+            this._warning(true, text, val.name)
+            this.deleteForm = true
         },
         confirm() {
-        axios.delete(`/admin-api/${this.user.model}/${this.user.id}`).then(({data})=>{
-            this.deleteForm = false
-            this.fetchPage()
-            this._newAlert(true, data.type, data.message)
-        });
+            this.warning_data.trigger = false
+            axios.delete(`/admin-api/student/${this.selectedItem.id}`).then(({data})=>{
+                this.fetchPage()
+                this._newAlert(true, data.type, data.message)
+            });
         }
     },
 };

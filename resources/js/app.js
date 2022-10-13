@@ -12,6 +12,7 @@ import "./mixins/index";
 import vuetify from './plugins/vuetify'
 import moment from 'moment';
 import router from './router/index'
+import { store } from "./plugins/store";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'bootstrap/dist/js/bootstrap.min.js'
 
@@ -38,5 +39,6 @@ const app = new Vue({
     el: '#app',
     vuetify,
     router,
+    store,
 });
 Vue.prototype.moment = moment;

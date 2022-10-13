@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Filters\Filter;
+use App\Filters\VoteFilter;
 use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\ExtractedVote;
@@ -156,6 +157,20 @@ class ElectionController extends Controller
             return [
                 'election' => Election::with('positions')->find($id),
                 'votes' => Vote::where('election_id', $id)->orderBy('id', 'desc')->get()
+            ];
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getVotes(Request $request, $id)
+    {
+        try{
+            $model = Vote::class;
+            $votes = (new VoteFilter($model))->searchable($id);
+            return [
+                'details' => Election::find($id),
+                'votes' => $votes,
             ];
         }catch(Exception $e) {
             return $e->getMessage();

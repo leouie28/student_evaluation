@@ -32,17 +32,6 @@
                                     ></v-text-field>
                                 </v-col>
                                 <v-col md="12" cols="12">
-                                    <v-text-field
-                                    dense
-                                    label="Short Description/Tagline (optional)"
-                                    v-model="payload.short_description"
-                                    :rules="rule"
-                                    filled
-                                    required
-                                    hide-details="auto"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col md="12" cols="12">
                                     <v-textarea
                                     dense
                                     label="Description (optional)"
@@ -108,12 +97,12 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text @click="$emit('close')">
+                    <v-btn text @click="close">
                         Close
                     </v-btn>
                     <v-btn color="secondary" @click="save">
-                        Create
-                        <v-icon>mdi-plus</v-icon>
+                       {{isEdit?'Update':'Create'}}
+                        <v-icon class="ml-2">mdi-{{isEdit?'content-save':'plus'}}</v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -124,20 +113,56 @@
 export default {
     data: () => ({
         payload: {
-            isEdit: false,
             name: '',
-            short_description: '',
             description: '',
             color_theme: '',
             image: null,
         },
+        orig: {
+            name: '',
+            description: '',
+            color_theme: '',
+            image: null,
+        },
+        old_img: null,
         rule: [v => !! v || 'This field is required'],
         colors: ['#9E9E9E', '#212121', '#FF5722', '#607D8B', '#FFEB3B', '#4CAF50', '#009688', '#03A9F4', '#673AB7', '#F44336', '#E91E63']
     }),
+    props: {
+        show: {
+            type: Boolean,
+            default: () => false
+        },
+        data: {
+            type: Object,
+            default: () => {}
+        }
+    },
+    computed: {
+        isEdit() {
+            return this._getters('is_editing')
+        }
+    },
     methods: {
+        close() {
+            this.$emit('close')
+            setTimeout(() => {
+                this._commit('is_editing', false)
+                this.payload = JSON.parse(JSON.stringify(this.orig))
+            },200)
+        },
         save() {
             if(this.payload.name && this.payload.short_name){
-                this.$emit('save',this.payload)
+                if(this.isEdit) {
+                    if(this.old_img == this.payload.image) {
+                        this.payload.image = ''
+                    }
+                    this.$emit('update',this.payload)
+                    this.close()
+                }else {
+                    this.$emit('save',this.payload)
+                    this.close()
+                }
             }else{
                 alert('Important field are required')
             }
@@ -155,10 +180,18 @@ export default {
             }
         },
     },
-    props: {
-        show: {
-            type: Boolean,
-            default: () => false
+    watch: {
+        data: {
+            handler(val) {
+                if(val) {
+                    console.log(val,'form')
+                    this.payload = val
+                    if(val.images.length>=1){
+                        this.old_img = val.images[0].path + val.images[0].file_name
+                        this.payload.image = val.images[0].path + val.images[0].file_name
+                    }
+                }
+            },immediate:true,deep:true
         }
     }
 }

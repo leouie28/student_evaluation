@@ -18,10 +18,10 @@
                         dense
                         v-model="payload.user_id"
                         :rules="rule"
-                        label="Student Id"
+                        color="brown"
+                        placeholder="Student Id"
                         required
                         prepend-inner-icon="mdi-account"
-                        placeholder="00-0000"
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="12">
@@ -32,7 +32,8 @@
                         v-model="payload.password"
                         :rules="rule"
                         required
-                        label="Password"
+                        color="brown"
+                        placeholder="Password"
                         type="password"
                         prepend-inner-icon="mdi-lock"
                         ></v-text-field>
@@ -44,8 +45,9 @@
                         <v-btn
                         block
                         large
+                        dark
                         @click="login"
-                        color="secondary">
+                        color="brown">
                             Login
                         </v-btn>
                     </v-col>
