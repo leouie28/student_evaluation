@@ -8,7 +8,7 @@
                         Election
                         <v-icon class="ml-1">mdi-cloud-print-outline</v-icon>
                     </div>
-                    <v-btn icon color="primary">
+                    <v-btn icon color="primary" @click="refresh">
                         <v-icon>mdi-refresh</v-icon>
                     </v-btn>
                 </v-toolbar-title>
@@ -43,6 +43,14 @@ export default {
         setTimeout(() => {
             this.loading = false
         },2000)
+    },
+    methods: {
+        refresh() {
+            this.loading = true
+            setTimeout(() => {
+                this.loading = false
+            },2000)
+        }
     }
 }
 </script>

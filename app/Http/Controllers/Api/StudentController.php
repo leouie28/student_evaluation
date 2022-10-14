@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Announcement;
+use App\Models\Vote;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AnnounceController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,20 +17,7 @@ class AnnounceController extends Controller
      */
     public function index()
     {
-        try{
-            return Announcement::orderBy('id', 'desc')->get();
-        }catch(Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-    public function getLatest()
-    {
-        try{
-            return Announcement::orderBy('id', 'desc')->take(4)->get();
-        }catch(Exception $e) {
-            return $e->getMessage();
-        }
+        //
     }
 
     /**
@@ -85,6 +73,19 @@ class AnnounceController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function profile()
+    {
+        try{
+            $user = Auth::guard('web')->user();
+            return [
+                'account' => Auth::guard('web')->user(),
+                'activity' => Vote::where('student_id', $user->id)->orderBy('id', 'desc')->get()
+            ];
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

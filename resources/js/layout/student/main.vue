@@ -7,7 +7,7 @@
         elevation="4">
             <div class="d-flex justify-space-between align-center w-100">
                 <span @click="$router.push({path: '/home'}).catch(() => {})" style="cursor:pointer;">
-                    <v-avatar size="34">
+                    <v-avatar size="32" class="mr-1">
                         <!-- <v-icon>mdi-account-circle</v-icon> -->
                         <v-img
                         src="/images/system/logo.png"
@@ -31,7 +31,7 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item>
+                        <v-list-item @click="$router.push({path: '/account'}).catch(() => {})">
                             <v-list-item-icon>
                                 <v-icon>mdi-account</v-icon>
                             </v-list-item-icon>
@@ -51,10 +51,10 @@
                 </v-menu>
             </div>
         </v-app-bar>
-        <v-main>
-            <v-container fluid class="pa-2 mx-auto grey student-main lighten-5" style="min-height:90vh;">
+        <v-main class="m-body">
+            <v-container fluid class="pa-2 mx-auto student-main" style="min-height:90vh;">
                 <transition name="slide-y-reverse-transition" mode="out-in">
-                    <router-view></router-view>
+                    <router-view class="py-2"></router-view>
                 </transition>
             </v-container>
         </v-main>
@@ -70,7 +70,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.m-body {
+    background: #EFEBE9;
+}
 .student-main {
     max-width: 600px !important;
 }

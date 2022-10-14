@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AnnounceController;
 use App\Http\Controllers\Api\ElectionController;
+use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\VoteController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,10 @@ Route::group(['middleware' => ['auth:web']], function() {
         Route::post('election-api/{key}/check-code', 'checkCode');
         Route::get('election-api/{key}/election-set', 'getSet');
     });
+
+    //get latest announcement
+    Route::get('announces/get-latest', [AnnounceController::class, 'getLatest']);
+    Route::get('profile', [StudentController::class, 'profile']);
 
     Route::resources([
         'election-api' => ElectionController::class,

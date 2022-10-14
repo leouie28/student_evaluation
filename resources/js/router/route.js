@@ -81,4 +81,10 @@ export default [
         name:'student-election-form',
         meta: { requireAuth: true },
     },
+    {
+        path:'/account',
+        component: () => import('@/pages/student/account/index.vue'),
+        name:'student-account',
+        meta: { requireAuth: true },
+    },
 ]
