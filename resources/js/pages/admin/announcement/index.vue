@@ -26,19 +26,18 @@
             class="cursor-pointer table-fix-height clickable-item"
             fixed-header>
                 <template v-slot:[`item.created_at`]="{ item }">
-                    {{ moment(item.created_at).format('YYYY-MM-DD') }}
+                    {{ moment(item.created_at).format('YYYY-MM-DD, h:mm a') }}
                 </template>
                 <template v-slot:[`item.action`]="{ item }">
                     <v-btn
-                        class="px-2"
-                        elevation="0"
-                        icon
                         color="primary"
+                        small
                         @click="editItem(item)"
                     >
-                        <v-icon>mdi-square-edit-outline</v-icon>
+                        <v-icon small class="mr-1">mdi-eye</v-icon>
+                        View
                     </v-btn>
-                    <v-btn
+                    <!-- <v-btn
                         class="px-2"
                         elevation="0"
                         icon
@@ -46,7 +45,7 @@
                         @click="warning(item)"
                     >
                         <v-icon>mdi-trash-can</v-icon>
-                    </v-btn>
+                    </v-btn> -->
                 </template>
                 <template v-slot:no-data>
                     <div>No Data</div>

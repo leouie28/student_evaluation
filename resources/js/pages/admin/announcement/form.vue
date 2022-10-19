@@ -11,6 +11,7 @@
                             dense
                             label="Heading/Titile"
                             v-model="payload.title"
+                            :readonly="isEdit"
                             :rules="rule"
                             filled
                             required
@@ -21,6 +22,7 @@
                             <v-textarea
                             dense
                             label="Content/Message"
+                            :readonly="isEdit"
                             v-model="payload.content"
                             :rules="rule"
                             filled
@@ -35,7 +37,7 @@
                     <v-btn text @click="closeForm">
                         Close
                     </v-btn>
-                    <v-btn color="secondary" @click="save">
+                    <v-btn color="secondary" @click="save" v-if="!isEdit">
                         {{isEdit?'Update':'Send'}}
                         <v-icon class="ml-2">mdi-{{isEdit?'content-save':'send'}}</v-icon>
                     </v-btn>

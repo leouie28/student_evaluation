@@ -18,9 +18,11 @@ export default {
     data: () => ({
         fetching: true,
         auth: false,
+        specialRoute: false,
     }),
     methods: {
         checkAuth() {
+            console.log(this.checkRoute())
             axios.get(`/web/check-auth`).then(({data})=>{
                 this.auth = data
                 console.log(data,'auth')
@@ -29,6 +31,12 @@ export default {
                     this.fetching = false
                 },500)
             })
+        },
+        checkRoute() {
+            let route = this.$route
+            if(route.name=='student-election') {
+                return true
+            }
         },
         logout() {
             axios.get(`/web/logout`).then(({data})=>{

@@ -79,6 +79,9 @@ export default {
                         if(data.role=='admin'){
                             this.$router.push({path: '/admin/status'})
                         }else if(data.role=='student'){
+                            if(this.$route.name=='student-election') {
+                                location.reload()
+                            }
                             this.$router.push({path: '/home'})
                         }
                     }else{
