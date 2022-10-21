@@ -178,11 +178,17 @@ export default {
             // console.log(this.alert_data.trigger,'trigger')
             // this.selectedItem = val
             // this.showForm = true
-            localStorage.setItem('_show', 1)
-            axios.get(`/admin-api/election/get-set/${val.id}`).then(({ data }) => {
-                localStorage.setItem('payload', JSON.stringify(data))
-            })
-            this.$router.push({path: `/admin/election/${val.id}/details`})
+            let now = this.moment()
+            let closing = this.moment(val.opening)
+            if(now>=closing) {
+                alert(`"${val.name}" is open, you can't edit this election.`)
+            }else {
+                localStorage.setItem('_show', 1)
+                axios.get(`/admin-api/election/get-set/${val.id}`).then(({ data }) => {
+                    localStorage.setItem('payload', JSON.stringify(data))
+                })
+                this.$router.push({path: `/admin/election/${val.id}/details`})
+            }
         },
         save(payload) {
             this.form = false

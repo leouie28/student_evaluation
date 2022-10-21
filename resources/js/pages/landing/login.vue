@@ -28,6 +28,7 @@
                     <v-col cols="12" md="12">
                         <v-text-field
                         outlined
+                        v-on:keyup.enter="login"
                         hide-details="auto"
                         dense
                         v-model="payload.password"

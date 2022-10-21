@@ -115,7 +115,9 @@ export default {
             axios.get(`/admin-api/election?per_page=-1`).then(({data}) => {
                 this.elects = data.data
                 if(data.data.length>0) {
-                    this.selectedId = this.elects[0].id
+                    let last = this.elects[this.elects.length -1]
+                    console.log(last)
+                    this.selectedId = last.id
                     this.getElection()
                 }
             })
