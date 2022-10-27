@@ -25,6 +25,44 @@
                 Admin
             </v-btn>
         </v-app-bar>
+        
+        <v-dialog persistent max-width="550" v-model="dialog1">
+            <v-card>
+                <v-card-title>
+                    <span>Admin Account</span>
+                    <v-spacer></v-spacer>
+                    <v-btn>Edit <v-icon>mdi-pencil</v-icon></v-btn>
+                </v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="12" md="12">
+                            <v-text-field
+                            filled
+                            label="Username"
+                            hide-details="auto"
+                            disabled
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="12">
+                            <v-text-field
+                            filled
+                            label="Old Password"
+                            hide-details="auto"
+                            readonly
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="12">
+                            <v-text-field
+                            filled
+                            label="New Password"
+                            hide-details="auto"
+                            readonly
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
 
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
         
@@ -32,6 +70,9 @@
 </template>
 <script>
 export default {
+    data: () => ({
+        dialog1: true,
+    }),
     methods: {
         
     }
