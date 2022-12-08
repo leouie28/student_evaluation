@@ -71,7 +71,7 @@
 <script>
 export default {
     data: () => ({
-        dialog1: true,
+        dialog1: false,
     }),
     methods: {
         

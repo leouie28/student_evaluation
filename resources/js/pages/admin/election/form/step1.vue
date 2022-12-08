@@ -275,7 +275,7 @@ export default {
 <style scoped>
 .feat-img{
     width: 100%;
-    height: 28vh;
+    /* min-height: ; */
     border: 2px dashed grey;
 }
 </style>

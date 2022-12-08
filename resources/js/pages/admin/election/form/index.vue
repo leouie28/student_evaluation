@@ -185,6 +185,7 @@ export default {
             })
         },
         copyLink() {
+            console.log(this.url)
             let url = this.url
             navigator.clipboard.writeText(url);
             alert("Link copied to clipboard")
