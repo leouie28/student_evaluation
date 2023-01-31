@@ -1,0 +1,67 @@
+version: "3.9"
+
+networks:
+  evoting:
+
+
+services:
+  core:
+    image: evoting
+    container_name: evoting-laravel
+    ports:
+      - "80"
+    restart: unless-stopped
+    working_dir: /var/www/evoting~
+    volumes:
+      - ./:/var/www/evoting
+    networks:
+      - evoting
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: evoting-nginx
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    volumes:
+      - ./:/var/www/evoting
+      - ./dockerconfig/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - evoting
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        user: laravel
+        uid: 1000
+    container_name: inshced-php
+    volumes:
+      - ./:/var/www/evoting
+    ports:
+      - "9000:9000"
+    networks:
+      - evoting
+
+  mysql:
+    image: mysql:8.0
+    container_name: evoting-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33061:3306"
+    volumes:
+      - ./dockerconfig/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: evoting
+      MYSQL_USER: evoting
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - evoting
