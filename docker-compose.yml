@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.7"
 
 networks:
   evoting:
@@ -6,12 +6,15 @@ networks:
 
 services:
   core:
-    image: evoting
-    container_name: evoting-laravel
+    build:
+      context: .
+      args:
+        user: laravel
+        uid: 1000
     ports:
-      - "80"
+      - "9000:9000"
     restart: unless-stopped
-    working_dir: /var/www/evoting~
+    working_dir: /var/www/evoting
     volumes:
       - ./:/var/www/evoting
     networks:
@@ -22,30 +25,30 @@ services:
     container_name: evoting-nginx
     restart: unless-stopped
     ports:
-      - "8088:80"
+      - "8081:80"
     volumes:
       - ./:/var/www/evoting
       - ./dockerconfig/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php
+      - core
       - mysql
     networks:
       - evoting
 
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        user: laravel
-        uid: 1000
-    container_name: inshced-php
-    volumes:
-      - ./:/var/www/evoting
-    ports:
-      - "9000:9000"
-    networks:
-      - evoting
+  # php:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       user: laravel
+  #       uid: 1000
+  #   container_name: inshced-php
+  #   volumes:
+  #     - ./:/var/www/evoting
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - evoting
 
   mysql:
     image: mysql:8.0
