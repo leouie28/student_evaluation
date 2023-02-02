@@ -1,4 +1,5 @@
 export default [
+    //admin routes
     {
         path:'/admin/status',
         component: () => import('@/pages/admin/status'),

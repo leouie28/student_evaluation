@@ -63,6 +63,8 @@
                                     </template>
                                     <v-date-picker
                                     no-title
+                                    :min="moment().format('YYYY-MM-DD')"
+                                    :max="election.date_close"
                                     v-model="election.date_open"
                                     @input="date_open_menu = false"
                                     ></v-date-picker>
@@ -124,6 +126,7 @@
                                     </template>
                                     <v-date-picker
                                     no-title
+                                    :min="election.date_open"
                                     v-model="election.date_close"
                                     @input="date_close_menu = false"
                                     ></v-date-picker>
@@ -210,6 +213,8 @@
                                 label="Election Code (no spacing)"
                                 :readonly="readonly"
                                 v-model="election.code"
+                                @click:append="election.code = generateCode()"
+                                append-icon="mdi-reload"
                                 hide-details="auto"
                                 ></v-text-field>
                             </v-col>
@@ -233,6 +238,7 @@
 <script>
 export default {
     data: () => ({
+        now: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         readonly: false,
         updating: false,
         date_open_menu: false,
@@ -269,6 +275,18 @@ export default {
                 }
             }
         },
+        generateCode() {
+            let length = 8
+            let result = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            let counter = 0;
+            while (counter < length) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            counter += 1;
+            }
+            return result;
+        }
     }
 }
 </script>

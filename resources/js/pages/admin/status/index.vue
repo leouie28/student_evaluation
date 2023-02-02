@@ -3,7 +3,7 @@
         <v-card elevation="2" class="pa-4">
             <v-row wrap class="py-3">
                 <v-col md="3" cols="12" v-for="stat in stats" :key="stat.name">
-                    <v-card elevation="0" class="rounded-lg pa-3 text-center" dark :color="stat.color">
+                    <v-card elevation="0" class="rounded-lg pa-3 text-center" @click="$router.push({path: stat.path})" dark :color="stat.color">
                         <div class="d-flex justify-center align-center">
                             <v-icon x-large>{{stat.icon}}</v-icon>
                             <span class="text-h3 ml-2">{{stat.data}}</span>
@@ -99,10 +99,10 @@ export default {
             votes: [],
             elect: {},
             stats: [
-                {name: 'Announcements', color: 'red', icon: 'mdi-bullhorn-outline', data: '0'},
-                {name: 'Elections', color: 'brown', icon: 'mdi-printer-outline', data: '0'},
-                {name: 'Voters', color: 'secondary', icon: 'mdi-account-group-outline', data: '0'},
-                {name: 'Party Groups', color: 'success', icon: 'mdi-flag-outline', data: '0'},
+                {name: 'Announcements', color: 'red', icon: 'mdi-bullhorn-outline', data: '0', path: '/admin/status'},
+                {name: 'Elections', color: 'brown', icon: 'mdi-printer-outline', data: '0', path: '/admin/election'},
+                {name: 'Voters', color: 'secondary', icon: 'mdi-account-group-outline', data: '0', path: '/admin/voter'},
+                {name: 'Party Groups', color: 'success', icon: 'mdi-flag-outline', data: '0', path: '/admin/partylist'},
             ],
         }
     },
