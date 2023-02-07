@@ -4,21 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends Authenticatable
+class Student extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'student_id',
-        'password',
-        'status',
-        'active',
-    ];
+  protected $fillable = [
+    'user_id',
+    'name'
+  ];
 
-    protected $hidden = [
-        'password'
-    ];
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  public function indicators()
+  {
+    return $this->hasMany(Indicator::class);
+  }
 }

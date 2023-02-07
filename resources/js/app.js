@@ -27,7 +27,7 @@ import { store } from "./plugins/store";
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('main-app', require('./layout/MainApp.vue').default);
+Vue.component('main-app', require('./views/MainApp.vue').default);
 Vue.component(VueCountdown.name, VueCountdown);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

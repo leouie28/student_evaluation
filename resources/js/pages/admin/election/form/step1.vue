@@ -214,7 +214,7 @@
                                 :readonly="readonly"
                                 v-model="election.code"
                                 @click:append="election.code = generateCode()"
-                                append-icon="mdi-reload"
+                                :append-icon="readonly?'':'mdi-reload'"
                                 hide-details="auto"
                                 ></v-text-field>
                             </v-col>
@@ -238,7 +238,6 @@
 <script>
 export default {
     data: () => ({
-        now: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         readonly: false,
         updating: false,
         date_open_menu: false,

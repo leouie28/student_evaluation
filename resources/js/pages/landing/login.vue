@@ -1,40 +1,38 @@
 <template>
     <div class="d-flex justify-center px-10 align-center" style="height:100vh;">
-        <v-card rounded="lg" elevation="4" max-width="400" class="mx-auto py-4">
+        <v-card tile elevation="4" max-width="400" class="mx-auto px-5 py-4">
             <v-card-text>
                 <div class="text-center mb-8">
-                    <v-avatar size="170" class="mx-auto">
+                    <v-avatar color="primary" size="170" class="mx-auto">
                         <v-img
                         alt="School Logo"
                         src="/images/system/logo.png"
                         ></v-img>
                     </v-avatar>
-                    <h4 class="mt-3 secondary--text">CKC Voting System</h4>
+                    <h4 class="mt-3 cyan--text">Student Evaluation</h4>
                 </div>
                 <v-row>
                     <v-col cols="12" md="12">
                         <v-text-field
-                        outlined
                         hide-details="auto"
                         dense
                         v-model="payload.user_id"
                         :rules="rule"
-                        color="brown"
-                        placeholder="Student Id"
+                        color="cyan"
+                        placeholder="User Id"
                         required
                         prepend-inner-icon="mdi-account"
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="12">
                         <v-text-field
-                        outlined
                         v-on:keyup.enter="login"
                         hide-details="auto"
                         dense
                         v-model="payload.password"
                         :rules="rule"
                         required
-                        color="brown"
+                        color="cyan"
                         placeholder="Password"
                         type="password"
                         prepend-inner-icon="mdi-lock"
@@ -45,11 +43,12 @@
                     </div>
                     <v-col cols="12" md="12">
                         <v-btn
+                        tile
                         block
                         large
                         dark
                         @click="login"
-                        color="brown">
+                        color="cyan">
                             Login
                         </v-btn>
                     </v-col>

@@ -1,7 +1,7 @@
 version: "3.7"
 
 networks:
-  evoting:
+  evaluation:
 
 
 services:
@@ -14,45 +14,29 @@ services:
     ports:
       - "9000:9000"
     restart: unless-stopped
-    working_dir: /var/www/evoting
+    working_dir: /var/www/evaluation
     volumes:
-      - ./:/var/www/evoting
+      - ./:/var/www/evaluation
     networks:
-      - evoting
+      - evaluation
 
   nginx:
     image: nginx:stable-alpine
-    container_name: evoting-nginx
+    container_name: evaluation-nginx
     restart: unless-stopped
     ports:
-      - "8081:80"
+      - "8082:80"
     volumes:
-      - ./:/var/www/evoting
+      - ./:/var/www/evaluation
       - ./dockerconfig/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - core
       - mysql
     networks:
-      - evoting
-
-  # php:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     args:
-  #       user: laravel
-  #       uid: 1000
-  #   container_name: inshced-php
-  #   volumes:
-  #     - ./:/var/www/evoting
-  #   ports:
-  #     - "9000:9000"
-  #   networks:
-  #     - evoting
-
+      - evaluation
   mysql:
     image: mysql:8.0
-    container_name: evoting-mysql
+    container_name: evaluation-mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -60,11 +44,11 @@ services:
     volumes:
       - ./dockerconfig/mysql:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: evoting
-      MYSQL_USER: evoting
+      MYSQL_DATABASE: evaluation
+      MYSQL_USER: admin
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
-      - evoting
+      - evaluation
