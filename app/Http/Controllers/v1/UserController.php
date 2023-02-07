@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -47,13 +48,23 @@ class UserController extends Controller
       'birthday' => ['nullable']
     ]);
 
-    $payload = (object) $payload;
+    $payload = $payload;
 
-    $request['password'] = Hash::make($request->password);
-    $user = User::create($request->toArray());
+    $payload['password'] = Hash::make($request->password);
+    $user = User::create($payload);
 
-    $user->teacher()->save(new Teacher($request->only(['name', 'birthday'])));
+    $user->teacher()->save(new Teacher(Arr::only($payload, ['name', 'birthday'])));
 
     return response($user);
+  }
+
+  public function createStudent(Request $request)
+  {
+    
+  }
+
+  public function createManyStudent(Request $request)
+  {
+    
   }
 }
