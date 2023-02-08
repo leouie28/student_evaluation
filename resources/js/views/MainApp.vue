@@ -11,6 +11,7 @@ import Evaluation from "../components/evaluation/form"
 import Login from '../pages/landing/login.vue'
 import Student from './student/main.vue'
 import Admin from './admin/main.vue'
+import http from "../services/httpConfig.js"
 export default {
     components: {
         Admin,
@@ -25,15 +26,20 @@ export default {
     }),
     methods: {
         checkAuth() {
-            console.log(this.checkRoute())
-            axios.get(`/web/check-auth`).then(({data})=>{
-                this.auth = data
-                console.log(data,'auth')
-            }).finally(()=>{
-                setTimeout(() => {
-                    this.fetching = false
-                },500)
-            })
+          http.api.get('admin/user/user/test').then(response => {
+            console.log(response, '200')
+          }).catch(err => {
+            console.log(err, 'error')
+          })
+            // console.log(this.checkRoute())
+            // axios.get(`/web/check-auth`).then(({data})=>{
+            //     this.auth = data
+            //     console.log(data,'auth')
+            // }).finally(()=>{
+            //     setTimeout(() => {
+            //         this.fetching = false
+            //     },500)
+            // })
         },
         checkRoute() {
             let route = this.$route

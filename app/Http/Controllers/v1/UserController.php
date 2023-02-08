@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Http\Controllers\Controller;
-use App\Models\Teacher;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Teacher;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +20,8 @@ class UserController extends Controller
 
   public function me()
   {
-    return response(Auth::user());
+    return response(Str::random(20));
+    // return response(Auth::user());
   }
 
   public function createAdmin(Request $request)
@@ -60,11 +62,9 @@ class UserController extends Controller
 
   public function createStudent(Request $request)
   {
-    
   }
 
   public function createManyStudent(Request $request)
   {
-    
   }
 }
