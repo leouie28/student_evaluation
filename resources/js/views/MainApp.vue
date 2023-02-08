@@ -25,12 +25,22 @@ export default {
         specialRoute: false,
     }),
     methods: {
-        checkAuth() {
-          http.api.get('admin/user/user/test').then(response => {
-            console.log(response, '200')
-          }).catch(err => {
-            console.log(err, 'error')
-          })
+        async checkAuth() {
+            // let auth = await http.auth();
+            // console.log(auth)
+        //   http.api.get('admin/user/user/test').then(response => {
+        //     console.log(response, '200')
+        //   }).catch(err => {
+        //     console.log(err, 'error')
+        //   })
+        let res = null
+        try {
+            res = await http.api.get('user/user/test')
+        } catch (error) {
+            console.log(error.message)
+        }
+        console.log(res)
+        console.log('una')
             // console.log(this.checkRoute())
             // axios.get(`/web/check-auth`).then(({data})=>{
             //     this.auth = data

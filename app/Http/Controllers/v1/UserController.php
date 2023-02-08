@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +21,8 @@ class UserController extends Controller
 
   public function me()
   {
-    return response(Str::random(20));
+    return Role::hashed('student');
+    // return response(Str::random(20));
     // return response(Auth::user());
   }
 

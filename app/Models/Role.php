@@ -18,4 +18,8 @@ class Role extends Model
   {
     return $this->hasMany(User::class);
   }
+
+  public function scopeHashed($query, $name) {
+    return $query->where('name', '=', $name)->value('hashed');
+  }
 }

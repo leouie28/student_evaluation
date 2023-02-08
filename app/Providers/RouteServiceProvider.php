@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Passport;
@@ -54,7 +56,7 @@ class RouteServiceProvider extends ServiceProvider
       //     // ->namespace($this->namespace)
       //     ->group(base_path('routes/student.php'));
 
-      Route::prefix('admin')
+      Route::prefix(Role::hashed('admin'))
         ->middleware('auth.admin')
         // ->namespace($this->namespace)
         ->group(base_path('routes/admin.php'));
