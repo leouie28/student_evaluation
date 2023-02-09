@@ -1,17 +1,26 @@
 <template>
-    <v-app v-if="!fetching" id="inspire">
-      <Evaluation></Evaluation>
-        <!-- <Login v-if="!auth"></Login>
-        <Student @logout="logout" v-else-if="auth==2"></Student>
+    <v-app id="inspire">
+        <!-- <Student @logout="logout" v-else-if="auth==2"></Student>
         <Admin @logout="logout" v-else-if="auth==1"></Admin> -->
+      
+      <Login></Login>
+
+      <v-overlay :value="false">
+        <v-progress-circular
+          color="primary"
+          indeterminate
+          size="64"
+        ></v-progress-circular>
+      </v-overlay>
     </v-app>
 </template>
 <script>
 import Evaluation from "../components/evaluation/form"
-import Login from '../pages/landing/login.vue'
+import Login from '../pages/auth/login.vue'
 import Student from './student/main.vue'
 import Admin from './admin/main.vue'
 import http from "../services/httpConfig.js"
+import auth from "../services/authService"
 export default {
     components: {
         Admin,
@@ -33,13 +42,23 @@ export default {
         //   }).catch(err => {
         //     console.log(err, 'error')
         //   })
-        let res = null
-        try {
-            res = await http.api.get('user/user/test')
-        } catch (error) {
-            console.log(error.message)
+        let creds = {
+          username: 'admin',
+          password: '123'
         }
-        console.log(res)
+
+        // let user = await auth.login(creds).catch(error => {
+        //   console.log(error.response.data.message)
+        // })
+        // console.log(user)
+
+        // let res = null
+        // try {
+        //     res = await http.api.get('user/user/test')
+        // } catch (error) {
+        //     console.log(error.message)
+        // }
+        // console.log(res)
         console.log('una')
             // console.log(this.checkRoute())
             // axios.get(`/web/check-auth`).then(({data})=>{
@@ -67,14 +86,14 @@ export default {
         }
     },
     watch: {
-        auth(val) {
-            if(val){
-                localStorage.role = val
-            }
-        },
-        $route (to, from){
-            this.checkAuth()
-        },
+        // auth(val) {
+        //     if(val){
+        //         localStorage.role = val
+        //     }
+        // },
+        // $route (to, from){
+        //     this.checkAuth()
+        // },
     }
 }
 </script>

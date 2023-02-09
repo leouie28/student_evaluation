@@ -19,21 +19,21 @@ class AuthController extends Controller
     $this->authService = $authService;
   }
 
-  public function checkAuth() {
+  public function checkAuth()
+  {
 
-    if($user = Auth::user()) {
+    if ($user = Auth::user()) {
       return $user;
     }
-     
-    throw new AuthenticationException;
 
+    throw new AuthenticationException;
   }
 
   public function login(LoginRequest $request)
   {
 
     if (!$user = $this->authService->loginUser($request)) {
-      throw new AuthenticationException;
+      throw new AuthenticationException('Invalid credentials.');
     }
 
     return response($user);

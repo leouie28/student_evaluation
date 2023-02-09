@@ -16,7 +16,7 @@
                         <v-text-field
                         hide-details="auto"
                         dense
-                        v-model="payload.user_id"
+                        v-model="payload.username"
                         :rules="rule"
                         color="cyan"
                         placeholder="User Id"
@@ -58,36 +58,42 @@
     </div>
 </template>
 <script>
+import auth from "@/services/authService"
 export default {
     data: () => ({
         rule: [
             v => !! v || 'This field is required'
         ],
         payload: {
-            user_id: '',
+            username: '',
             password: '',
         },
         message: '',
     }),
     methods: {
-        login() {
+        async login() {
             if(!this.payload.user_id || !this.payload.password){
                 alert('Please fillup the importan fields')
             }else{
-                axios.post('/web/login', this.payload).then(({data}) => {
-                    if(data.user){
-                        if(data.role=='admin'){
-                            this.$router.push({path: '/admin/status'})
-                        }else if(data.role=='student'){
-                            if(this.$route.name=='student-election') {
-                                location.reload()
-                            }
-                            this.$router.push({path: '/home'})
-                        }
-                    }else{
-                        this.message = data.message
-                    }
-                })
+
+              let res = await auth.loginApi(this.creds).catch(error => {
+                console.log({error})
+              })
+
+                // axios.post('/web/login', this.payload).then(({data}) => {
+                //     if(data.user){
+                //         if(data.role=='admin'){
+                //             this.$router.push({path: '/admin/status'})
+                //         }else if(data.role=='student'){
+                //             if(this.$route.name=='student-election') {
+                //                 location.reload()
+                //             }
+                //             this.$router.push({path: '/home'})
+                //         }
+                //     }else{
+                //         this.message = data.message
+                //     }
+                // })
             }
         }
     }

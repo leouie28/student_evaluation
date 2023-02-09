@@ -19,6 +19,11 @@ const router = new Router({
             component: () => import('../pages/landing/login.vue'),
             name:'login'
         },
+        {
+          path: '*',
+          component: () => import('../pages/404.vue'),
+          name: '404'
+        }
     ]
 })
 router.beforeEach((to, from, next) => {

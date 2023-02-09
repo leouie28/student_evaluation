@@ -1,14 +1,21 @@
 import axios from "axios";
 
 const http = {}
-const BASE_URL = "http://127.0.0.1:8000/"
-const type = "Hfy66EjT9vGtKI6qOPqf";
+const BASE_URL = window.location.origin
+const TYPE = "GcMLkfd8kHZn1QHSfD3R";
+
+http.plain = axios.create({
+  headers: {
+    "Accept": "application/json",
+  }
+})
 
 http.api = axios.create({
-  baseURL: BASE_URL + type,
+  baseURL: `${BASE_URL}/${TYPE}`,
   timeout: 6000,
   headers: {
-    "Accept": "application/json"
+    "Accept": "application/json",
+    "Content-Type": "application/json"
   }
 })
 
