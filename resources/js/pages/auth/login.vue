@@ -92,9 +92,14 @@ export default {
           let res = await auth.loginApi(this.payload).catch(error => {
             this.message = error?.response?.data.message
             this.loading = false
-            return 0;
+            return false
           })
-          role.check(res.data);
+          if(res) {
+            sessionStorage.setItem('_type', res.data.role.id)
+            if(res.data.role.name=='admin') {
+                this.$router.push({path: '/admnin/dashboard'})
+            }
+          }
         }
       }
   }

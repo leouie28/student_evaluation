@@ -1,9 +1,17 @@
 <template>
     <v-app id="inspire">
+
+        <v-main>
+            <v-container>
+                <router-view></router-view>
+            </v-container>
+        </v-main>
+
         <!-- <Student @logout="logout" v-else-if="auth==2"></Student>
         <Admin @logout="logout" v-else-if="auth==1"></Admin> -->
+        <!-- <div v-if="auth">Hello world</div>
       
-      <Login></Login>
+        <Login v-else></Login> -->
 
       <v-overlay :value="false">
         <v-progress-circular
@@ -34,7 +42,18 @@ export default {
         specialRoute: false,
     }),
     methods: {
-        async checkAuth() {
+        checkRole() {
+            //role: admin = 1, coordinator = 2, teacher = 3, student = 4
+            let type = sessionStorage.getItem('_type')
+            if(type) {
+                this.auth = type
+            }else {
+                let middleware = this.getMiddleware(this.$route.path)
+                this.checkAuth(middleware)
+            }
+        },
+        checkAuth() {
+
             // let auth = await http.auth();
             // console.log(auth)
         //   http.api.get('admin/user/user/test').then(response => {
@@ -42,10 +61,6 @@ export default {
         //   }).catch(err => {
         //     console.log(err, 'error')
         //   })
-        let creds = {
-          username: 'admin',
-          password: '123'
-        }
 
         // let user = await auth.login(creds).catch(error => {
         //   console.log(error.response.data.message)
@@ -70,6 +85,10 @@ export default {
             //     },500)
             // })
         },
+        getMiddleware(path) {
+            let middleware = path.split("/")
+            return middleware[0]
+        },
         checkRoute() {
             let route = this.$route
             if(route.name=='student-election') {
@@ -91,9 +110,9 @@ export default {
         //         localStorage.role = val
         //     }
         // },
-        // $route (to, from){
-        //     this.checkAuth()
-        // },
+        $route (to, from){
+            this.checkRole()
+        },
     }
 }
 </script>
