@@ -97,7 +97,7 @@ export default {
           if(res) {
             sessionStorage.setItem('_type', res.data.role.id)
             if(res.data.role.name=='admin') {
-                this.$router.push({path: '/admnin/dashboard'})
+                this.$router.push({path: '/admin/dashboard'})
             }
           }
         }

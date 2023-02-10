@@ -1,40 +1,25 @@
 <template>
-    <v-app id="inspire">
-
-        <v-main>
-            <v-container>
-                <router-view></router-view>
-            </v-container>
-        </v-main>
-
-        <!-- <Student @logout="logout" v-else-if="auth==2"></Student>
-        <Admin @logout="logout" v-else-if="auth==1"></Admin> -->
-        <!-- <div v-if="auth">Hello world</div>
-      
-        <Login v-else></Login> -->
-
-      <v-overlay :value="false">
-        <v-progress-circular
-          color="primary"
-          indeterminate
-          size="64"
-        ></v-progress-circular>
-      </v-overlay>
-    </v-app>
+  <v-app id="inspire">
+    <div v-if="!fetching">
+      <Admin v-if="auth==1"></Admin>
+      <Login v-else></Login>
+    </div>
+    <v-overlay :value="fetching">
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
+  </v-app>
 </template>
 <script>
-import Evaluation from "../components/evaluation/form"
-import Login from '../pages/auth/login.vue'
-import Student from './student/main.vue'
-import Admin from './admin/main.vue'
-import http from "../services/httpConfig.js"
-import auth from "../services/authService"
+import { http, auth, Login, Admin } from "./index"
 export default {
     components: {
         Admin,
-        Student,
+        // Student,
         Login,
-        Evaluation,
     },
     data: () => ({
         fetching: true,
@@ -47,12 +32,15 @@ export default {
             let type = sessionStorage.getItem('_type')
             if(type) {
                 this.auth = type
+                this.fetching = false
             }else {
                 let middleware = this.getMiddleware(this.$route.path)
                 this.checkAuth(middleware)
             }
         },
         checkAuth() {
+
+          this.fetching = false
 
             // let auth = await http.auth();
             // console.log(auth)

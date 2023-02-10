@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <div>
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -16,7 +16,7 @@
             </transition>
         </v-container>
     </v-main>
-  </v-app>
+  </div>
 </template>
 
 <script>
