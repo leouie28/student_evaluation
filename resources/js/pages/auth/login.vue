@@ -99,6 +99,13 @@ export default {
             if(res.data.role.name=='admin') {
                 this.$router.push({path: '/admin/dashboard'})
             }
+            if(res.data.role.name=='teacher') {
+              window.location.reload()
+                // this.$router.push({path: '/admin/dashboard'})
+            }
+            if(res.data.role.name=='student') {
+                this.$router.push({path: '/admin/dashboard'})
+            }
           }
         }
       }

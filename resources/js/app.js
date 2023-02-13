@@ -13,6 +13,7 @@ import vuetify from './plugins/vuetify'
 import moment from 'moment';
 import router from './router/index'
 import { store } from "./plugins/store";
+import "../css/app.css"
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'bootstrap/dist/js/bootstrap.min.js'
 

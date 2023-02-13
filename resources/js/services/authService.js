@@ -4,7 +4,7 @@ const auth = {}
 
 auth.loginApi = (creds) => {
   try {
-    return http.plain.post('login', creds)
+    return http.plain.post('/login', creds)
   } catch (error) {
     return error
   }

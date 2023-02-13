@@ -1,7 +1,9 @@
 <template>
   <v-app id="inspire">
     <div v-if="!fetching">
-      <Admin v-if="auth==1"></Admin>
+      <Student v-if="auth==4"></Student>
+      <Teacher v-else-if="auth==3"></Teacher>
+      <Admin v-else-if="auth==1"></Admin>
       <Login v-else></Login>
     </div>
     <v-overlay :value="fetching">
@@ -14,11 +16,12 @@
   </v-app>
 </template>
 <script>
-import { http, auth, Login, Admin } from "./index"
+import { http, auth, Login, Admin, Teacher, Student } from "./index"
 export default {
     components: {
         Admin,
-        // Student,
+        Teacher,
+        Student,
         Login,
     },
     data: () => ({
@@ -38,8 +41,8 @@ export default {
                 this.checkAuth(middleware)
             }
         },
-        checkAuth() {
-
+        checkAuth(val) {
+          console.log(val)
           this.fetching = false
 
             // let auth = await http.auth();
@@ -75,7 +78,7 @@ export default {
         },
         getMiddleware(path) {
             let middleware = path.split("/")
-            return middleware[0]
+            return middleware[1]
         },
         checkRoute() {
             let route = this.$route
@@ -104,6 +107,3 @@ export default {
     }
 }
 </script>
-<style lang="css">
-    @import url('../../css/app.css');
-</style>
