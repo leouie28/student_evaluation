@@ -1,10 +1,18 @@
 <template>
-  <div class="pa-3">
-    <v-card>
+  <div>
+    <v-card rounded="lg" elevation="0">
       <v-card-title class="d-flex justify-space-between items-center w-full">
         <div>
-          <v-row max-width="400">
-            <v-col cols="7">
+          <v-row max-width="700">
+            <v-col cols="3">
+              <v-select
+              filled
+              dense
+              label="Department"
+              hide-details=""
+            ></v-select>
+            </v-col>
+            <v-col cols="3">
               <v-select
               filled
               dense
@@ -12,7 +20,7 @@
               hide-details=""
             ></v-select>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="3">
               <v-select
               filled
               dense
@@ -20,9 +28,17 @@
               hide-details=""
             ></v-select>
             </v-col>
+            <v-col cols="3">
+              <v-select
+              filled
+              dense
+              label="Subject"
+              hide-details=""
+            ></v-select>
+            </v-col>
           </v-row>
         </div>
-        <v-btn color="success" large>
+        <v-btn color="warning" large>
           Save All
         </v-btn>
       </v-card-title>
@@ -49,9 +65,6 @@
                 </th>
                 <th class="text-left text-h6">
                   Remarks
-                </th>
-                <th class="text-left text-h6">
-                  Actions
                 </th>
               </tr>
             </thead>
@@ -90,9 +103,6 @@
                   </v-radio-group>
                 </td>
                 <td>Testing remarks for student in this field.</td>
-                <td>
-                  <v-btn color="success">Save</v-btn>
-                </td>
               </tr>
             </tbody>
           </template>
