@@ -3,8 +3,10 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      width="200"
+      color="grey darken-4"
     >
-        <side-bar @logout="$emit('logout')"></side-bar>
+      <side-bar @logout="$emit('logout')"></side-bar>
     </v-navigation-drawer>
 
     <Header @toggle="toggle"></Header>

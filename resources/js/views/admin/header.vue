@@ -2,7 +2,7 @@
     <div>
         <v-app-bar app elevate-on-scroll>
             <v-app-bar-nav-icon @click="$emit('toggle')"></v-app-bar-nav-icon>
-            <v-toolbar-title class="mt-1">CKC Voting System</v-toolbar-title>
+            <!-- <v-toolbar-title class="mt-1">CKC Voting System</v-toolbar-title> -->
             <!-- <div>
                 <v-text-field
                 style="width: 400px;"
