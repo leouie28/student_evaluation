@@ -19,7 +19,7 @@
           no-action
           >
             <template v-slot:activator>
-                <v-list-item-content>
+                <v-list-item-content :class="getUrl == nav.path ? 'active-nav' : '' ">
                     <v-list-item-title
                         v-text="nav.title"
                     ></v-list-item-title>
@@ -28,7 +28,10 @@
 
             <v-list-item
                 v-for="child in nav.items"
+                @click="$router.push({name: child.path}).catch(() => {})"
+                :class="getUrl == child.path ? 'active-nav' : '' "
                 :key="child.title"
+                dense
             >
                 <v-list-item-content>
                     <v-list-item-title
@@ -37,7 +40,12 @@
                 </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="nav.title">
+          <v-list-item
+          v-else
+          :key="nav.title"
+          @click="$router.push({name: nav.path}).catch(() => {})"
+          :class="getUrl == nav.path ? 'active-nav' : '' "
+          >
               <v-list-item-icon>
                   <v-icon small>{{ nav.icon }}</v-icon>
               </v-list-item-icon>
@@ -97,11 +105,11 @@ export default {
                 active: false,
                 items: [],
                 icon: 'mdi-file-sign',
-                path: 'admin-status',
+                path: 'admin-evaluation',
             },
             {
                 title: "Group Intity",
-                active: true,
+                active: false,
                 icon: "mdi-group or-small",
                 items: [
                   { title: "Department" },
@@ -116,16 +124,16 @@ export default {
                 active: false,
                 items: [],
                 icon: 'mdi-account-school',
-                path: 'admin-status',
+                path: 'admin-user-student',
             },
             {
                 title: "Faculties",
                 active: false,
                 icon: "mdi-account-group-outline or-small",
                 items: [
-                  { title: "Admin" },
-                  { title: "Coordinator" },
-                  { title: "Teacher" },
+                  { title: "Admin", path: "admin-user-admin" },
+                  { title: "Coordinator", path: "admin/user-coordinator" },
+                  { title: "Teacher", path: "admin/user-teacher" },
                 ],
                 path: "",
             },
@@ -146,11 +154,11 @@ export default {
 
 <style scope>
 .active-nav .v-icon, .active .v-list-item__title{
-  color: #EFEBE9 !important;
+  color: #212121 !important;
 }
 .active-nav{
-  background: #8D6E63 !important;
-  color: #EFEBE9 !important;
+  background: #FFC107 !important;
+  color: #212121 !important;
 }
 .v-application--is-ltr .v-list-item__icon {
   margin-right: 10px !important;

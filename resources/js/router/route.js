@@ -1,6 +1,24 @@
 
 export default [
     {
+        path:'/admin/evaluation',
+        component: () => import('@/pages/admin/evaluation'),
+        name:'admin-evaluation',
+        meta: { requireAuth: true },
+    },
+    {
+        path:'/admin/user-student',
+        component: () => import('@/pages/admin/student'),
+        name:'admin-user-student',
+        meta: { requireAuth: true },
+    },
+    {
+        path:'/admin/user-admin',
+        component: () => import('@/pages/admin/evaluation'),
+        name:'admin-user-admin',
+        meta: { requireAuth: true },
+    },
+    {
         path:'/admin',
         component: () => import('@/pages/admin/dashboard'),//admin view
         children: [

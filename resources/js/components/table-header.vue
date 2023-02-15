@@ -12,14 +12,14 @@
                 @click.stop="$emit('refresh')"
                 v-if="!hide.includes('refresh')"
             >
-                mdi-autorenew
+                mdi-reload
                 {{ data.isFetching ? "mdi-spin" : "" }}
             </v-icon>
             <v-spacer></v-spacer>
-            <div class="d-inline mr-2">
+            <div class="d-inline mr-4">
                 <v-text-field
                 dense
-                placeholder="Search ..."
+                placeholder="Search record ..."
                 append-icon="mdi-magnify"
                 hide-details="">
                 </v-text-field>
@@ -39,49 +39,69 @@
                 </template>
                 <span>Grid View</span>
             </v-tooltip> -->
-            <v-tooltip v-if="!hide.includes('excel')" bottom color="primary">
+            <v-tooltip v-if="!hide.includes('filter')" bottom color="secondary">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        color="warning"
+                        dark
+                        small
+                        @click.stop="$emit('importExcel')"
+                        class="mr-1"
+                        v-bind="attrs"
+                        v-on="on"
+                    > 
+                        <span class="text-capitalize">Filter</span>
+                        <v-icon small>mdi-filter-menu</v-icon>
+                    </v-btn>
+                </template>
+                <span>Filter records</span>
+            </v-tooltip>
+            <v-tooltip v-if="!hide.includes('excel')" bottom color="secondary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="success"
                         dark
+                        small
                         @click.stop="$emit('importExcel')"
-                        class="mr-2"
+                        class="mr-1"
                         v-bind="attrs"
                         v-on="on"
-                    >
-                        Import Excel 
-                        <v-icon>mdi-upload</v-icon>
+                    > 
+                        <span class="text-capitalize">Import Excel</span>
+                        <v-icon small>mdi-table-arrow-left</v-icon>
                     </v-btn>
                 </template>
                 <span>Import from excel file</span>
             </v-tooltip>
-            <v-tooltip v-if="!hide.includes('download')" bottom color="primary">
+            <v-tooltip v-if="!hide.includes('download')" bottom color="secondary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="primary"
                         dark
-                        class="mr-2"
+                        small
+                        class="mr-1"
                         v-bind="attrs"
                         v-on="on"
                     >
-                        Download 
-                        <v-icon>mdi-download</v-icon>
+                        <span class="text-capitalize">Download</span>
+                        <v-icon small>mdi-download</v-icon>
                     </v-btn>
                 </template>
                 <span>Download {{data.title}} record</span>
             </v-tooltip>
-            <v-tooltip v-if="!hide.includes('addNew')" bottom color="primary">
+            <v-tooltip v-if="!hide.includes('addNew')" bottom color="secondary">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="secondary"
                         dark
+                        small
                         @click.stop="$emit('addNew')"
-                        class="mr-2"
+                        class="mr-1"
                         v-bind="attrs"
                         v-on="on"
                     >
-                        Create 
-                        <v-icon>mdi-plus</v-icon>
+                        <span class="text-capitalize">New</span>
+                        <v-icon small>mdi-plus</v-icon>
                     </v-btn>
                 </template>
                 <span>Add New</span>
@@ -123,3 +143,9 @@ export default {
     },
 }
 </script>
+<style scoped>
+.v-application .v-btn{
+    min-width: unset !important;
+    padding: 0 10px !important;
+}
+</style>

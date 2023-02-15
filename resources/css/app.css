@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500&display=swap');
+
+.v-application {
+    font-family: 'Nunito', sans-serif !important;
+}
+
 .v-divider{
     /* border-color: rgb(10, 10, 10) !important; */
     border-color: #757575 !important;
