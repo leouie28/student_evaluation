@@ -35,13 +35,15 @@ router.beforeEach((to, from, next) => {
                 next()
             } else {
                 next({
-                    // name: 'login',
-                    // query: { redirect: to.fullPath }
+                    name: 'login',
+                    query: { redirect: to.fullPath }
                 })
             }
         } else {
             next() // make sure to always call next()!
         }
+    }).catch(error => {
+        // router.push({path: "/login"})
     })
 })
 

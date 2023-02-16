@@ -4,7 +4,7 @@
       v-model="drawer"
       app
       width="200"
-      color="grey darken-4"
+      color="grey darken-3"
     >
       <side-bar @logout="$emit('logout')"></side-bar>
     </v-navigation-drawer>

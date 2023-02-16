@@ -1,15 +1,21 @@
 <template>
     <div>
-      <div style="height:150px" class="text-center">
+      <div class="text-center pt-4 border-b">
+        <v-toolbar-title>
+          <h4 class="font-weight-bold amber--text">School Name</h4>
+        </v-toolbar-title>
+      </div>
+      <v-divider></v-divider>
+      <!-- <div style="height:150px" class="text-center">
           <v-img
           class="text-center mx-auto my-4" 
           height="170"
           width="170"
           src="/images/system/logo.png">
           </v-img>
-      </div>
+      </div> -->
 
-      <v-list class="mt-5" dark dense nav>
+      <v-list class="" dark dense nav>
         <template v-for="nav in navs" no-action>
           <v-list-group
           v-if="nav.items.length > 0"
@@ -74,7 +80,7 @@
       </v-list> -->
 
       <div>
-        <v-footer absolute color="grey darken-3">
+        <v-footer absolute color="grey darken-4">
             <v-btn
             block
             elevation="2"
@@ -112,7 +118,7 @@ export default {
                 active: false,
                 icon: "mdi-group or-small",
                 items: [
-                  { title: "Department" },
+                  { title: "Department", path: "admin-department" },
                   { title: "Grade/Class" },
                   { title: "Section" },
                   { title: "Subject" },
@@ -139,8 +145,21 @@ export default {
             },
         ]
     }),
+    created() {
+      this.checkRouteActive()
+    },
     methods: {
-        
+        checkRouteActive() {
+          let path = this.getUrl
+          this.navs.forEach(elem => {
+            if(elem.items.length>0) {
+              let res = elem.items.find(x => x.path === path)
+              if(res) {
+                elem.active = true
+              }
+            }
+          });
+        }
     },
     computed: {
         getUrl() {

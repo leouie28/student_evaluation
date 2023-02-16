@@ -7,6 +7,12 @@ export default [
         meta: { requireAuth: true },
     },
     {
+        path:'/admin/department',
+        component: () => import('@/pages/admin/department'),
+        name:'admin-department',
+        meta: { requireAuth: true },
+    },
+    {
         path:'/admin/user-student',
         component: () => import('@/pages/admin/student'),
         name:'admin-user-student',

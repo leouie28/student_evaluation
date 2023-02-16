@@ -11,8 +11,8 @@ class AuthService
 {
   public function loginUser($creds)
   {
-    if (Auth::guard('web')->attempt($creds->toArray())) {
-      $auth = User::with('role')->whereId(Auth::user()->id)->first();
+    if (Auth::guard("web")->attempt($creds->toArray())) {
+      $auth = User::with('role')->whereId(Auth::id())->first();
 
       return $auth;
     }

@@ -21,7 +21,12 @@ class AuthController extends Controller
 
   public function checkAuth()
   {
-
+    // return "test";
+    $arr = [
+      "test" => "test",
+      "user" => Auth::check()
+    ];
+    return response($arr);
     if ($user = Auth::user()) {
       return $user;
     }
@@ -35,6 +40,7 @@ class AuthController extends Controller
     if (!$user = $this->authService->loginUser($request)) {
       throw new AuthenticationException('Invalid credentials.');
     }
+    $request->session()->regenerate();
 
     return response($user);
   }

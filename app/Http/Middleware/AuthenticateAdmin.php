@@ -5,11 +5,11 @@ namespace App\Http\Middleware;
 use App\Exceptions\AuthException;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
-// use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticateAdmin
+class AuthenticateAdmin extends Middleware
 {
   /**
    * Handle an incoming request.
