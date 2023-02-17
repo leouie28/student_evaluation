@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/check-auth', [AuthController::class, 'checkAuth'])->middleware(['auth:web']);
 
 Route::get('/{any?}', function () {
   return view('app');

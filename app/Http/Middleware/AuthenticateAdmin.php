@@ -2,14 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\Exceptions\AuthException;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+// use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticateAdmin extends Middleware
+class AuthenticateAdmin
 {
   /**
    * Handle an incoming request.
@@ -24,9 +23,9 @@ class AuthenticateAdmin extends Middleware
     //   throw new AuthenticationException();
     // }
 
-    // if ($user->isAdmin()) {
-    //   throw new AuthenticationException('User not allowed.');
-    // }
+    if (!Auth::user()->isAdmin()) {
+      throw new AuthenticationException('User not allowed.');
+    }
     return $next($request);
   }
 }
