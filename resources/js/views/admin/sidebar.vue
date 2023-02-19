@@ -88,7 +88,7 @@
             color="brown lighten-4"
             @click="$emit('logout')"
             >
-                <v-icon>mdi-logout-variant</v-icon>
+                <v-icon class="mr-2">mdi-logout-variant</v-icon>
                 Logout
             </v-btn>
         </v-footer>
@@ -119,7 +119,7 @@ export default {
                 icon: "mdi-group or-small",
                 items: [
                   { title: "Department", path: "admin-department" },
-                  { title: "Grade/Class" },
+                  { title: "Grade Year" },
                   { title: "Section" },
                   { title: "Subject" },
                 ],

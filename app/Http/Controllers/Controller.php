@@ -23,7 +23,7 @@ class Controller extends BaseController
     return [
       'data' => $data,
       'type' => $status,
-      'message' => 'Record ' . $msgType,
+      'message' => 'Record successfully ' . $msgType,
     ];
   }
 

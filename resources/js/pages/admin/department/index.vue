@@ -14,7 +14,6 @@
                 </template>
             </table-header>
             <v-data-table
-                dense
                 :headers="headers"
                 :items="data_items"
                 :search="data.keyword"
@@ -28,22 +27,22 @@
                 class="cursor-pointer table-fix-height clickable-item"
                 fixed-header
             >
+                <template v-slot:[`item.id`]="{ item }">
+                    <span class="primary--text font-weight-bold">{{item.id}}</span>
+                </template>
                 <template v-slot:[`item.created_at`]="{ item }">
-                    {{ moment(item.created_at).format("YYYY-MM-DD, h:mm a") }}
+                    {{ moment(item.created_at).format("DD/MM/YYYY") }}
                 </template>
                 <template v-slot:[`item.action`]="{ item }">
-                    <v-btn color="primary" icon small @click="editItem(item)">
-                        <v-icon class="mr-1">mdi-eye-outline</v-icon>
+                    <v-btn color="primary" icon small>
+                        <v-icon small>mdi-eye-outline</v-icon>
                     </v-btn>
-                    <!-- <v-btn
-                        class="px-2"
-                        elevation="0"
-                        icon
-                        color="error"
-                        @click="warning(item)"
-                    >
-                        <v-icon>mdi-trash-can</v-icon>
-                    </v-btn> -->
+                    <v-btn color="primary" icon small @click.stop="editItem(item)">
+                        <v-icon small>mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn color="error" icon small @click="warning(item)">
+                        <v-icon small>mdi-delete</v-icon>
+                    </v-btn>
                 </template>
                 <template v-slot:no-data>
                     <div>No Data</div>
@@ -120,7 +119,7 @@ export default {
             {
                 text: "Created at",
                 align: "start",
-                sortable: false,
+                sortable: true,
                 value: "created_at",
             },
             {
@@ -133,10 +132,6 @@ export default {
     }),
     methods: {
         fetchPage() {
-            // axios.get("/web-admin/check-auth").then(({ data }) => {
-            //     console.log(data);
-            // });
-
             this.data.isFetching = true;
             let params = this._createParams(this.options);
             params = params + this._createFilterParams(this.data.filter);
@@ -169,7 +164,7 @@ export default {
         },
         update(payload) {
             axios
-                .put(`/admin-api/announcement/${payload.id}`, payload)
+                .put(`${this.routeApi}/${payload.id}`, payload)
                 .then(({ data }) => {
                     this.form = false;
                     this.fetchPage();
@@ -188,7 +183,7 @@ export default {
         warning(val) {
             this.selectedItem = val;
             let text = "Are you sure you want to delete";
-            this._warning(true, text, val.title);
+            this._warning(true, text, val.name);
             this.deleteForm = true;
         },
         confirm() {

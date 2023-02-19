@@ -15,10 +15,10 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text @click="$emit('close')">
+                    <v-btn small text @click="$emit('close')">
                         Cancel
                     </v-btn>
-                    <v-btn color="primary" @click="$emit('confirm')">
+                    <v-btn small color="primary" @click="$emit('confirm')">
                         Confirm
                     </v-btn>
                 </v-card-actions>

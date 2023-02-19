@@ -6,6 +6,7 @@ use App\Filters\Filter;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class DepartmentController extends Controller
 {
@@ -17,7 +18,7 @@ class DepartmentController extends Controller
   public function index()
   {
     $model = Department::class;
-    return (new Filter($model))->searchable();
+    return (new Filter($model))->searchable('departments');
   }
 
   /**
@@ -76,7 +77,10 @@ class DepartmentController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $dept = Department::findOrFail($id);
+    $dept->update($request->toArray());
+
+    return response()->json($this->returnBasic($dept, 'updated'), 200);
   }
 
   /**

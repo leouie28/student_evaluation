@@ -14,6 +14,11 @@ class Department extends Model
     'info'
   ];
 
+  public function getTableName()
+  {
+    return $this->getTable();
+  }
+
   public function teachers()
   {
     return $this->hasMany(Teacher::class);

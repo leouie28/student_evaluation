@@ -2,7 +2,7 @@
     <div>
         <v-dialog persistent max-width="600" v-model="show">
             <v-card>
-                <v-card-title>New Department</v-card-title>
+                <v-card-title>{{isEdit?"Update":"New"}} Department</v-card-title>
                 <v-divider class="mt-0 pt-0"></v-divider>
                 <v-card-text class="">
                     <v-row>
@@ -11,7 +11,6 @@
                                 dense
                                 label="Name Label"
                                 v-model="payload.name"
-                                :readonly="isEdit"
                                 :rules="rule"
                                 filled
                                 required
@@ -22,7 +21,6 @@
                             <v-textarea
                                 dense
                                 label="Info"
-                                :readonly="isEdit"
                                 v-model="payload.info"
                                 :rules="rule"
                                 filled
@@ -34,12 +32,9 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text @click="closeForm"> Close </v-btn>
-                    <v-btn color="secondary" @click="save" v-if="!isEdit">
+                    <v-btn text @click="closeForm" small> Close </v-btn>
+                    <v-btn color="secondary" @click="save" small>
                         {{ isEdit ? "Update" : "Create" }}
-                        <v-icon class="ml-2"
-                            >mdi-{{ isEdit ? "content-save" : "plus" }}</v-icon
-                        >
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -79,7 +74,7 @@ export default {
     },
     methods: {
         save() {
-            if (this.payload.title && this.payload.info) {
+            if (this.payload.name && this.payload.info) {
                 if (this.isEdit) {
                     this.$emit("update", this.payload);
                     this.closeForm();
