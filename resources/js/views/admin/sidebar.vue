@@ -133,7 +133,7 @@ export default {
                 path: 'admin-user-student',
             },
             {
-                title: "Faculties",
+                title: "Faculty",
                 active: false,
                 icon: "mdi-account-group-outline or-small",
                 items: [

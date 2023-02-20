@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
 // use Illuminate\Auth\Middleware\Authenticate as Middleware;
@@ -23,7 +24,11 @@ class AuthenticateAdmin
     //   throw new AuthenticationException();
     // }
 
-    if (!Auth::user()->isAdmin()) {
+    if (!$id = Auth::id()) {
+      throw new AuthenticationException;
+    }
+    
+    if(!User::find($id)->isAdmin()) {
       throw new AuthenticationException('User not allowed.');
     }
     return $next($request);

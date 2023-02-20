@@ -66,33 +66,26 @@
                             <v-icon small>mdi-filter-menu</v-icon>
                         </v-btn>
                     </template>
-                <v-card width="300" class="pa-2">
-                    <v-card-title>Filter</v-card-title>
-                    <v-card-text>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-select
-                                dense
-                                outlined
-                                label="Gender"
-                                hide-details=""
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-select
-                                dense
-                                outlined
-                                height="20"
-                                label="Department"
-                                hide-details=""
-                                ></v-select>
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-btn block color="warning" class="text-capitalize">Filter Record</v-btn>
-                    </v-card-actions>
-                </v-card>
+                    <slot name="filter">
+                        <v-card width="300" class="pa-2">
+                            <v-card-title>Filter</v-card-title>
+                            <v-card-text>
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-select
+                                        dense
+                                        outlined
+                                        label="Field"
+                                        hide-details=""
+                                        ></v-select>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn block color="warning" class="text-capitalize">Filter Record</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </slot>
                 </v-menu>
                 <v-tooltip v-if="!hide.includes('excel')" bottom color="secondary">
                     <template v-slot:activator="{ on, attrs }">
@@ -146,7 +139,7 @@
                 </v-tooltip>
             </v-toolbar>
         </div>
-        <v-sheet color="grey lighten-2" class="pa-2 d-flex align-center" rounded="md">
+        <v-sheet v-if="data.isFiltered" color="grey lighten-2" class="px-2 d-flex align-center" rounded="md">
             <span class="pr-3">Filter by:</span>
             <v-chip-group column>
                 <v-chip class="elevation-4" label color="primary">gender:"Male"</v-chip>
@@ -164,7 +157,9 @@ export default {
                 return {
                     title: "Table Header",
                     isFetching: false,
-                    keyword: ""
+                    keyword: "",
+                    isFiltered: false,
+                    filter: []
                 };
             }
         },

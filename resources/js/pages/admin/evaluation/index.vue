@@ -8,8 +8,33 @@
             @importExcel="importExcel"
             @search="fetchPage"
             :hide="['download', 'excel', 'addNew']">
-                <template v-slot:custom_filter>
-                    <admin-filter :filter="data.filter"></admin-filter>
+                <template v-slot:filter>
+                    <v-card width="300" class="pa-2">
+                        <v-card-title>Filter</v-card-title>
+                        <v-card-text>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-select
+                                    dense
+                                    outlined
+                                    label="Gender"
+                                    hide-details=""
+                                    ></v-select>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-select
+                                    dense
+                                    outlined
+                                    label="Department"
+                                    hide-details=""
+                                    ></v-select>
+                                </v-col>
+                            </v-row>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-btn block color="warning" class="text-capitalize">Filter Record</v-btn>
+                        </v-card-actions>
+                    </v-card>
                 </template>
             </table-header>
             <v-data-table
@@ -105,8 +130,8 @@ export default {
             { text: "Grade Year", align: "start", sortable: false, value: "content", },
             { text: "Section", align: "start", sortable: false, value: "content", },
             { text: "Subject", align: "start", sortable: false, value: "content", },
-            { text: "Teacher", align: "start", sortable: false, value: "content", },
             { text: "Evaluation For", align: "start", sortable: true, value: "created_at", },
+            { text: "Teacher", align: "start", sortable: false, value: "content", },
             { text: "Actions", align: "center", sortable: false, value: "action", },
         ],
     }),
