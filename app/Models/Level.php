@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Grade extends Model
+class Level extends Model
 {
   use HasFactory;
 
@@ -13,6 +13,10 @@ class Grade extends Model
     'department_id',
     'name',
     'info'
+  ];
+
+  protected $appends = [
+    'department_name'
   ];
 
   public function department()
@@ -23,5 +27,10 @@ class Grade extends Model
   public function sections()
   {
     return $this->hasMany(Section::class);
+  }
+
+  public function getDepartmentNameAttribute()
+  {
+    return $this->department->name;
   }
 }

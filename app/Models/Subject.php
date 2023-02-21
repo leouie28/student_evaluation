@@ -11,8 +11,14 @@ class Subject extends Model
 
   protected $fillable = [
     'section_id',
+    'teacher_id',
     'name',
     'info',
+  ];
+
+  protected $appends = [
+    'section_name',
+    'teacher_name',
   ];
 
   public function section()
@@ -20,8 +26,23 @@ class Subject extends Model
     return $this->belongsTo(Section::class);
   }
 
+  public function teacher()
+  {
+    return $this->belongsTo(Teacher::class);
+  }
+
   public function evaluations()
   {
     return $this->hasMany(Evaluation::class);
+  }
+
+  public function getSectionNameAttribute()
+  {
+    return $this->section->name;
+  }
+
+  public function getTeacherNameAttribute()
+  {
+    return $this->teacher->name;
   }
 }

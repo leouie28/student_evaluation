@@ -10,18 +10,27 @@ class Section extends Model
   use HasFactory;
 
   protected $fillable = [
-    'grade_id',
+    'level_id',
     'name',
     'info',
   ];
 
-  public function grade()
+  protected $appends = [
+    'level_name'
+  ];
+
+  public function level()
   {
-    return $this->belongsTo(Grade::class);
+    return $this->belongsTo(Level::class);
   }
 
   public function subjects()
   {
     return $this->hasMany(Subject::class);
+  }
+
+  public function getLevelNameAttribute()
+  {
+    return $this->level->name;
   }
 }

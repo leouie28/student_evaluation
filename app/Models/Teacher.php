@@ -12,11 +12,28 @@ class Teacher extends Model
   protected $fillable = [
     'user_id',
     'name',
+    'contact_number',
+    'address',
     'birthday',
+    'image',
+  ];
+
+  protected $appends = [
+    'gender'
   ];
 
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  public function subjects()
+  {
+    return $this->hasMany(Subject::class);
+  }
+
+  public function getGenderAttribute()
+  {
+    return $this->user->gender;
   }
 }

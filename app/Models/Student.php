@@ -14,13 +14,16 @@ class Student extends Model
     'user_id',
     'first_name',
     'last_name',
-    'gender',
     'address',
     'birthday',
     'contact_number',
     'current_grade_level',
     'current_section',
     'image',
+  ];
+
+  protected $appends = [
+    'gender',
   ];
 
   public function user()
@@ -31,5 +34,10 @@ class Student extends Model
   public function indicators()
   {
     return $this->hasMany(Indicator::class);
+  }
+
+  public function getGenderAttribute()
+  {
+    return $this->user->gender;
   }
 }

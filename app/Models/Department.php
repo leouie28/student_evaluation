@@ -14,18 +14,13 @@ class Department extends Model
     'info'
   ];
 
-  public function getTableName()
-  {
-    return $this->getTable();
-  }
-
   public function teachers()
   {
     return $this->hasMany(Teacher::class);
   }
 
-  public function grades()
+  public function level()
   {
-    return $this->hasMany(Grade::class);
+    return $this->hasMany(Level::class);
   }
 }

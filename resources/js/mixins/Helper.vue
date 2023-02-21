@@ -13,7 +13,7 @@ export default {
         }
     },
     methods: {
-        _newAlert(trigger, color, text){
+        _newAlert(trigger, color, text = 'Failed to save record'){
             this.alert_data.color = color
             this.alert_data.text = text
             setTimeout(() => {
@@ -26,7 +26,25 @@ export default {
             if(item){
                 this.warning_data.item = item
             }
-        }
+        },
+        _hasEmptyKeys(obj, excepts = []) {
+            let copy = Object.assign({}, obj)
+            if(excepts.length>0) {
+                excepts.forEach(elem => {
+                    delete copy[elem]
+                })
+            }
+            let fields = Object.values(copy)
+
+            let foundEmpty = false;
+            fields.forEach(elem => {
+                if(!elem || elem==null || elem.length<=0 || elem=="") {
+                    foundEmpty = true
+                }
+            })
+            if (foundEmpty) return true
+            else return false;
+        },
     }
 }
 </script>

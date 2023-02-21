@@ -15,8 +15,8 @@ class DepartmentTeacher extends Migration
   {
     Schema::create('department_teacher', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('department_id')->constrained();
-      $table->foreignId('teacher_id')->constrained();
+      $table->integer('department_id')->nullable();
+      $table->integer('teacher_id')->nullable();
       $table->timestamps();
     });
   }

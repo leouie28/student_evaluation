@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Filters\Filter;
-use App\Http\Controllers\Controller;
-use App\Models\Student;
 use App\Models\User;
+use App\Filters\Filter;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-class StudentController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $model = Student::class;
-        return (new Filter($model))->searchable('students');
+        $model = Teacher::class;
+        return (new Filter($model))->searchable('teachers');
     }
 
     /**
@@ -40,30 +40,25 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $request['role_id'] = 4;
-        $request['username'] = $request->student_id;
-        $request['password'] = Hash::make('123');
+        $request['role_id'] = 3;
+        $request['password'] = Hash::make($request->password);
         $payload = $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required',
             'role_id' => 'required|integer',
-            'student_id' => 'required|unique:students',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'name' => 'required|string',
             'gender' => 'required|string',
             'address' => 'required',
             'birthday' => 'required',
             'contact_number' => 'nullable',
-            'current_grade_level' => 'nullable',
-            'current_section' => 'nullable',
             'image' => 'nullable',
         ]);
-        
-        $student = User::create($payload);
 
-        $student->student()->save(new Student($payload));
+        $teacher = User::create($payload);
 
-        return response()->json($this->returnBasic($student), 200);
+        $teacher->student()->save(new Teacher($payload));
+
+        return response()->json($this->returnBasic($teacher), 200);
     }
 
     /**

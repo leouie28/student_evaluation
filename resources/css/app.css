@@ -30,6 +30,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.v-application .v-text-field--outlined.v-input--dense.v-text-field--outlined>.v-input__control>.v-input__slot {
-    min-height: 0 !important;
-}
+/* .v-application .v-text-field--outlined fieldset {
+    border-color: #ccc;
+} */

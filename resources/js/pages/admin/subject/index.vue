@@ -80,11 +80,11 @@ export default {
         TableHeader,
     },
     data: () => ({
-        routeApi: "/web-admin/department",
+        routeApi: "/web-admin/subject",
         form: false,
         excelForm: false,
         data: {
-            title: "Department",
+            title: "Subject",
             isFetching: false,
             keyword: "",
             filter: {},
@@ -105,16 +105,22 @@ export default {
         headers: [
             { text: "ID", align: "start", sortable: true, value: "id" },
             {
-                text: "Name Label",
+                text: "Name",
                 align: "start",
                 sortable: true,
                 value: "name",
             },
             {
-                text: "No. of grade level",
+                text: "Section",
                 align: "start",
                 sortable: false,
-                value: "content",
+                value: "section_name",
+            },
+            {
+                text: "Teacher",
+                align: "start",
+                sortable: false,
+                value: "teacher_name",
             },
             {
                 text: "Created at",
@@ -156,6 +162,9 @@ export default {
                 .then(({ data }) => {
                     this.fetchPage();
                     this._newAlert(true, data.type, data.message);
+                })
+                .catch((error) => {
+                    this._newAlert(true, 'error', error.response?.data.message);
                 })
                 .finally(() => {
                     this.showForm = false;

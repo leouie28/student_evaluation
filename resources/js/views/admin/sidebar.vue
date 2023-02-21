@@ -119,9 +119,9 @@ export default {
                 icon: "mdi-group or-small",
                 items: [
                   { title: "Department", path: "admin-department" },
-                  { title: "Grade Year" },
-                  { title: "Section" },
-                  { title: "Subject" },
+                  { title: "Grade Level", path: "admin-level" },
+                  { title: "Section", path: "admin-section" },
+                  { title: "Subject", path: "admin-subject" },
                 ],
                 path: "",
             },
@@ -138,8 +138,8 @@ export default {
                 icon: "mdi-account-group-outline or-small",
                 items: [
                   { title: "Admin", path: "admin-user-admin" },
-                  { title: "Coordinator", path: "admin/user-coordinator" },
-                  { title: "Teacher", path: "admin/user-teacher" },
+                  { title: "Coordinator", path: "admin-user-coordinator" },
+                  { title: "Teacher", path: "admin-user-teacher" },
                 ],
                 path: "",
             },
@@ -186,6 +186,6 @@ export default {
   font-size: 16px !important;
 }
 .v-application--is-ltr .v-list--dense.v-list--nav .v-list-group--no-action>.v-list-group__items>.v-list-item {
-  padding-left: 60px !important;
+  padding-left: 50px !important;
 }
 </style>

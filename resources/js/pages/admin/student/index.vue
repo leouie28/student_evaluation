@@ -27,8 +27,16 @@
                 class="cursor-pointer table-fix-height clickable-item"
                 fixed-header
             >
-                <template v-slot:[`item.id`]="{ item }">
-                    <span class="primary--text font-weight-bold">{{item.id}}</span>
+                <template v-slot:[`item.student_id`]="{ item }">
+                    <span class="primary--text font-weight-bold">{{item.student_id}}</span>
+                </template>
+                <template v-slot:[`item.image`]="{ item }">
+                    <v-avatar tile>
+                        <img
+                        alt="image"
+                        src='/images/system/noimage.png'
+                        />
+                    </v-avatar>
                 </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format("DD/MM/YYYY") }}
@@ -80,7 +88,7 @@ export default {
         TableHeader,
     },
     data: () => ({
-        routeApi: "/web-admin/department",
+        routeApi: "/web-admin/student",
         form: false,
         excelForm: false,
         data: {
@@ -103,48 +111,48 @@ export default {
         selectedItem: {},
         selected: [],
         headers: [
-            { text: "Student Id", align: "start", sortable: true, value: "id" },
+            { text: "Student Id", align: "start", sortable: true, value: "student_id" },
             {
                 text: "Image",
                 align: "start",
                 sortable: true,
-                value: "name",
+                value: "image",
             },
             {
                 text: "First Name",
                 align: "start",
                 sortable: true,
-                value: "name",
+                value: "first_name",
             },
             {
                 text: "Last Name",
                 align: "start",
                 sortable: false,
-                value: "content",
+                value: "last_name",
             },
             {
                 text: "Address",
                 align: "start",
                 sortable: true,
-                value: "created_at",
+                value: "address",
             },
             {
                 text: "Gender",
                 align: "start",
                 sortable: true,
-                value: "created_at",
+                value: "gender",
             },
             {
                 text: "Grade Level",
                 align: "start",
                 sortable: true,
-                value: "created_at",
+                value: "level",
             },
             {
                 text: "Section",
                 align: "start",
                 sortable: true,
-                value: "created_at",
+                value: "section",
             },
             {
                 text: "Actions",

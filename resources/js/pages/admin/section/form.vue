@@ -1,11 +1,25 @@
 <template>
     <div>
-        <v-dialog persistent max-width="600" v-model="show">
+        <v-dialog persistent max-width="500" v-model="show">
             <v-card>
-                <v-card-title>{{isEdit?"Update":"New"}} Department</v-card-title>
+                <v-card-title>{{isEdit?"Update":"New"}} Section</v-card-title>
                 <v-divider class="mt-0 pt-0"></v-divider>
                 <v-card-text class="">
                     <v-row>
+                        <v-col md="12" cols="12">
+                            <v-select
+                                dense
+                                label="Grade Level"
+                                v-model="payload.level_id"
+                                :items="levels"
+                                item-text="name"
+                                item-value="id"
+                                :rules="rule"
+                                outlined
+                                required
+                                hide-details="auto"
+                            ></v-select>
+                        </v-col>
                         <v-col md="12" cols="12">
                             <v-text-field
                                 dense
@@ -20,7 +34,7 @@
                         <v-col md="12" cols="12">
                             <v-textarea
                                 dense
-                                label="Info"
+                                label="Info (optional)"
                                 v-model="payload.info"
                                 :rules="rule"
                                 outlined
@@ -34,7 +48,7 @@
                     <v-spacer></v-spacer>
                     <v-btn @click="closeForm" class="text-capitalize"> Close </v-btn>
                     <v-btn color="secondary" @click="save" class="text-capitalize">
-                        {{ isEdit ? "Update " : "Create " }}Department
+                        {{ isEdit ? "Update " : "Create " }}Section
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -42,18 +56,22 @@
     </div>
 </template>
 <script>
+import common from "@/services/commonApi.js"
 export default {
     data: () => ({
         // isEdit: false,
         payload: {
+            level_id: "",
             name: "",
             info: "",
         },
         orig: {
+            level_id: "",
             name: "",
             info: "",
         },
         rule: [(v) => !!v || "This field is required"],
+        levels: [],
     }),
     props: {
         show: {
@@ -70,11 +88,15 @@ export default {
         },
     },
     mounted() {
-        console.log(this._getters("is_editing"), "form");
+        this.initialize()
     },
     methods: {
+        async initialize() {
+            let {data} = await common.get('/web-admin/level')
+            this.levels = data.data
+        },
         save() {
-            if (this.payload.name && this.payload.info) {
+            if (this._hasEmptyKeys(this.payload, ['info'])==false) {
                 if (this.isEdit) {
                     this.$emit("update", this.payload);
                     this.closeForm();
@@ -103,12 +125,12 @@ export default {
     watch: {
         data: {
             handler(val) {
-                if (val) {
+                if(!this._hasEmptyKeys(val)) {
                     this.payload = val;
                 }
             },
-            immediate: true,
-            deep: true,
+            // immediate: true,
+            // deep: true,
         },
     },
 };

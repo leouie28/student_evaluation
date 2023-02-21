@@ -2,55 +2,31 @@
     <div>
         <v-dialog persistent max-width="800" v-model="show">
             <v-card>
-                <v-card-title>{{isEdit?"Update":"New"}} Student</v-card-title>
+                <v-card-title>{{isEdit?"Update":"New"}} Teacher</v-card-title>
                 <v-divider class="mt-0 pt-0"></v-divider>
-                <v-card-text>
+                <v-card-text class="">
                     <v-row>
                         <v-col cols="8">
                             <v-row>
                                 <v-col cols="12">
-                                    <span>Student Id <span class="error--text">*</span></span>
+                                    <span>Full Name <span class="error--text">*</span></span>
                                     <v-text-field
                                         dense
                                         outlined
-                                        placeholder="Student Id"
-                                        v-model="payload.student_id"
+                                        placeholder="Full name"
+                                        v-model="payload.name"
                                         :rules="rule"
                                         required
                                         hide-details=""
                                     ></v-text-field>
                                 </v-col>
                                 <!-- <v-col cols="6"></v-col> -->
-                                <v-col cols="6">
-                                    <span>First name <span class="error--text">*</span></span>
-                                    <v-text-field
-                                        dense
-                                        outlined
-                                        placeholder="First name"
-                                        v-model="payload.first_name"
-                                        :rules="rule"
-                                        required
-                                        hide-details=""
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="6">
-                                    <span>Last name <span class="error--text">*</span></span>
-                                    <v-text-field
-                                        dense
-                                        outlined
-                                        placeholder="Last name"
-                                        v-model="payload.last_name"
-                                        :rules="rule"
-                                        required
-                                        hide-details=""
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
+                                <v-col cols="3">
                                     <span>Gender <span class="error--text">*</span></span>
                                     <v-select
                                         dense
                                         outlined
-                                        :items="genders"
+                                        :items="gender"
                                         placeholder="Gender"
                                         v-model="payload.gender"
                                         :rules="rule"
@@ -58,7 +34,7 @@
                                         hide-details="auto"
                                     ></v-select>
                                 </v-col>
-                                <v-col cols="8">
+                                <v-col cols="9">
                                     <span>Address <span class="error--text">*</span></span>
                                     <v-text-field
                                         dense
@@ -75,7 +51,7 @@
                                     <v-text-field
                                         dense
                                         outlined
-                                        placeholder="Birthday"
+                                        placeholder="birthdate"
                                         v-model="payload.birthday"
                                         :rules="rule"
                                         required
@@ -83,36 +59,41 @@
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="6">
-                                    <span>Telephone/Mobile no.<span class="error--text"></span></span>
+                                    <span>Telephone/Mobile no. <span class="error--text">*</span></span>
                                     <v-text-field
                                         dense
                                         outlined
-                                        placeholder="Telephone/Mobile no."
+                                        placeholder="contact"
                                         v-model="payload.contact_number"
                                         :rules="rule"
                                         required
                                         hide-details="auto"
                                     ></v-text-field>
                                 </v-col>
+                                <v-col cols="12" class="pa-0">
+                                    <v-divider class="pa-0 mx-0 my-2"></v-divider>
+                                    <v-toolbar-title class="mb-0 pb-0">Account credential</v-toolbar-title>
+                                </v-col>
                                 <v-col cols="6">
-                                    <span>Grade level <span class="error--text">*</span></span>
+                                    <span>Username <span class="error--text">*</span></span>
                                     <v-text-field
                                         dense
                                         outlined
-                                        placeholder="Grade level"
-                                        v-model="payload.current_grade_level"
+                                        placeholder="username"
+                                        v-model="payload.username"
                                         :rules="rule"
                                         required
                                         hide-details="auto"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="6">
-                                    <span>Section <span class="error--text">*</span></span>
+                                    <span>Password <span class="error--text"></span></span>
                                     <v-text-field
                                         dense
                                         outlined
-                                        placeholder="Section"
-                                        v-model="payload.current_section"
+                                        type="password"
+                                        placeholder="password"
+                                        v-model="payload.password"
                                         :rules="rule"
                                         required
                                         hide-details="auto"
@@ -132,7 +113,7 @@
                     <v-spacer></v-spacer>
                     <v-btn @click="closeForm" class="text-capitalize"> Close </v-btn>
                     <v-btn color="secondary" @click="save" class="text-capitalize">
-                        {{ isEdit ? "Update " : "Create " }}Student
+                        {{ isEdit ? "Update " : "Create " }}Teacher
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -144,29 +125,23 @@ export default {
     data: () => ({
         // isEdit: false,
         payload: {
-            student_id: "",
-            first_name: "",
-            last_name: "",
+            name: "",
             gender: "",
+            contact_number: "",
             address: "",
             birthday: "",
-            contact_number: "",
-            current_grade_level: "",
-            current_section: "",
+            image: "",
         },
         orig: {
-            student_id: "",
-            first_name: "",
-            last_name: "",
+            name: "",
             gender: "",
+            contact_number: "",
             address: "",
             birthday: "",
-            contact_number: "",
-            current_grade_level: "",
-            current_section: "",
+            image: "",
         },
         rule: [(v) => !!v || "This field is required"],
-        genders: ['male', 'female']
+        gender: ['male', 'female'],
     }),
     props: {
         show: {
@@ -182,13 +157,9 @@ export default {
             default: () => {},
         },
     },
-    mounted() {
-        console.log(this._getters("is_editing"), "form");
-    },
     methods: {
         save() {
-            let except = ['contact_number', 'current_grade_level', 'current_section'];
-            if (!this._hasEmptyKeys(this.payload, except)) {
+            if (this._hasEmptyKeys(this.payload, ['image'])==false) {
                 if (this.isEdit) {
                     this.$emit("update", this.payload);
                     this.closeForm();
@@ -215,15 +186,15 @@ export default {
         },
     },
     watch: {
-        // data: {
-        //     handler(val) {
-        //         if (val) {
-        //             this.payload = val;
-        //         }
-        //     },
-        //     immediate: true,
-        //     deep: true,
-        // },
+        data: {
+            handler(val) {
+                if(!this._hasEmptyKeys(val)) {
+                    this.payload = val;
+                }
+            },
+            // immediate: true,
+            // deep: true,
+        },
     },
 };
 </script>
