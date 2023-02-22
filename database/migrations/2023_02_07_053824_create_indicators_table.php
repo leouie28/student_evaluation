@@ -15,9 +15,10 @@ class CreateIndicatorsTable extends Migration
   {
     Schema::create('indicators', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('evaluation_id')->constrained();
+      $table->string('year');
+      $table->string('label');
+      $table->string('type')->default('radio_button'); // radio_button or text_field
       $table->integer('order')->nullable();
-      $table->string('type')->default('score'); // score or remarks
       $table->timestamps();
     });
   }

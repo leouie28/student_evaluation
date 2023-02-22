@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Filters\Filter;
 use App\Http\Controllers\Controller;
-use App\Models\Subject;
+use App\Models\Indicator;
 use Illuminate\Http\Request;
 
-class SubjectController extends Controller
+class IndicatorController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -16,8 +15,7 @@ class SubjectController extends Controller
    */
   public function index()
   {
-    $model = Subject::class;
-    return (new Filter($model))->searchable('subjects');
+    //
   }
 
   /**
@@ -39,15 +37,24 @@ class SubjectController extends Controller
   public function store(Request $request)
   {
     $payload = $request->validate([
-      'section_id' => 'required|integer',
-      'teacher_id' => 'required|integer',
-      'name' => 'required',
-      'info' => 'nullable'
+      'year' => 'required|string',
+      'indicators' => 'array'
     ]);
 
-    $section = Subject::create($payload);
+    if (Indicator::where('year', $request->year)->exists()) {
+      return response()->json($this->returnBasic($request, 'The year you enter has already evaluation indicators', 'failed'));
+    }
 
-    return response()->json($this->returnBasic($section), 200);
+    foreach ($payload['indicators'] as $ind) {
+      Indicator::create([
+        'year' => $payload['year'],
+        'label' => $ind['label'],
+        'type' => $ind['type'],
+        'order' => $ind['order']
+      ]);
+    }
+
+    return Indicator::where('year', $request->year)->get();
   }
 
   /**

@@ -43,6 +43,8 @@ class Subject extends Model
 
   public function getTeacherNameAttribute()
   {
-    return $this->teacher->name;
+    if ($this->teacher_id) {
+      return $this->teacher->name;
+    }
   }
 }

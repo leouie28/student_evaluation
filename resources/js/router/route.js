@@ -1,66 +1,77 @@
-
 export default [
     {
-        path:'/admin/evaluation',
-        component: () => import('@/pages/admin/evaluation'),
-        name:'admin-evaluation',
+        path: "/admin/evaluation",
+        component: () => import("@/pages/admin/evaluation"),
+        name: "admin-evaluation",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/department',
-        component: () => import('@/pages/admin/department'),
-        name:'admin-department',
+        path: "/admin/department",
+        component: () => import("@/pages/admin/department"),
+        name: "admin-department",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/level',
-        component: () => import('@/pages/admin/level'),
-        name:'admin-level',
+        path: "/admin/level",
+        component: () => import("@/pages/admin/level"),
+        name: "admin-level",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/section',
-        component: () => import('@/pages/admin/section'),
-        name:'admin-section',
+        path: "/admin/section",
+        component: () => import("@/pages/admin/section"),
+        name: "admin-section",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/subject',
-        component: () => import('@/pages/admin/subject'),
-        name:'admin-subject',
+        path: "/admin/subject",
+        component: () => import("@/pages/admin/subject"),
+        name: "admin-subject",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/user-student',
-        component: () => import('@/pages/admin/student'),
-        name:'admin-user-student',
+        path: "/admin/user-student",
+        component: () => import("@/pages/admin/student"),
+        name: "admin-user-student",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/user-admin',
-        component: () => import('@/pages/admin/evaluation'),
-        name:'admin-user-admin',
+        path: "/admin/user-admin",
+        component: () => import("@/pages/admin/evaluation"),
+        name: "admin-user-admin",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin/user-teacher',
-        component: () => import('@/pages/admin/teacher'),
-        name:'admin-user-teacher',
+        path: "/admin/user-teacher",
+        component: () => import("@/pages/admin/teacher"),
+        name: "admin-user-teacher",
         meta: { requireAuth: true },
     },
     {
-        path:'/admin',
-        component: () => import('@/pages/admin/dashboard'),//admin view
+        path: "/admin/indicator",
+        component: () => import("@/pages/admin/indicator"),
+        name: "admin-indicator",
+        meta: { requireAuth: true },
+    },
+    {
+        path: "/admin/indicator/create",
+        component: () => import("@/pages/admin/indicator/create.vue"),
+        name: "admin-indicator-create",
+        meta: { requireAuth: true },
+    },
+    {
+        path: "/admin",
+        component: () => import("@/pages/admin/dashboard"), //admin view
         children: [
             {
-                path: 'dashboard',
-                component: () => import('@/pages/admin/dashboard'),
-                name: 'admin-election-details',
-                meta: { parent:'/admin' }
+                path: "dashboard",
+                component: () => import("@/pages/admin/dashboard"),
+                name: "admin-election-details",
+                meta: { parent: "/admin" },
             },
-        ]
+        ],
     },
-]
+];
 
 // export default [
 //     //admin routes

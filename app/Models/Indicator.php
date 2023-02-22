@@ -10,9 +10,10 @@ class Indicator extends Model
   use HasFactory;
 
   protected $fillable = [
-    'evaluation_id',
-    'order',
+    'year',
+    'label',
     'type',
+    'order',
   ];
 
   public function evaluation()

@@ -20,6 +20,15 @@ class Controller extends BaseController
 
   public function returnBasic($data, $msgType = 'saved', $status = 'success')
   {
+
+    if ($status == 'failed') {
+      return [
+        'data' => $data,
+        'type' => $status,
+        'message' => $msgType,
+      ];
+    }
+
     return [
       'data' => $data,
       'type' => $status,
