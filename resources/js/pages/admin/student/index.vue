@@ -28,15 +28,20 @@
                 fixed-header
             >
                 <template v-slot:[`item.student_id`]="{ item }">
-                    <span class="primary--text font-weight-bold">{{item.student_id}}</span>
+                    <span class="primary--text font-weight-bold">{{
+                        item.student_id
+                    }}</span>
                 </template>
                 <template v-slot:[`item.image`]="{ item }">
                     <v-avatar tile>
-                        <img
-                        alt="image"
-                        src='/images/system/noimage.png'
-                        />
+                        <img alt="image" src="/images/system/noimage.png" />
                     </v-avatar>
+                </template>
+                <template v-slot:[`item.level_name`]="{ item }">
+                    <span class="primary--text">{{ item.level_name }}</span>
+                </template>
+                <template v-slot:[`item.section_name`]="{ item }">
+                    <span class="primary--text">{{ item.section_name }}</span>
                 </template>
                 <template v-slot:[`item.created_at`]="{ item }">
                     {{ moment(item.created_at).format("DD/MM/YYYY") }}
@@ -45,7 +50,12 @@
                     <v-btn color="primary" icon small>
                         <v-icon small>mdi-eye-outline</v-icon>
                     </v-btn>
-                    <v-btn color="primary" icon small @click.stop="editItem(item)">
+                    <v-btn
+                        color="primary"
+                        icon
+                        small
+                        @click.stop="editItem(item)"
+                    >
                         <v-icon small>mdi-pencil</v-icon>
                     </v-btn>
                     <v-btn color="error" icon small @click="warning(item)">
@@ -111,7 +121,12 @@ export default {
         selectedItem: {},
         selected: [],
         headers: [
-            { text: "Student Id", align: "start", sortable: true, value: "student_id" },
+            {
+                text: "Student Id",
+                align: "start",
+                sortable: true,
+                value: "student_id",
+            },
             {
                 text: "Image",
                 align: "start",
@@ -146,13 +161,13 @@ export default {
                 text: "Grade Level",
                 align: "start",
                 sortable: true,
-                value: "level",
+                value: "level_name",
             },
             {
                 text: "Section",
                 align: "start",
                 sortable: true,
-                value: "section",
+                value: "section_name",
             },
             {
                 text: "Actions",

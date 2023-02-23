@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\v1;
 
-use App\Filters\Filter;
 use App\Http\Controllers\Controller;
-use App\Models\Student;
-use App\Models\User;
+use App\Models\Evaluation;
+use App\Models\Indicator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class StudentController extends Controller
+class EvaluationController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -18,8 +16,7 @@ class StudentController extends Controller
    */
   public function index()
   {
-    $model = Student::class;
-    return (new Filter($model))->searchable('students');
+    //
   }
 
   /**
@@ -40,30 +37,23 @@ class StudentController extends Controller
    */
   public function store(Request $request)
   {
-    $request['role_id'] = 4;
-    $request['username'] = $request->student_id;
-    $request['password'] = Hash::make('123');
     $payload = $request->validate([
-      'username' => 'required|unique:users',
-      'password' => 'required',
-      'role_id' => 'required|integer',
-      'student_id' => 'required|unique:students',
-      'first_name' => 'required|string',
-      'last_name' => 'required|string',
-      'gender' => 'required|string',
-      'address' => 'required',
-      'birthday' => 'required',
-      'contact_number' => 'nullable',
-      'current_grade_level' => 'required|integer',
-      'current_section' => 'required|integer',
-      'image' => 'nullable',
+      'evaluation' => 'required|array'
     ]);
 
-    $student = User::create($payload);
+    //need to add error handling
+    foreach ($request->evaluation as $eval) {
+      foreach ($eval['data'] as $ind) {
+        Evaluation::create([
+          'subject_id' => $ind['subject_id'],
+          'student_id' => $eval['student_id'],
+          'indicator_id' => $ind['indicator_id'],
+          'remarks' => $ind['remarks']
+        ]);
+      }
+    }
 
-    $student->student()->save(new Student($payload));
-
-    return response()->json($this->returnBasic($student), 200);
+    return response()->json($payload, 200);
   }
 
   /**

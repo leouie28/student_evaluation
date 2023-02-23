@@ -15,9 +15,10 @@ class CreateEvaluationsTable extends Migration
   {
     Schema::create('evaluations', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('subject_id')->constrained();
-      $table->foreignId('teacher_id')->constrained();
-      $table->string('label')->nullable();
+      $table->integer('subject_id')->nullable();
+      $table->integer('student_id')->nullable();
+      $table->integer('indicator_id')->nullable();
+      $table->string('remarks')->nullable();
       $table->timestamps();
     });
   }

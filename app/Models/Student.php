@@ -24,11 +24,23 @@ class Student extends Model
 
   protected $appends = [
     'gender',
+    'level_name',
+    'section_name',
   ];
 
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  public function level()
+  {
+    return $this->belongsTo(Level::class, 'current_grade_level');
+  }
+
+  public function section()
+  {
+    return $this->belongsTo(Section::class, 'current_section');
   }
 
   public function indicators()
@@ -38,6 +50,16 @@ class Student extends Model
 
   public function getGenderAttribute()
   {
-    return $this->user->gender;
+    return $this->user()->first()->gender;
+  }
+
+  public function getLevelNameAttribute()
+  {
+    return $this->level()->first()->name;
+  }
+
+  public function getSectionNameAttribute()
+  {
+    return $this->section()->first()->name;
   }
 }

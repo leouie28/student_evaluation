@@ -38,13 +38,15 @@ class Subject extends Model
 
   public function getSectionNameAttribute()
   {
-    return $this->section->name;
+    if ($this->section()->first()) {
+      return $this->section()->first()->name;
+    }
   }
 
   public function getTeacherNameAttribute()
   {
-    if ($this->teacher_id) {
-      return $this->teacher->name;
+    if ($this->teacher()->first()) {
+      return $this->teacher()->first()->name;
     }
   }
 }

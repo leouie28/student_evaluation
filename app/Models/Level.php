@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPUnit\Framework\returnSelf;
+
 class Level extends Model
 {
   use HasFactory;
@@ -31,6 +33,8 @@ class Level extends Model
 
   public function getDepartmentNameAttribute()
   {
-    return $this->department->name;
+    if ($this->department()->first()) {
+      return $this->department()->first()->name;
+    }
   }
 }

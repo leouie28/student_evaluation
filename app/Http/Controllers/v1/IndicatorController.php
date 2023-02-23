@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Filters\IndicatorFilter;
 use App\Http\Controllers\Controller;
 use App\Models\Indicator;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class IndicatorController extends Controller
    */
   public function index()
   {
-    //
+    $model = Indicator::class;
+    return (new IndicatorFilter($model))->searchable('indicators');
   }
 
   /**

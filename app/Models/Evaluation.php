@@ -11,8 +11,9 @@ class Evaluation extends Model
 
   protected $fillable = [
     'subject_id',
-    'teacher_id',
-    'label',
+    'student_id',
+    'indicator_id',
+    'remarks',
   ];
 
   public function subject()

@@ -125,7 +125,7 @@ export default {
                 path: "admin-user-student",
             },
             {
-                title: "Group Intity",
+                title: "School",
                 active: false,
                 icon: "mdi-group or-small",
                 items: [

@@ -31,6 +31,8 @@ class Section extends Model
 
   public function getLevelNameAttribute()
   {
-    return $this->level->name;
+    if ($this->level()->first()) {
+      return $this->level()->first()->name;
+    }
   }
 }

@@ -27,8 +27,8 @@ class AuthenticateAdmin
     if (!$id = Auth::id()) {
       throw new AuthenticationException;
     }
-    
-    if(!User::find($id)->isAdmin()) {
+
+    if (!User::find($id)->isAdmin()) {
       throw new AuthenticationException('User not allowed.');
     }
     return $next($request);
