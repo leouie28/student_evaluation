@@ -18,7 +18,7 @@ class Indicator extends Model
 
   public function evaluation()
   {
-    return $this->belongsTo(Evaluation::class);
+    return $this->hasMany(Evaluation::class);
   }
 
   public function students()

@@ -4,6 +4,7 @@ namespace App\Filters;
 
 use App\Models\Evaluation;
 use App\Models\Indicator;
+use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -19,29 +20,29 @@ class EvaluationFilter
   public function searchable($table)
   {
 
-    if ($first = $this->getFirstEnty()) {
-      $first = Carbon::parse($first)->month;
+    $now = Carbon::now();
 
-      return $first;
-    }
+    return DB::table($table)->groupBy('year')->select('id', 'created_at', DB::raw('count(id) as evaluation_number'))->paginate(15);
 
-    return Carbon::now()->month;
+    return Subject::whereHas('evaluations', function ($q) use ($now) {
+      $q->whereMonth('created_at', $now);
+    })->paginate(15);
 
     // $this->searchColumns($table);
-    $this->sortBy();
+    // $this->sortBy();
     // // $this->filter();
     // // $this->orderCount();
     $per_page = Request()->per_page;
 
-    if ($per_page == '-1' || !isset(Request()->per_page)) return DB::table($table)->select('year', 'created_at', DB::raw('count(*) as indicator_number'))->groupBy('year')->get();
+    if ($per_page == '-1' || !isset(Request()->per_page)) return DB::table($table)->select('id', 'created_at', DB::raw('count(id) as evaluation_number'))->groupBy('subject_id')->get();
     // $res = $this->model->paginate(2);
 
-    return DB::table($table)->groupBy('year')->select('year', 'created_at', DB::raw('count(*) as indicator_number'))->paginate($per_page);
+    return DB::table($table)->groupBy('year')->select('id', 'created_at', DB::raw('count(id) as evaluation_number'))->paginate($per_page);
   }
 
   public function getFirstEnty()
   {
-    if (Evaluation::exists()) {
+    if (Evaluation::exists()) { //tochange
       return Evaluation::orderBy('created_at', 'asc')->first()->value('created_at');
     }
     return false;

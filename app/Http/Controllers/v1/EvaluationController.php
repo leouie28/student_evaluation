@@ -17,7 +17,7 @@ class EvaluationController extends Controller
    */
   public function index()
   {
-    return (new EvaluationFilter)->searchable('students');
+    return (new EvaluationFilter)->searchable('evaluations');
   }
 
   /**
