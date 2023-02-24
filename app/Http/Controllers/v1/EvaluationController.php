@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Filters\EvaluationFilter;
 use App\Http\Controllers\Controller;
 use App\Models\Evaluation;
 use App\Models\Indicator;
@@ -16,7 +17,7 @@ class EvaluationController extends Controller
    */
   public function index()
   {
-    //
+    return (new EvaluationFilter)->searchable('students');
   }
 
   /**
