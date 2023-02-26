@@ -10,10 +10,7 @@ class Evaluation extends Model
   use HasFactory;
 
   protected $fillable = [
-    'subject_id',
-    'student_id',
-    'indicator_id',
-    'remarks',
+    'subject_id'
   ];
 
   public function subject()
@@ -24,6 +21,11 @@ class Evaluation extends Model
   public function teacher()
   {
     return $this->belongsTo(Teacher::class);
+  }
+
+  public function student()
+  {
+    return $this->belongsTo(student::class);
   }
 
   public function indicator()
