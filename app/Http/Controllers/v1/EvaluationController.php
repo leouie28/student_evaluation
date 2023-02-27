@@ -19,7 +19,8 @@ class EvaluationController extends Controller
    */
   public function index()
   {
-    return (new EvaluationFilter)->searchable('evaluations');
+    $model = Evaluation::class;
+    return (new EvaluationFilter($model))->searchable('evaluations');
   }
 
   /**
@@ -46,13 +47,13 @@ class EvaluationController extends Controller
     ]);
 
     $now = Carbon::now();
-    if(Evaluation::where('subject_id', $request->subject_id)->whereMonth('created_at', $now)->exists()) {
+    if (Evaluation::where('subject_id', $request->subject_id)->whereMonth('created_at', $now)->exists()) {
       return response()->json($this->returnBasic($payload, 'Evaluation already exist for this month', 'failed'), 200);
     }
     $newEval = Evaluation::create(['subject_id' => $request->subject_id]);
     //need to add error handling
-    foreach($request->evaluation as $eval) {
-      foreach($eval['response'] as $ind) {
+    foreach ($request->evaluation as $eval) {
+      foreach ($eval['response'] as $ind) {
         Response::create([
           'evaluation_id' => $newEval->id,
           'student_id' => $eval['student_id'],

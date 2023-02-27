@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
       $table->id();
       $table->string('username')->unique();
       $table->string('password');
-      $table->string('gender')->nullable();
+      $table->string('gender')->nullable()->default('male');
       $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null'); //1 = admin,2 = coordinator, 3 = teacher, 4 = student
       $table->rememberToken();
       $table->timestamps();
