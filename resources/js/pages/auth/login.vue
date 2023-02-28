@@ -9,7 +9,7 @@
                       src="/images/system/logo.png"
                       ></v-img>
                   </v-avatar>
-                  <h4 class="mt-3 cyan--text">Student Evaluation</h4>
+                  <h4 class="mt-3 amber--text">Student Evaluation</h4>
               </div>
               <v-row>
                   <v-col cols="12" md="12">
@@ -18,7 +18,7 @@
                       dense
                       v-model="payload.username"
                       :rules="rule"
-                      color="cyan"
+                      color="amber"
                       :disabled="loading?true:false"
                       placeholder="User Id"
                       required
@@ -33,7 +33,7 @@
                       v-model="payload.password"
                       :rules="rule"
                       required
-                      color="cyan"
+                      color="amber"
                       :disabled="loading?true:false"
                       placeholder="Password"
                       type="password"
@@ -51,7 +51,7 @@
                       dark
                       :disabled="loading?true:false"
                       @click="login"
-                      color="cyan">
+                      color="amber">
                           <span v-if="!loading">Login</span>
                           <v-progress-circular
                             v-else
@@ -100,11 +100,10 @@ export default {
                 this.$router.push({path: '/admin/dashboard'})
             }
             if(res.data.role.name=='teacher') {
-              window.location.reload()
-                // this.$router.push({path: '/admin/dashboard'})
+                this.$router.push({path: '/teacher/dashboard'})
             }
             if(res.data.role.name=='student') {
-                this.$router.push({path: '/admin/dashboard'})
+                this.$router.push({path: '/student/dashboard'})
             }
           }
         }

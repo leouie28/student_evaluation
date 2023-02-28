@@ -59,6 +59,15 @@ export default [
         name: "admin-indicator-create",
         meta: { requireAuth: true },
     },
+
+    //teacher routes
+    {
+        path: "/teacher/dashboard",
+        component: () => import("@/pages/teacher/dashboard.vue"),
+        name: "teacher-dashboard",
+        meta: { requireAuth: true },
+    },
+
     {
         path: "/admin",
         component: () => import("@/pages/admin/dashboard"), //admin view

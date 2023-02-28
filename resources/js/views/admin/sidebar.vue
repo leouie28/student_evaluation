@@ -150,11 +150,11 @@ export default {
             {
                 title: "Preference",
                 active: false,
-                icon: "mdi-tune-variant",
+                icon: "mdi-format-list-checks",
                 items: [
                     { title: "Evaluation Indicator", path: "admin-indicator" },
                     {
-                        title: "Default Passwords",
+                        title: "System Preferences",
                         path: "admin-user-coordinator",
                     },
                 ],

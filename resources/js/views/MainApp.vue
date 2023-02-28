@@ -29,81 +29,53 @@ export default {
         auth: false,
         specialRoute: false,
     }),
+    created() {
+      
+    },
     methods: {
-        checkRole() {
-            //role: admin = 1, coordinator = 2, teacher = 3, student = 4
-            let type = sessionStorage.getItem('_type')
-            if(type) {
-                this.auth = type
-                this.fetching = false
-            }else {
-                let middleware = this.getMiddleware(this.$route.path)
-                this.checkAuth(middleware)
-            }
-        },
-        checkAuth(val) {
-          console.log(val)
-          this.fetching = false
-
-            // let auth = await http.auth();
-            // console.log(auth)
-        //   http.api.get('admin/user/user/test').then(response => {
-        //     console.log(response, '200')
-        //   }).catch(err => {
-        //     console.log(err, 'error')
-        //   })
-
-        // let user = await auth.login(creds).catch(error => {
-        //   console.log(error.response.data.message)
-        // })
-        // console.log(user)
-
-        // let res = null
-        // try {
-        //     res = await http.api.get('user/user/test')
-        // } catch (error) {
-        //     console.log(error.message)
-        // }
-        // console.log(res)
-        console.log('una')
-            // console.log(this.checkRoute())
-            // axios.get(`/web/check-auth`).then(({data})=>{
-            //     this.auth = data
-            //     console.log(data,'auth')
-            // }).finally(()=>{
-            //     setTimeout(() => {
-            //         this.fetching = false
-            //     },500)
-            // })
-        },
-        getMiddleware(path) {
-            let middleware = path.split("/")
-            return middleware[1]
-        },
-        checkRoute() {
-            let route = this.$route
-            if(route.name=='student-election') {
-                return true
-            }
-        },
-        logout() {
-            axios.get(`/web/logout`).then(({data})=>{
-                this.auth = false
-                localStorage.role = 0
-            }).finally(()=>{
-                this.$router.push({name:'login'})
-            })
+      checkRole() {
+        //role: admin = 1, coordinator = 2, teacher = 3, student = 4
+        let type = sessionStorage.getItem('_type')
+        if(type) {
+            this.auth = type
+            this.fetching = false
+        }else {
+            let middleware = this.getMiddleware(this.$route.path)
+            this.checkAuth(middleware)
         }
+      },
+      checkAuth(val) {
+        console.log(val)
+        this.fetching = false
+      },
+      getMiddleware(path) {
+          let middleware = path.split("/")
+          return middleware[1]
+      },
+      checkRoute() {
+          let route = this.$route
+          if(route.name=='student-election') {
+              return true
+          }
+      },
+      logout() {
+          axios.get(`/web/logout`).then(({data})=>{
+              this.auth = false
+              localStorage.role = 0
+          }).finally(()=>{
+              this.$router.push({name:'login'})
+          })
+      }
     },
     watch: {
-        // auth(val) {
-        //     if(val){
-        //         localStorage.role = val
-        //     }
-        // },
-        $route (to, from){
-            this.checkRole()
-        },
+      // auth(val) {
+      //     if(val){
+      //         localStorage.role = val
+      //     }
+      // },
+      $route (to, from){
+          this.checkRole()
+      },
     }
 }
 </script>

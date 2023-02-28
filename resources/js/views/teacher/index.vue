@@ -2,7 +2,7 @@
   <div>
     <v-app-bar
       app
-      color="black"
+      color="grey darken-4"
       dark
       flat
       elevate-on-scroll
@@ -15,14 +15,16 @@
           rounded
           class="mr-1"
           elevation="0">
-            <span class="text-capitalize font-weight-medium mr-1 amber--text font-nunito">Teacher Name</span>
+            <span class="text-capitalize font-weight-bold mr-1 amber--text font-nunito">Teacher Name</span>
             <v-avatar
             size="32">
             <v-icon>mdi-account</v-icon>
             </v-avatar>
           </v-btn>
-          <v-btn rounded class="mr-1"><v-icon>mdi-clipboard-text-clock-outline</v-icon></v-btn>
-          <v-btn text plain class="text-capitalize">Logout</v-btn>
+          <!-- <v-btn rounded class="mr-1"><v-icon>mdi-clipboard-text-clock-outline</v-icon></v-btn> -->
+          <v-btn text plain>
+            <span class="text-capitalize font-weight-bold">Logout</span>
+          </v-btn>
           <!-- <v-btn elevation="0" large>
             <v-icon>mdi mdi-logout-variant</v-icon>
           </v-btn> -->
@@ -31,8 +33,10 @@
     </v-app-bar>
 
     <v-main class="grey lighten-3">
-      <v-container fluid>
-        <evaluation-form></evaluation-form>
+      <v-container fluid class="pa-0 grey lighten-2" style="min-height:90vh;">
+        <transition name="slide-y-reverse-transition" mode="out-in">
+          <router-view></router-view>
+        </transition>
       </v-container>
     </v-main>
   </div>
