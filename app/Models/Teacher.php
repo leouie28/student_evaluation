@@ -34,6 +34,6 @@ class Teacher extends Model
 
   public function getGenderAttribute()
   {
-    return $this->user->gender;
+    return $this->user()->first()->gender;
   }
 }

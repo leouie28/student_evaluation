@@ -26,6 +26,11 @@ class Level extends Model
     return $this->belongsTo(Department::class);
   }
 
+  public function subjects()
+  {
+    return $this->hasMany(Subject::class);
+  }
+
   public function sections()
   {
     return $this->hasMany(Section::class);

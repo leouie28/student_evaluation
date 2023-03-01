@@ -25,8 +25,13 @@ class User extends Authenticatable
     'role_id',
   ];
 
+  protected $with = [
+    // 'profile'
+  ];
+
   protected $appends = [
     // 'hashed'
+    'profile'
   ];
 
   /**
@@ -47,6 +52,13 @@ class User extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+  // public function profile()
+  // {
+  //   return $this->teacher();
+  //   // if ($this->role_id === 3) {
+  //   // }
+  // }
 
   public function role()
   {
@@ -69,13 +81,21 @@ class User extends Authenticatable
     return false;
   }
 
+  public function isTeacher(): bool
+  {
+    if ($this->role_id == 3) return true;
+    return false;
+  }
+
   public function scopeStudents($query)
   {
     return $query->whereRoleId(4);
   }
 
-  // public function getHashedAttribute()
-  // {
-  //   return $this->role->hashed;
-  // }
+  public function getProfileAttribute()
+  {
+    if ($this->teacher()) {
+      return $this->teacher()->first();
+    }
+  }
 }

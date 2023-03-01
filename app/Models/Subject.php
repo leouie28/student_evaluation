@@ -4,26 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Subject extends Model
 {
   use HasFactory;
 
   protected $fillable = [
-    'section_id',
+    'level_id',
     'teacher_id',
     'name',
     'info',
   ];
 
   protected $appends = [
-    'section_name',
+    'level_name',
     'teacher_name',
+    'department_name',
+    'students_count'
   ];
 
-  public function section()
+  public function students()
   {
-    return $this->belongsTo(Section::class);
+    return $this->belongsToMany(Student::class);
+  }
+
+  public function level()
+  {
+    return $this->belongsTo(Level::class);
   }
 
   public function teacher()
@@ -36,10 +44,15 @@ class Subject extends Model
     return $this->hasMany(Evaluation::class);
   }
 
-  public function getSectionNameAttribute()
+  public function scopeMySubjects($query, $id)
   {
-    if ($this->section()->first()) {
-      return $this->section()->first()->name;
+    return $query->where('teacher_id', $id);
+  }
+
+  public function getLevelNameAttribute()
+  {
+    if ($this->level()->first()) {
+      return $this->level()->first()->name;
     }
   }
 
@@ -48,5 +61,15 @@ class Subject extends Model
     if ($this->teacher()->first()) {
       return $this->teacher()->first()->name;
     }
+  }
+
+  public function getDepartmentNameAttribute()
+  {
+    return $this->level()->first()->department_name;
+  }
+
+  public function getStudentsCountAttribute()
+  {
+    return $this->students()->count();
   }
 }
